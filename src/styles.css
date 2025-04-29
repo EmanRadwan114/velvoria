@@ -2,10 +2,47 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
+/* src/styles.css or src/styles.scss */
+:root {
+  --primary-color: #0b5d5d;
+  --secondary-color: #dc9c13;
+  --primary-txt-color: #313033;
+  /* text colors */
+  --primary-btn-color: hsl(180, 79%, 20%);
+  --secondary-btn-color: #dc9c13;
+  --primary-btn-hover: #074444;
+  /* background */
+  --background-color-primary: #ffffff;
+  --background-color-secondary: #f5f5f5;
+}
+
+.body {
+  background-color: var(--background-color-primary);
+}
 /* logo font style */
 .aboreto-regular {
   font-family: "Aboreto", system-ui;
   font-weight: 600;
   font-style: normal;
-  color:   #0B5D5D;
+  color: #0b5d5d;
+}
+.main-btn {
+  background-color: var(--secondary-btn-color);
+  color: #ffff;
+}
+
+.main-btn:hover {
+  background-color: var(--background-color-primary);
+  color: var(--primary-txt-color);
+  border: 2px solid var(--primary-txt-color);
+}
+
+.sec-btn {
+  background-color: var(--secondary-btn-color);
+  color: #ffff;
+}
+.sec-btn:hover {
+  background-color: var(--background-color-primary);
+  color: var(--primary-txt-color);
+  border: 2px solid var(--primary-txt-color);
 }
