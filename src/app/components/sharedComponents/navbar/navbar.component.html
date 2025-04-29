@@ -2,14 +2,20 @@
   <div class="container mx-auto flex justify-between items-center w-full">
     <div>
       <!-- LOGO -->
-      <a routerLink="/home" class=" aboreto-regular text-2xl font-bold"
+      <a routerLink="/home" class="aboreto-regular text-2xl font-bold "
         >VELVORIA</a
       >
     </div>
 
     <!-- Center: Navigation -->
-    <ul class="hidden md:flex space-x-8 items-center">
-      <li><a routerLink="/home" class="hover:text-emerald-800 font-medium">Home</a></li>
+    <!-- <ul class="hidden md:flex space-x-8 items-cente md:space-x-4"> -->
+      <ul class="hidden md:flex items-center gap-x-4 lg:gap-x-8">
+
+      <li>
+        <a routerLink="/home" class="hover:text-emerald-800 font-medium"
+          >Home</a
+        >
+      </li>
 
       <!-- Dropdown Furniture -->
       <div class="relative group inline-block">
@@ -23,7 +29,7 @@
           class="absolute left-0 top-full z-50 hidden group-hover:block bg-white w-64 p-4 shadow-md rounded-md"
         >
           <div class="grid grid-cols-2 gap-3 text-sm text-gray-700">
-            <a routerLink="/categories" class=" dropdown-link-hover"
+            <a routerLink="/categories" class="dropdown-link-hover"
               >All Furnitures</a
             >
             <a routerLink="/furniture/sofas" class="hover:text-red-500"
@@ -65,17 +71,18 @@
         </div>
       </div>
 
-      <li><a routerLink="/about" class="hover:text-emerald-800  font-medium">About</a></li>
       <li>
-        <a routerLink="/contact-us" class="hover:text-emerald-800  font-medium ">Contact</a>
+        <a routerLink="/about" class="hover:text-emerald-800 font-medium"
+          >About</a
+        >
       </li>
       <li>
-        <input
-          type="text"
-          placeholder="Search"
-          class="input  w-24 md:w-auto"
-        />
-       
+        <a routerLink="/contact-us" class="hover:text-emerald-800 font-medium"
+          >Contact</a
+        >
+      </li>
+      <li>
+        <input type="text" placeholder="Search" class="input lg:w-50 md:w-24" />
       </li>
     </ul>
 
@@ -116,6 +123,43 @@
         </div>
       </div>
     </div>
+
+    <!-- For Small Screen Only -->
+
+    <div class="md:hidden">
+      <button
+        class="text-2xl"
+        (click)="menuOpen = !menuOpen"
+        aria-label="Toggle menu"
+      >
+        <i class="fas" [ngClass]="menuOpen ? 'fa-times' : 'fa-bars'"></i>
+      </button>
+    </div>
+  <ul
+  *ngIf="menuOpen"
+  class="md:hidden absolute top-10 left-0 mt-4 w-full bg-white shadow-md space-y-2 z-50 p-4"
+>
+  <li>
+    <a routerLink="/home" class="block px-4 py-2 hover:text-emerald-700">Home</a>
+  </li>
+  <li>
+    <a routerLink="/categories" class="block px-4 py-2 hover:text-emerald-700">Furniture</a>
+  </li>
+  <li>
+    <a routerLink="/about" class="block px-4 py-2 hover:text-emerald-700">About</a>
+  </li>
+  <li>
+    <a routerLink="/contact-us" class="block px-4 py-2 hover:text-emerald-700">Contact</a>
+  </li>
+  <li>
+    <input
+      type="text"
+      placeholder="Search"
+      class="input input-bordered w-full px-4 py-2"
+    />
+  </li>
+</ul>
+
   </div>
 </nav>
 
