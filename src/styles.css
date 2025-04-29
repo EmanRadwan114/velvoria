@@ -1,8 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 @import "tailwindcss";
 @plugin "daisyui";
-
 /* src/styles.css or src/styles.scss */
+
+/* logo font style */
+.aboreto-regular {
+  font-family: "Aboreto", system-ui;
+  font-weight: 600;
+  font-style: normal;
+  color: #0b5d5d;
+}
+
 :root {
   --primary-color: #0b5d5d;
   --secondary-color: #dc9c13;
@@ -19,24 +27,20 @@
 .body {
   background-color: var(--background-color-primary);
 }
-/* logo font style */
-.aboreto-regular {
-  font-family: "Aboreto", system-ui;
-  font-weight: 600;
-  font-style: normal;
-  color: #0b5d5d;
-}
+
+/* Buttons Style */
+/* primary btn */
 .main-btn {
-  background-color: var(--secondary-btn-color);
+  background-color: var(--primary-btn-color);
   color: #ffff;
 }
 
 .main-btn:hover {
   background-color: var(--background-color-primary);
   color: var(--primary-txt-color);
-  border: 2px solid var(--primary-txt-color);
+  border: 1px solid var(--primary-txt-color);
 }
-
+/* Secondary btn */
 .sec-btn {
   background-color: var(--secondary-btn-color);
   color: #ffff;
@@ -44,5 +48,22 @@
 .sec-btn:hover {
   background-color: var(--background-color-primary);
   color: var(--primary-txt-color);
-  border: 2px solid var(--primary-txt-color);
+  border: 1px solid var(--primary-txt-color);
+}
+/* custom links Styel */
+
+.custom-links {
+  text-decoration: none;
+  color: var(--primary-txt-color)
+}
+.custom-links:hover {
+  color: #007870;
+  cursor: pointer;
+}
+.icons{
+   color: var(--primary-txt-color)
+}
+.icons:hover{
+    color: #007870;
+
 }
