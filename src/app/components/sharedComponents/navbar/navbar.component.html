@@ -1,0 +1,145 @@
+<nav class="navbar bg-base-100 shadow-sm">
+  <div class="container mx-auto flex justify-between items-center w-full">
+    <div>
+      <!-- LOGO -->
+      <a routerLink="/home" class=" aboreto-regular text-2xl font-bold"
+        >VELVORIA</a
+      >
+    </div>
+
+    <!-- Center: Navigation -->
+    <ul class="hidden md:flex space-x-8 items-center">
+      <li><a routerLink="/home" class="hover:text-emerald-800 font-medium">Home</a></li>
+
+      <!-- Dropdown Furniture -->
+      <div class="relative group inline-block">
+        <a
+          class="cursor-pointer text-base font-medium px-4 py-2 hover:text-emerald-800"
+        >
+          Furniture <i class="fas fa-chevron-down ml-1 text-xs"></i>
+        </a>
+        <!-- Dropdown content -->
+        <div
+          class="absolute left-0 top-full z-50 hidden group-hover:block bg-white w-64 p-4 shadow-md rounded-md"
+        >
+          <div class="grid grid-cols-2 gap-3 text-sm text-gray-700">
+            <a routerLink="/categories" class=" dropdown-link-hover"
+              >All Furnitures</a
+            >
+            <a routerLink="/furniture/sofas" class="hover:text-red-500"
+              >Sofas</a
+            >
+            <a
+              routerLink="/furniture/storage-units"
+              class="hover:text-emerald-950"
+              >Storage Units</a
+            >
+            <a routerLink="/furniture/desks" class="hover:text-emerald-950"
+              >Desks</a
+            >
+            <a
+              routerLink="/furniture/dining-tables"
+              class="hover:text-emerald-950"
+              >Dining Tables</a
+            >
+            <a
+              routerLink="/furniture/office-Desks"
+              class="hover:text-emerald-500"
+              >Office Desks</a
+            >
+            <a routerLink="/furniture/chairs" class="hover:text-emerald-950"
+              >Chairs</a
+            >
+            <a
+              routerLink="/furniture/outdoor-sets"
+              class="hover:text-emerald-950"
+              >Outdoor Sets</a
+            >
+            <a routerLink="/furniture/decors" class="hover:text-emerald-950"
+              >Decors</a
+            >
+            <a routerLink="/furniture/lighting" class="hover:text-emerald-950"
+              >Lighting</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <li><a routerLink="/about" class="hover:text-emerald-800  font-medium">About</a></li>
+      <li>
+        <a routerLink="/contact-us" class="hover:text-emerald-800  font-medium ">Contact</a>
+      </li>
+      <li>
+        <input
+          type="text"
+          placeholder="Search"
+          class="input  w-24 md:w-auto"
+        />
+       
+      </li>
+    </ul>
+
+    <!-- Login, Cart, Fav -->
+    <div class="flex items-center space-x-4">
+      <!-- Login Icon -->
+      <a
+        routerLink="/login"
+        class="hover:text-emerald-500 flex items-center gap-1"
+      >
+        <i class="fas fa-user"></i>
+        <span class="hidden md:inline">Login</span>
+      </a>
+
+      <!-- Favorite Icon -->
+      <a routerLink="/favorites" class="hover:text-emerald-500">
+        <i class="fas fa-heart"></i>
+      </a>
+
+      <!-- Cart Icon with Badge -->
+      <div class="dropdown dropdown-end">
+        <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
+          <div class="indicator">
+            <i class="fas fa-shopping-cart text-lg"></i>
+            <span class="badge badge-sm indicator-item bg-emerald-500">8</span>
+          </div>
+        </div>
+        <div
+          class="card card-compact dropdown-content bg-base-100 z-10 mt-3 w-52 shadow"
+        >
+          <div class="card-body">
+            <span class="text-lg font-bold">8 Items</span>
+            <span class="text-info">Subtotal: $999</span>
+            <div class="card-actions">
+              <button class="btn btn-primary btn-block">View cart</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- icon for user profile  -->
+<!-- <div class="dropdown dropdown-end">
+      <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+        <div class="w-10 rounded-full">
+          <img
+            alt="Tailwind CSS Navbar component"
+            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+          />
+        </div>
+      </div>
+      <ul
+        tabindex="0"
+        class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+      >
+        <li>
+          <a class="justify-between">
+            Profile
+            <span class="badge">New</span>
+          </a>
+        </li>
+        <li><a>Settings</a></li>
+        <li><a>Logout</a></li>
+      </ul>
+    </div> -->

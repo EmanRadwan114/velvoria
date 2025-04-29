@@ -1,2 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 @import "tailwindcss";
+@plugin "daisyui";
+
+/* logo font style */
+.aboreto-regular {
+  font-family: "Aboreto", system-ui;
+  font-weight: 600;
+  font-style: normal;
+  color:   #0B5D5D;
+}
