@@ -1,0 +1,33 @@
+<div class="relative w-full h-screen overflow-hidden">
+  <!-- Slides -->
+  <div
+    class="w-full h-full flex transition-transform duration-700 ease-in-out"
+    [style.transform]="getSlideTransform()"
+  >
+    <div
+      class="w-full h-full flex-shrink-0 flex flex-col items-center bg-cover bg-center"
+      *ngFor="let slide of slides"
+      [style.backgroundImage]="'url(' + slide.image + ')'"
+    >
+      <div class="text-white text-center p-6 rounded mt-22">
+        <h1 class="header-txt">{{ slide.header }}</h1>
+        <p class="sec-txt">{{ slide.text }}</p>
+        <button class="sec-btn">
+          {{ slide.buttonText }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Indicators -->
+  <div
+    class="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-3"
+  >
+    <button
+      *ngFor="let slide of slides; let i = index"
+      class="w-3 h-3 rounded-full cursor-pointer"
+      [ngClass]="i === currentIndex ? 'bg-white' : 'bg-gray-500'"
+      (click)="goToSlide(i)"
+    ></button>
+  </div>
+</div>
