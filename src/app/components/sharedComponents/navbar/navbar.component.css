@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+.search:focus{
+  outline: none;
+border: 1px solid var(--primary-txt-color);
+}
