@@ -32,7 +32,7 @@ export class HeroComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    setInterval(() => this.nextSlide(), 5000);
+    setInterval(() => this.nextSlide(), 6000);
   }
 
   nextSlide() {

@@ -12,3 +12,45 @@
 .sec-txt {
   @apply md:text-xl mb-4;
 }
+
+/*# hero section start */
+
+@theme {
+  --animate-toright: toright 1500ms ease-in-out;
+  @keyframes toright {
+    0% {
+      transform: translateX(-200px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0px);
+      opacity: 1;
+    }
+  }
+
+  --animate-toleft: toleft 1500ms ease-in-out;
+  @keyframes toleft {
+    0% {
+      transform: translateX(200px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0px);
+      opacity: 1;
+    }
+  }
+
+  --animate-tozoomout: tozoomout 2s ease-in-out;
+  @keyframes tozoomout {
+    0% {
+      transform: scale(1.5);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+}
+
+/*# hero section end */

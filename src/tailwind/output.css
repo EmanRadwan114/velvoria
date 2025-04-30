@@ -30,6 +30,9 @@
     --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     --default-font-family: var(--font-sans);
     --default-mono-font-family: var(--font-mono);
+    --animate-toright: toright 1500ms ease-in-out;
+    --animate-toleft: toleft 1500ms ease-in-out;
+    --animate-tozoomout: tozoomout 2s ease-in-out;
   }
 }
 @layer base {
@@ -229,6 +232,15 @@
   }
   .transform {
     transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);
+  }
+  .animate-toleft {
+    animation: var(--animate-toleft);
+  }
+  .animate-toright {
+    animation: var(--animate-toright);
+  }
+  .animate-tozoomout {
+    animation: var(--animate-tozoomout);
   }
   .cursor-pointer {
     cursor: pointer;
@@ -444,6 +456,36 @@
 @property --tw-ease {
   syntax: "*";
   inherits: false;
+}
+@keyframes toright {
+  0% {
+    transform: translateX(-200px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0px);
+    opacity: 1;
+  }
+}
+@keyframes toleft {
+  0% {
+    transform: translateX(200px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0px);
+    opacity: 1;
+  }
+}
+@keyframes tozoomout {
+  0% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 @layer properties {
   @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
