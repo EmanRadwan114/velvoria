@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { interval } from 'rxjs';
 
 @Component({
@@ -7,7 +7,7 @@ import { interval } from 'rxjs';
   templateUrl: './dotd.component.html',
   styles: ``,
 })
-export class DOTDComponent implements OnInit {
+export class DOTDComponent implements OnInit , OnDestroy{
   DealOfTheDayProduct: {
     img: string;
     title: string;
@@ -31,6 +31,9 @@ export class DOTDComponent implements OnInit {
     this.IntervalForupdateCountdown = setInterval(() => {
       this.updateCountdown();
     }, 1000);
+  }
+  ngOnDestroy(): void {
+    this.IntervalForupdateCountdown.clear();
   }
 
   updateCountdown() {
