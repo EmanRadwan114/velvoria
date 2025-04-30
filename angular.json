@@ -31,7 +31,6 @@
             ],
             "styles": [
               "src/styles.css",
-              "src/tailwind/output.css",
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css"
             ],
             "scripts": []
@@ -92,5 +91,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "e557fac3-b354-43e7-8496-00205f1cd685"
   }
 }
