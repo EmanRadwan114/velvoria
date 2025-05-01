@@ -9,7 +9,7 @@ export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent, title: 'Home' },
   { path: 'categories', component: CategoriesComponent, title: 'Categories' },
-  { path: 'products', component: ProductsComponent, title: 'Products' },
+  { path: 'furnitures', component: ProductsComponent, title: 'Products' },
   { path: 'cart', component: CartComponent, title: 'Cart' },
   { path: 'search', component: SearchComponent, title: 'Search Results' },
   {
