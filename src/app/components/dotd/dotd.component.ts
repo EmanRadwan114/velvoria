@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { interval } from 'rxjs';
 
 @Component({
@@ -7,7 +7,7 @@ import { interval } from 'rxjs';
   templateUrl: './dotd.component.html',
   styles: ``,
 })
-export class DOTDComponent implements OnInit {
+export class DOTDComponent implements OnInit ,OnDestroy {
   DealOfTheDayProduct: {
     img: string;
     title: string;
@@ -33,22 +33,30 @@ export class DOTDComponent implements OnInit {
     }, 1000);
   }
 
-  updateCountdown() {
+  private updateCountdown(): void {
     const now = new Date();
     const endDate = this.DealOfTheDayProduct.endDate;
-    const diffMs = endDate.getTime() - now.getTime();
+    const diffMs = Math.max(0, endDate.getTime() - now.getTime());
+
+    const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diffMs % (1000 * 60)) / 1000);
 
     this.timeLeft = {
-      days: Math.max(0, Math.floor(diffMs / (1000 * 60 * 60 * 24))),
-      hours: Math.max(
-        0,
-        Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-      ),
-      minutes: Math.max(
-        0,
-        Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60))
-      ),
-      seconds: Math.max(0, Math.floor((diffMs % (1000 * 60)) / 1000)),
+      days: this.formatTime(days),
+      hours: this.formatTime(hours),
+      minutes: this.formatTime(minutes),
+      seconds: this.formatTime(seconds)
     };
+  }
+
+  private formatTime(value: number): string {
+    return value < 10 ? `0${value}` : `${value}`;
+  }
+  ngOnDestroy() {
+    if (this.IntervalForupdateCountdown) {
+      clearInterval(this.IntervalForupdateCountdown);
+    }
   }
 }
