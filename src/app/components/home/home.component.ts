@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
+import { HeroComponent } from '../hero/hero.component';
 import { DOTDComponent } from '../dotd/dotd.component';
 
 @Component({
   selector: 'app-home',
-  imports: [DOTDComponent],
+  imports: [HeroComponent, DOTDComponent],
   templateUrl: './home.component.html',
-  styles: ``
+  styles: ``,
 })
-export class HomeComponent {
-
-}
+export class HomeComponent {}
