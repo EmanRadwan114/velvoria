@@ -127,3 +127,8 @@
 .icons:hover {
   color: #007870;
 }
+/* primary text color */
+.primary-text-color{
+  color:var(--primary-txt-color)
+
+}
