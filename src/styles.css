@@ -1,6 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 @import "tailwindcss";
 
+* {
+  box-sizing: border-box;
+}
+
 .prim-btn-outline {
   @apply mt-2 px-6 py-3 text-sm md:text-base text-white border-2 font-semibold rounded hover:bg-teal-700 hover:border-teal-700 transition duration-400 ease-in-out cursor-pointer;
 }
@@ -89,12 +93,13 @@
 .main-btn {
   background-color: var(--primary-btn-color);
   color: #ffff;
+  transition: background-color 300ms, color 300ms;
 }
 
 .main-btn:hover {
   background-color: var(--background-color-primary);
   color: var(--primary-txt-color);
-  border: 1px solid var(--primary-txt-color);
+  outline: 1px solid var(--primary-txt-color);
 }
 /* Secondary btn */
 .sec-btn {
@@ -121,4 +126,9 @@
 }
 .icons:hover {
   color: #007870;
+}
+/* primary text color */
+.primary-text-color{
+  color:var(--primary-txt-color)
+
 }
