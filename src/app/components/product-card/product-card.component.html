@@ -1,12 +1,12 @@
 <div
-  class="group product-card bg-white shadow-md rounded-lg overflow-hidden w-64 max-w-sm h-[400px] relative"
+  class="group product-card bg-white shadow-md rounded-lg overflow-hidden w-70 max-w-sm h-[400px] relative"
 >
   <!-- Image -->
   <a routerLink="/product-details">
     <img
       [src]="thumbnail"
       [alt]="title"
-      class="w-full  h-[60%] object-cover hover:scale-105 transition-transform duration-300"
+      class="w-full h-[60%] object-cover hover:scale-105 transition-transform duration-300"
     />
   </a>
 
@@ -16,22 +16,24 @@
       <div class="flex space-x-1 group">
         <ng-container *ngFor="let star of [1, 2, 3, 4, 5]; let i = index">
           <i
-            class="fa-star cursor-pointer text-gray-300 group-hover:text-yellow-400 hover:text-yellow-400 transition duration-200"
+            class="w-4 fa-star cursor-pointer text-gray-300 group-hover:text-yellow-400 hover:text-yellow-400 transition duration-200"
             [class.fas]="hovered >= i + 1"
             [class.far]="hovered < i + 1"
             (mouseenter)="hovered = i + 1"
             (mouseleave)="hovered = 0"
           ></i>
         </ng-container>
+        <p class="ml-2 text-sm text-gray-500">4.2/5 (12000 reviews)</p>
       </div>
-      <h2 class=" mt-2 text-lg font-semibold text-gray-900 hover:text-teal-700" >{{ title }}</h2>
+      <h2 class="mt-2 text-lg font-semibold text-gray-900 hover:text-teal-700">
+        {{ title }}
+      </h2>
     </div>
     <h3 class="text-lg text-red-600 h-[10%]">{{ price }} EGP</h3>
   </div>
 
- 
   <!-- Animated Tags -->
-    <div
+  <div
     class="absolute top-2 left-0 transform -translate-x-full group-hover:translate-x-[10px] transition-transform duration-500 bg-orange-500 text-gray-50 w-12 px-2 text-center"
   >
     Hot
