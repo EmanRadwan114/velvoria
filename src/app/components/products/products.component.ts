@@ -15,7 +15,7 @@ export class ProductsComponent {
       description:
         'A comfortable and stylish leather sofa that enhances any living room  sofa that enhances any living room  ',
       thumbnail:
-        'https://img.freepik.com/free-psd/sofa-isolated-transparent-background_191095-10348.jpg?uid=R194767243&ga=GA1.1.1957810835.1742649565&semt=ais_hybrid&w=740',
+        'https://i.pinimg.com/736x/6a/bc/5e/6abc5ee32be8dd302c4bfdca33373c4b.jpg',
       price: '15000',
     },
     {
@@ -23,7 +23,7 @@ export class ProductsComponent {
       description:
         'A soft and cozy fabric sofa perfect for small spaces. It provides a co…',
       thumbnail:
-        'https://img.freepik.com/free-psd/midcentury-modern-grey-sofa-with-wooden-frame_632498-25556.jpg?ga=GA1.1.1738893645.1745595705&semt=ais_hybrid&w=740',
+        'https://i.pinimg.com/736x/8b/a7/f1/8ba7f1b9a4f3bc481bb55128d78cb13c.jpg',
       price: '12300',
     },
     {
@@ -31,7 +31,7 @@ export class ProductsComponent {
       description:
         'A classic wooden storage unit that offers ample space to store your  sofa that enhances any living room  sofa that enhances any living room ',
       thumbnail:
-        'https://img.freepik.com/free-psd/rustic-wooden-chest-drawers-threedrawer-wooden-storage-unit_191095-86149.jpg?uid=R194767243&ga=GA1.1.1957810835.1742649565&semt=ais_hybrid&w=740',
+        'https://i.pinimg.com/736x/a2/f6/e6/a2f6e6046ab723e7061dc0d3fdd9f059.jpg',
       price: '10300',
     },
     {
@@ -39,7 +39,7 @@ export class ProductsComponent {
       description:
         'A sleek, modern storage shelf that combines style with functionality.',
       thumbnail:
-        'https://img.freepik.com/free-vector/white-supermarket-shelves_134830-694.jpg?ga=GA1.1.1738893645.1745595705&semt=ais_hybrid&w=740',
+        'https://i.pinimg.com/736x/c7/bd/05/c7bd055105d2eba84e81b90038f5f8b9.jpg',
       price: '2300',
     },
   ];
