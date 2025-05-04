@@ -79,6 +79,7 @@
   --primary-btn-color: hsl(180, 79%, 20%);
   --secondary-btn-color: #dc9c13;
   --primary-btn-hover: #074444;
+  --secondary-btn-hover: #a7760c;
   /* background */
   --background-color-primary: #ffffff;
   --background-color-secondary: #f5f5f5;
@@ -97,9 +98,7 @@
 }
 
 .main-btn:hover {
-  background-color: var(--background-color-primary);
-  color: var(--primary-txt-color);
-  outline: 1px solid var(--primary-txt-color);
+  background-color: var(--primary-btn-hover);
 }
 /* Secondary btn */
 .sec-btn {
@@ -107,9 +106,7 @@
   color: #ffff;
 }
 .sec-btn:hover {
-  background-color: var(--background-color-primary);
-  color: var(--primary-txt-color);
-  border: 1px solid var(--primary-txt-color);
+  background-color: var(--secondary-btn-hover);
 }
 /* custom links Styel */
 
@@ -128,7 +125,6 @@
   color: #007870;
 }
 /* primary text color */
-.primary-text-color{
-  color:var(--primary-txt-color)
-
+.primary-text-color {
+  color: var(--primary-txt-color);
 }
