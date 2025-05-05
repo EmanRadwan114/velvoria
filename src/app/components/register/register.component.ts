@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { TogglePasswordDirective } from '../../../directives/toggle-password.directive';
-import axios from 'axios';
+import { HttpClient } from '@angular/common/http';
 import {
   FormControl,
   FormGroup,
@@ -25,7 +25,7 @@ export class RegisterComponent {
   signUp = false;
   showAlert = false;
   message = '';
-  constructor(public router: Router) {}
+  constructor(public router: Router, private http: HttpClient) {}
   userData = new FormGroup({
     name: new FormControl(null, [Validators.required, Validators.minLength(3)]),
     email: new FormControl(null, [
@@ -60,7 +60,8 @@ export class RegisterComponent {
   }
   addUser() {
     if (!this.userData.valid || !this.passwordsMatch) {
-      alert('You must fill registration form');
+      this.message = 'you must fill registration form';
+      this.clickA();
     } else {
       const fullUrl = this.router.url;
       console.log(fullUrl); //user or admin
@@ -70,18 +71,17 @@ export class RegisterComponent {
         password: this.userData.controls.password.value,
         role: fullUrl.includes('user') ? 'user' : 'admin',
       };
-      axios
-        .post('http://127.0.0.1:7500/auth/register', user)
-        .then((res) => {
-          if (res.data) {
+      this.http.post('http://127.0.0.1:7500/auth/register', user).subscribe({
+        next: (res) => {
+          if (res) {
             this.signUp = true;
           }
-        })
-        .catch((err) => {
-          this.message = err.response.data.message;
+        },
+        error: (err) => {
+          this.message = err.error.message;
           this.clickA();
-          // console.log();
-        });
+        },
+      });
     }
   }
   clickA() {
