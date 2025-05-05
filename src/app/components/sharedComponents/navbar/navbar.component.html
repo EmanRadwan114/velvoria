@@ -23,6 +23,7 @@
           Furniture <i class="fas fa-chevron-down ml-1 text-xs"></i>
         </a>
         <!-- Dropdown content -->
+
         <div class="absolute left-0 top-full z-50 hidden group-hover:block bg-white w-64 p-4 shadow-md rounded-md">
           <div class="grid grid-cols-2 gap-3 text-sm text-gray-700">
 
@@ -33,14 +34,14 @@
               >Sofas</a
             >
 
+
             <a
               routerLink="/furnitures/storage-units"
               class="hover:hover:text-teal-700"
-
               >Storage Units</a
             >
-            <a routerLink="/furnitures/desks" class="hover:hover:text-teal-700"
-              >Desks</a
+            <a routerLink="/furnitures/beds" class="hover:hover:text-teal-700"
+              >Beds</a
             >
 
             <a
@@ -65,18 +66,18 @@
             <a routerLink="/furnitures/decors" class="hover:text-teal-700"
               >Decors</a
             >
-            <a
-              routerLink="/furnitures/lighting"
+            <a        routerLink="/furnitures/lighting"
               class="hover:hover:text-teal-700"
             >Lighting</a>
           </div>
         </div>
       </div>
 
+
       <li>
         <a
           routerLink="/about"
-          class="hover:hover:text-teal-700 font-medium"
+          class="hover:text-teal-700 font-medium"
         >About</a>
       </li>
       <li>
@@ -165,7 +166,7 @@
     </div>
     <ul
       *ngIf="menuOpen"
-      class="md:hidden absolute top-10 left-0 mt-4 w-full bg-white shadow-md space-y-2 z-50 p-4"
+      class="md:hidden absolute top-10 left-0 mt-4 w-full bg-base-100 shadow-md space-y-2 z-50 p-4"
     >
       <li>
         <a
@@ -174,11 +175,7 @@
         >Home</a>
       </li>
       <li>
-
-        <a routerLink="/categories" class="block px-4 py-2 hover:text-teal-700"
-          >Furniture</a
-        >
-
+        <a routerLink="/categories" class="block px-4 py-2 hover:text-teal-700" >Furniture</a>        
       </li>
       <li>
         <a
