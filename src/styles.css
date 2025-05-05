@@ -125,6 +125,22 @@
   color: #007870;
 }
 /* primary text color */
-.primary-text-color {
-  color: var(--primary-txt-color);
+.primary-text-color{
+  color:var(--primary-txt-color)
+
 }
+
+/* primary bg color */
+.primary-color-bg {
+  background-color: var(--primary-color);
+}
+
+.light-text-color{
+  color: var(--background-color-primary);
+  
+}
+/* yellow */
+.tex-scondery-color{
+  background-color:var(--secondary-color)
+}
+

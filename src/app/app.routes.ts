@@ -3,15 +3,38 @@ import { HomeComponent } from './components/home/home.component';
 import { ProductsComponent } from './components/products/products.component';
 import { CartComponent } from './components/cart/cart.component';
 import { SearchComponent } from './components/search/search.component';
+import { RegisterComponent } from './components/register/register.component';
+import { LoginComponent } from './components/login/login.component';
 import { CategoriesComponent } from './components/categories/categories.component';
+
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent, title: 'Home' },
   { path: 'categories', component: CategoriesComponent, title: 'Categories' },
-  { path: 'furnitures', component: ProductsComponent, title: 'Products' },
+  { path: 'products', component: ProductsComponent, title: 'Products' },
   { path: 'cart', component: CartComponent, title: 'Cart' },
   { path: 'search', component: SearchComponent, title: 'Search Results' },
+  {
+    path: 'register/user',
+    component: RegisterComponent,
+    title: 'Registration',
+  },
+  {
+    path: 'register/admin',
+    component: RegisterComponent,
+    title: 'Registration',
+  },
+  {
+    path: 'login/user',
+    component: LoginComponent,
+    title: 'Login',
+  },
+  {
+    path: 'login/admin',
+    component: LoginComponent,
+    title: 'Login',
+  },
   {
     path: 'wishlist',
     loadComponent: () =>

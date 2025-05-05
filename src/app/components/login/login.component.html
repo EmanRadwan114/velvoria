@@ -1,0 +1,104 @@
+<div
+  id="parent"
+  class="w-full flex justify-center items-center"
+>
+  <div
+    role="alert"
+    class="alert alert-error fixed right-0 top-1 w-3/12"
+    *ngIf="showAlert"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-6 w-6 shrink-0 stroke-current"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <path
+        stroked-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+      />
+    </svg>
+    <!-- <i class="fa-regular fa-circle-xmark h-6 w-6"></i> -->
+    <span>{{message|titlecase}}</span>
+  </div>
+  <div class="w-full md:w-10/12 lg:w-8/12 flex bg-gray-100/90 rounded-2xl p-1 pl-2 items-center">
+    <form
+      [formGroup]="userData"
+      class="flex flex-col p-3 flex-1/2"
+    >
+      <div>
+        <h1 class="aboreto-regular text-3xl font-bold mt-5 mb-3">VELVORIA</h1>
+      </div>
+      <p class="italic text-sm mb-4 ml-2">Welcome back! Log in to continue enjoying the timeless comfort of Velvoria.
+      </p>
+      <div class="ml-3">
+        <div class="mt-4">
+          <input
+            class="input validator w-11/12 rounded-3xl p-5"
+            type="email"
+            required
+            placeholder="Email"
+            formControlName="email"
+            [ngClass]="{
+              'border-green-500 focus:outline-green-500': validEmail.valid && validEmail.touched,
+              'border-red-500 focus:outline-red-500': !validEmail.valid && validEmail.touched
+            }"
+          />
+          @if(!validEmail.valid && validEmail.touched){
+          <div class="text-red-600 ml-3 text-sm">Ex: xxx&commat;gmail.com</div>
+          }
+        </div>
+
+        <div class="mt-4">
+          <div class="relative w-full">
+            <input
+              class="input w-11/12 rounded-3xl p-5 "
+              type="password"
+              placeholder="Password"
+              formControlName="password"
+              #passwordInput
+              [ngClass]="{
+                'border-green-500 focus:outline-green-500': validPassword.valid && validPassword.touched,
+                'border-red-500 focus:outline-red-500': !validPassword.valid && validPassword.touched
+              }"
+            />
+            <div
+              class="absolute inset-y-0 right-4 sm:right-9 md:right-10 lg:right-7 xl:right-12 flex items-center px-2 z-10"
+            >
+              <i
+                class="fa fa-eye"
+                [appTogglePassword]="passwordInput"
+              ></i>
+            </div>
+          </div>
+          @if(!validPassword.valid && validPassword.touched){
+          <div class="text-red-600 ml-3 text-sm">Password must be at least 8 characters and include:<br>
+            • one uppercase letter and one lowercase letter<br>
+            • one number<br>
+            • one special character (&commat;, _, $, or -)<br></div>
+          }
+        </div>
+        <div class="mt-7 ml-2">
+          <button
+            class="main-btn p-2 rounded-xl w-6/12"
+            (click)="addUser()"
+          >Sign in</button>
+        </div>
+        <a
+          [routerLink]="router.url.includes('user')?'/register/user':'/register/admin'"
+          class="text-teal-700 underline ml-4 mt-2 cursor-pointer block"
+        >
+          New user? Sign up.</a>
+      </div>
+    </form>
+    <img
+      src="https://img.freepik.com/premium-vector/illustration-furniture-interior-design-concept-with-plants-flowers-wall-paintings_299750-9.jpg?w=826"
+      alt=""
+      height="400"
+      width="400"
+      class="flex-1/2 rounded-lg"
+    >
+  </div>
+</div>

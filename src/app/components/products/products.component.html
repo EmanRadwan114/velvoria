@@ -1,1 +1,10 @@
-<p>products works!</p>
+<section class="flex flex-wrap justify-center gap-8  p-6">
+  <app-product-card
+    *ngFor="let product of products"
+    [title]="product.title"
+    [description]="product.description"
+    [thumbnail]="product.thumbnail"
+    [price]="product.price"
+
+  ></app-product-card>
+</section>
