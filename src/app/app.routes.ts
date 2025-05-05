@@ -26,7 +26,7 @@ export const routes: Routes = [
       import('./components/profile/profile.component').then(
         (c) => c.ProfileComponent
       ),
-    title: 'Wishlist',
+    title: 'Profile',
   },
   {
     path: 'about',
