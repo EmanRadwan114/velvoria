@@ -1,47 +1,53 @@
 <nav class="navbar bg-base-100 shadow-sm">
+
   <div class="container mx-auto flex justify-between items-center w-full">
     <div>
       <!-- LOGO -->
-      <a routerLink="/home" class="aboreto-regular text-2xl font-bold"
-        >VELVORIA</a
-      >
+      <a
+        routerLink="/home"
+        class="aboreto-regular text-2xl font-bold"
+      >VELVORIA</a>
     </div>
 
     <!-- Center: Navigation -->
 
     <ul class="nav-menu-custom md:flex items-center gap-x-2 lg:gap-x-8">
       <li>
+
         <a routerLink="/home" class="hover:text-teal-700 font-medium">Home</a>
       </li>
 
       <!-- Dropdown Furniture -->
       <div class="relative group inline-block">
-        <a
-          class="cursor-pointer text-base font-medium px-4 py-2 hover:text-teal-700"
-        >
+        <a class="cursor-pointer text-base font-medium px-4 py-2 hover:text-teal-700">
           Furniture <i class="fas fa-chevron-down ml-1 text-xs"></i>
         </a>
         <!-- Dropdown content -->
-        <div
-          class="absolute left-0 top-full z-50 hidden group-hover:block bg-base-100 w-64 p-4 shadow-md rounded-md"
-        >
+
+        <div class="absolute left-0 top-full z-50 hidden group-hover:block bg-white w-64 p-4 shadow-md rounded-md">
           <div class="grid grid-cols-2 gap-3 text-sm text-gray-700">
-            <a routerLink="/furnitures" class="hover:text-teal-700"
+
+            <a routerLink="/categories" class="hover:text-teal-700"
               >All Furnitures</a
             >
             <a routerLink="/furnitures/sofas" class="hover:hover:text-teal-700"
               >Sofas</a
             >
-            <a             routerLink="/furnitures/storage-units"
+
+
+            <a
+              routerLink="/furnitures/storage-units"
               class="hover:hover:text-teal-700"
               >Storage Units</a
             >
             <a routerLink="/furnitures/beds" class="hover:hover:text-teal-700"
               >Beds</a
             >
+
             <a
               routerLink="/furnitures/dining-tables"
               class="hover:hover:text-teal-700"
+
               >Dining Tables</a
             >
             <a routerLink="/furnitures/office-Desks" class="hover:text-teal-700"
@@ -50,9 +56,11 @@
             <a routerLink="/furnitures/chairs" class="hover:text-teal-700"
               >Chairs</a
             >
+
             <a
               routerLink="/furnitures/outdoor-sets"
               class="hover:hover:text-teal-700"
+
               >Outdoor Sets</a
             >
             <a routerLink="/furnitures/decors" class="hover:text-teal-700"
@@ -60,28 +68,29 @@
             >
             <a        routerLink="/furnitures/lighting"
               class="hover:hover:text-teal-700"
-              >Lighting</a
-            >
+            >Lighting</a>
           </div>
         </div>
       </div>
 
-      <li>  <a routerLink="/about" class="hover:hover:text-teal-700 font-medium"
-          >About</a
-        >
+
+      <li>
+        <a
+          routerLink="/about"
+          class="hover:text-teal-700 font-medium"
+        >About</a>
       </li>
       <li>
-        <a routerLink="/contact-us" class="hover:text-teal-700 font-medium"
-          >Contact</a
-        >
+        <a
+          routerLink="/contact-us"
+          class="hover:text-teal-700 font-medium"
+        >Contact</a>
       </li>
       <!-- Search -->
       <li class="hidden md:block">
         <form class="w-full md:w-40 lg:w-64">
           <div class="relative">
-            <div
-              class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
-            >
+            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
               <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
             </div>
             <input
@@ -102,7 +111,7 @@
     <div class="flex items-center space-x-4">
       <!-- Login Icon -->
       <a
-        routerLink="/login"
+        routerLink="/login/user"
         class="hover:text-teal-700 flex items-center gap-1"
       >
         <i class="fas fa-user"></i>
@@ -110,24 +119,26 @@
       </a>
 
       <!-- Favorite Icon -->
-      <a routerLink="/favorites" class="hover:text-teal-700">
+      <a
+        routerLink="/favorites"
+        class="hover:text-teal-700"
+      >
         <i class="fas fa-heart"></i>
       </a>
 
       <!-- Cart Icon with Badge -->
       <div class="dropdown dropdown-end">
-        <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
+        <div
+          tabindex="0"
+          role="button"
+          class="btn btn-ghost btn-circle"
+        >
           <div class="indicator">
             <i class="fas fa-shopping-cart text-lg"></i>
-            <span
-              class="badge badge-sm indicator-item bg-teal-700 text-gray-100"
-              >8</span
-            >
+            <span class="badge badge-sm indicator-item bg-teal-700 text-gray-100">8</span>
           </div>
         </div>
-        <div
-          class="card card-compact dropdown-content bg-base-100 z-10 mt-3 w-52 shadow"
-        >
+        <div class="card card-compact dropdown-content bg-base-100 z-10 mt-3 w-52 shadow">
           <div class="card-body">
             <span class="text-lg font-bold">8 Items</span>
             <span class="text-info">Subtotal: $999</span>
@@ -147,7 +158,10 @@
         (click)="menuOpen = !menuOpen"
         aria-label="Toggle menu"
       >
-        <i class="fas" [ngClass]="menuOpen ? 'fa-times' : 'fa-bars'"></i>
+        <i
+          class="fas"
+          [ngClass]="menuOpen ? 'fa-times' : 'fa-bars'"
+        ></i>
       </button>
     </div>
     <ul
@@ -155,21 +169,22 @@
       class="md:hidden absolute top-10 left-0 mt-4 w-full bg-base-100 shadow-md space-y-2 z-50 p-4"
     >
       <li>
-        <a routerLink="/home" class="block px-4 py-2 hover:text-teal-700"
-          >Home</a
-        >
+        <a
+          routerLink="/home"
+          class="block px-4 py-2 hover:text-teal-700"
+        >Home</a>
       </li>
       <li>
-        <a routerLink="/furnitures" class="block px-4 py-2 hover:text-teal-700"
-          >Furniture</a
-        >
+        <a routerLink="/categories" class="block px-4 py-2 hover:text-teal-700" >Furniture</a>        
       </li>
       <li>
-        <a routerLink="/about" class="block px-4 py-2 hover:text-teal-700"
-          >About</a
-        >
+        <a
+          routerLink="/about"
+          class="block px-4 py-2 hover:text-teal-700"
+        >About</a>
       </li>
       <li>
+
         <a routerLink="/contact-us" class="block px-4 py-2 hover:text-teal-700"
           >Contact</a
         >
@@ -180,6 +195,7 @@
           <div
             class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
           >
+
             <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
           </div>
           <input
