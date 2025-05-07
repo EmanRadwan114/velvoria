@@ -1,4 +1,15 @@
 <section class="flex flex-wrap justify-center gap-8  p-6">
+  <div class="relative h-30 w-full bg-cover bg-center  bg-amber-200" >
+  <div class="absolute inset-0  flex flex-col justify-center items-center text-gray-900 text-center">
+    <h1 class="text-4xl font-bold">All Furnitures</h1>
+    <p class="text-sm mt-2">
+      <a href="/" class="hover:underline ">Home</a>
+      <span class="mx-2">&gt;</span>
+      Shop
+    </p>
+  </div>
+</div>
+
   <app-product-card
     *ngFor="let product of products"
     [title]="product.title"

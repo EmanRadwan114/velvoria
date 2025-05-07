@@ -1,32 +1,32 @@
-<div class="primary-color-bg">
+<div class="">
     <div class="flex flex-col items-center mx-auto pt-14">
-        <h2 class="header-txt font-semibold text-center mb-3 light-text-color">
+        <h2 class="header-txt font-semibold text-center mb-3 text-teal-700" >
             Good Vibes
         </h2>
 
         <section
-            class="overflow-visible m-6 grid md:grid-cols-3 md:grid-rows-2 gap-3 md:h-[90vh] md:w-[140vh] relative">
+            class="overflow-visible m-6 grid md:grid-cols-3 md:grid-rows-2 gap-6 md:h-[90vh] md:w-[90vw] relative">
 
             <!-- ✅ First Image -->
-            <div class="relative md:col-span-2 md:row-span-2 overflow-visible rounded-2xl cursor-pointer"
+            <div class="relative md:col-span-2 md:row-span-2 overflow-visible rounded-2xl cursor-pointer "
                 (mouseenter)="showCard1 = true" (mouseleave)="showCard1 = false">
                 <!-- Ping dot -->
                 <span class="absolute left-52 bottom-1/3 -translate-y-1/2 flex size-6 z-10">
-                    <span class="absolute h-full w-full animate-ping rounded-full primary-color-bg opacity-65"></span>
-                    <span class="relative inline-flex size-6 rounded-full primary-color-bg"></span>
+                    <span class="absolute h-full w-full animate-ping rounded-full  bg-gray-100  opacity-65"></span>
+                    <span class="relative inline-flex size-6 rounded-full  bg-gray-100 "></span>
                 </span>
 
                 <!-- Hover Card on dot -->
                 <div *ngIf="showCard1"
                     class="flex flex-col gap-2 items-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px]  bg-white bg-opacity-90 p-4 rounded-2xl shadow-xl z-20">
-                    <img src="images/art.jpg" class="rounded-xl mb-2 w-[200px] h-[150px] object-cover" alt="">
+                    <img src="https://img.freepik.com/free-photo/chic-modern-luxury-aesthetics-style-living-room-blue-tone_53876-125839.jpg?t=st=1746613249~exp=1746616849~hmac=5bad8b598ebbe6802b5b38049dda00cd9c0f8341f88cce3627aaf4637f631871&w=996" class="rounded-xl mb-2 w-[200px] h-[150px] object-cover" alt="">
 
                     <p class="text-gray-600 text-sm">Before: <s>$200</s><br>Now: <span
                             class="text-green-600 font-bold">$150</span></p>
                     <button class="main-btn p-1 rounded-sm text-sm">See More</button>
                 </div>
 
-                <img src="images/room.jpg" class="w-full h-full object-cover object-center rounded-2xl" alt="">
+                <img src="https://img.freepik.com/free-photo/chic-modern-luxury-aesthetics-style-living-room-blue-tone_53876-125839.jpg?t=st=1746613249~exp=1746616849~hmac=5bad8b598ebbe6802b5b38049dda00cd9c0f8341f88cce3627aaf4637f631871&w=996" class="w-full h-full object-cover object-center rounded-lg" alt="">
             </div>
 
             <!-- ✅ Second Image -->
@@ -34,21 +34,21 @@
                 (mouseleave)="showCard2 = false">
                 <!-- Ping dot -->
                 <span class="absolute left-1/2 top-1/2 -translate-y-1/2 flex size-6 z-10">
-                    <span class="absolute h-full w-full animate-ping rounded-full primary-color-bg opacity-65"></span>
-                    <span class="relative inline-flex size-6 rounded-full primary-color-bg"></span>
+                    <span class="absolute h-full w-full animate-ping rounded-full  bg-gray-100  opacity-65"></span>
+                    <span class="relative inline-flex size-6 rounded-full  bg-gray-100 "></span>
                 </span>
 
                 <!-- Hover Card on dot -->
                 <div *ngIf="showCard2"
                     class="flex flex-col gap-2 items-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px]  bg-white bg-opacity-90 p-4 rounded-2xl shadow-xl z-20">
-                    <img src="images/room.jpg" class="rounded-xl mb-2 w-[200px] h-[150px] object-cover" alt="">
+                    <img src="images/lighting-room.jpg" class="rounded-xl mb-2 w-[200px] h-[150px] object-cover" alt="">
 
                     <p class="text-gray-600 text-sm">Before: <s>$200</s><br>Now: <span
                             class="text-green-600 font-bold">$150</span></p>
                     <button class="main-btn p-1 rounded-sm text-sm">See More</button>
                 </div>
 
-                <img src="images/lighting-room.jpg" class="w-full h-full object-cover object-center rounded-2xl" alt="">
+                <img src="images/lighting-room.jpg" class="w-full h-full object-cover object-center rounded-lg" alt="">
             </div>
 
             <!-- ✅ Third Image -->
@@ -56,8 +56,8 @@
                 (mouseleave)="showCard3 = false">
                 <!-- Ping dot -->
                 <span class="absolute left-1/2 top-1/2 -translate-y-1/2 flex size-6 z-10">
-                    <span class="absolute h-full w-full animate-ping rounded-full primary-color-bg opacity-65"></span>
-                    <span class="relative inline-flex size-6 rounded-full primary-color-bg"></span>
+                    <span class="absolute h-full w-full animate-ping rounded-full bg-gray-100 opacity-65"></span>
+                    <span class="relative inline-flex size-6 rounded-full  bg-gray-100 "></span>
                 </span>
 
                 <!-- Hover Card on dot -->
@@ -70,7 +70,7 @@
                     <button class="main-btn p-1 rounded-sm text-sm">See More</button>
                 </div>
 
-                <img src="images/art.jpg" class="w-full h-full object-cover object-center rounded-2xl" alt="">
+                <img src="images/art.jpg" class="w-full h-full object-cover object-center rounded-lg" alt="">
             </div>
 
         </section>

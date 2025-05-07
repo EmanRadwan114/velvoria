@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-products',
   imports: [ProductCardComponent, CommonModule],
   templateUrl: './products.component.html',
-  styles: ``,
+  styleUrl: './products.css',
 })
 export class ProductsComponent {
   products = [
