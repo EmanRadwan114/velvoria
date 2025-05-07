@@ -89,7 +89,7 @@
   background-color: var(--background-color-primary);
 }
 
-/* Buttons Style */
+/*^^^^^^^ Buttons Style ^^^^^^^*/
 /* primary btn */
 .main-btn {
   background-color: var(--primary-btn-color);
@@ -106,10 +106,22 @@
   color: #ffff;
 }
 .sec-btn:hover {
-  background-color: var(--secondary-btn-hover);
+  border: 2px solid var(--primary-txt-color);
+  background-color: transparent;
+  color: var(--primary-txt-color);
 }
-/* custom links Styel */
 
+.black-btn {
+  background-color: var(--primary-txt-color);
+  color: #ffff;
+}
+.black-btn:hover {
+  border: 2px solid var(--primary-color);
+  background-color: transparent;
+  color: var(--primary-color);
+}
+
+/*^^^^^^^ custom links Styel ^^^^^^^*/
 .custom-links {
   text-decoration: none;
   color: var(--primary-txt-color);
@@ -118,37 +130,38 @@
   color: #007870;
   cursor: pointer;
 }
+
+/*^^^^^^^ Icons Style ^^^^^^^*/
 .icons {
   color: var(--primary-txt-color);
 }
 .icons:hover {
   color: #007870;
 }
-/* primary text color gray*/
-.primary-text-color{
-  color:var(--primary-txt-color)
 
+/*^^^^^^^ Text Style ^^^^^^^*/
+/* primary text color */
+.primary-text-color {
+  color: var(--primary-txt-color);
 }
 
+
+
+.light-text-color {
+  color: var(--background-color-primary);
+}
+
+.text-gold-color {
+  color: var(--secondary-color);
+}
+
+/* yellow */
+.tex-scondery-color {
+  background-color: var(--secondary-color);
+}
+
+/*^^^^^^^ Background Style ^^^^^^^*/
 /* primary bg color */
 .primary-color-bg {
   background-color: var(--primary-color);
 }
-
-.light-text-color{
-  color: var(--background-color-primary);
-  
-}
-/* yellow */
-.tex-scondery-color{
-  background-color:var(--secondary-color)
-}
-/* white gary  dark bg */
-.bg-whight-color{
-  background-color:var(--background-color-secondary)
-}
-/* white text white gary bg */
-.txt-gray-color{
-  color:rgb(134, 134, 134)
-}
-
