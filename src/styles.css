@@ -124,7 +124,7 @@
 .icons:hover {
   color: #007870;
 }
-/* primary text color */
+/* primary text color gray*/
 .primary-text-color{
   color:var(--primary-txt-color)
 
@@ -142,5 +142,13 @@
 /* yellow */
 .tex-scondery-color{
   background-color:var(--secondary-color)
+}
+/* white gary  dark bg */
+.bg-whight-color{
+  background-color:var(--background-color-secondary)
+}
+/* white text white gary bg */
+.txt-gray-color{
+  color:rgb(134, 134, 134)
 }
 

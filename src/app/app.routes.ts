@@ -36,7 +36,7 @@ export const routes: Routes = [
     title: 'Login',
   },
   {
-    path: 'wishlist',
+    path: 'favorites',
     loadComponent: () =>
       import('./components/wishlist/wishlist.component').then(
         (c) => c.WishlistComponent
