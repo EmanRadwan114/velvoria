@@ -1,21 +1,41 @@
-<section class="flex flex-wrap justify-center gap-8  p-6">
-  <div class="relative h-30 w-full bg-cover bg-center  bg-amber-200" >
-  <div class="absolute inset-0  flex flex-col justify-center items-center text-gray-900 text-center">
-    <h1 class="text-4xl font-bold">All Furnitures</h1>
-    <p class="text-sm mt-2">
-      <a href="/" class="hover:underline ">Home</a>
-      <span class="mx-2">&gt;</span>
-      Shop
-    </p>
+<section class="p-6">
+  <!-- Hero Section -->
+  <div class="relative h-30 w-full bg-cover bg-center bg-amber-200 mb-5">
+    <div class="absolute inset-0 flex flex-col justify-center items-center text-gray-900 text-center">
+      <h1 class="text-4xl font-bold">All Furnitures</h1>
+      <p class="text-sm mt-2">
+        <a href="/" class="hover:underline">Home</a>
+        <span class="mx-2">&gt;</span>
+        Shop
+      </p>
+    </div>
   </div>
-</div>
 
-  <app-product-card
-    *ngFor="let product of products"
-    [title]="product.title"
-    [description]="product.description"
-    [thumbnail]="product.thumbnail"
-    [price]="product.price"
+  <!-- Content Section -->
+  <div class="flex flex-col md:flex-row gap-6">
+    <!-- Filter Sidebar -->
+    <div class="bg-white p-6 w-full md:w-[20%] rounded-lg shadow">
+      <!-- Add filter controls here -->
+      <h2 class="text-gray-800 text-xl font-semibold mb-4">Filters</h2>
+      <!-- Example filter -->
+      <label class="block text-white mb-2">Category:</label>
+      <select class="w-full p-2 rounded text-gray-700">
+        <option>All</option>
+        <option>Chairs</option>
+        <option>Tables</option>
+        <option>Sofas</option>
+      </select>
+    </div>
 
-  ></app-product-card>
+    <!-- Product Cards -->
+    <div class="bg-white p-2 w-full md:w-[80%] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <app-product-card
+        *ngFor="let product of products"
+        [title]="product.title"
+        [description]="product.description"
+        [thumbnail]="product.thumbnail"
+        [price]="product.price">
+      </app-product-card>
+    </div>
+  </div>
 </section>
