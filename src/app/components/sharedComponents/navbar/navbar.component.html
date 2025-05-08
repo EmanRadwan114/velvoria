@@ -14,7 +14,10 @@
     <ul class="nav-menu-custom md:flex items-center gap-x-2 lg:gap-x-8">
       <li>
 
-        <a routerLink="/home" class="hover:text-teal-700 font-medium">Home</a>
+        <a
+          routerLink="/home"
+          class="hover:text-teal-700 font-medium"
+        >Home</a>
       </li>
 
       <!-- Dropdown Furniture -->
@@ -35,6 +38,7 @@
             >
 
 
+
             <a
               routerLink="/furnitures/storage units"
               class="hover:hover:text-teal-700"
@@ -44,10 +48,10 @@
               >Beds</a
             >
 
+
             <a
               routerLink="/furnitures/dining tables"
               class="hover:hover:text-teal-700"
-
               >Dining Tables</a
             >
             <a routerLink="/furnitures/office desks" class="hover:text-teal-700"
@@ -67,6 +71,7 @@
               >Decors</a
             >
             <a        routerLink="/furnitures/lighting"
+
               class="hover:hover:text-teal-700"
             >Lighting</a>
           </div>
@@ -88,7 +93,11 @@
       </li>
       <!-- Search -->
       <li class="hidden md:block">
-        <form class="w-full md:w-40 lg:w-64">
+        <form
+          class="w-full md:w-40 lg:w-64"
+          (ngSubmit)="search()"
+          #searchForm="ngForm"
+        >
           <div class="relative">
             <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
               <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
@@ -96,6 +105,8 @@
             <input
               id="search-desktop"
               type="search"
+              name="query"
+              [(ngModel)]="searchQuery"
               placeholder="Search..."
               class="w-full rounded-lg border border-gray-300 bg-gray-50 p-2 pl-10 text-sm text-gray-900"
             />
@@ -233,6 +244,7 @@
       </li>
       <li>
         <a routerLink="/categories" class="block px-4 py-2 hover:text-teal-700" >Furniture</a>        
+
       </li>
       <li>
         <a
@@ -242,16 +254,15 @@
       </li>
       <li>
 
-        <a routerLink="/contact-us" class="block px-4 py-2 hover:text-teal-700"
-          >Contact</a
-        >
+        <a
+          routerLink="/contact-us"
+          class="block px-4 py-2 hover:text-teal-700"
+        >Contact</a>
       </li>
 
       <li>
         <div class="relative">
-          <div
-            class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
-          >
+          <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
 
             <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
           </div>
