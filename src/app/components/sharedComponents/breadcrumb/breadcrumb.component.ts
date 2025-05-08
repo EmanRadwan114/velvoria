@@ -8,35 +8,30 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './breadcrumb.component.html',
-  styleUrls: ['./breadcrumb.component.css'],
+  // styleUrls: ['./breadcrumb.component.css'],
 })
-export class BreadcrumbComponent implements OnInit {
+export class BreadcrumbComponent  {
   breadcrumb: string[] = [];
 
-  constructor(private router: Router, private route: ActivatedRoute, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private router: Router,
 
-  ngOnInit(): void {
+  ) {
     // Only continue with events where the navigation has successfully ended.
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
-        this.buildBreadcrumb();
-        // Force change detection to update the view
-        this.cdr.detectChanges();
+        const path = this.router.url;
+        const segments = path.split('/').filter((segment) => segment);
+
+        if (segments.length === 0) {
+          this.breadcrumb = ['Home']; // If no segments, default to 'Home'
+        } else {
+          this.breadcrumb = ['Home', ...segments.map(this.formatSegments)];
+        }
+
+        console.log('Breadcrumb:', this.breadcrumb); // Debugging breadcrumb
       });
-  }
-
-  buildBreadcrumb() {
-    const path = this.router.url;
-    const segments = path.split('/').filter((segment) => segment);
-
-    if (segments.length === 0) {
-      this.breadcrumb = ['Home']; // If no segments, default to 'Home'
-    } else {
-      this.breadcrumb = ['Home', ...segments.map(this.formatSegments)];
-    }
-
-    console.log('Breadcrumb:', this.breadcrumb); // Debugging breadcrumb
   }
 
   formatSegments(segment: string): string {
