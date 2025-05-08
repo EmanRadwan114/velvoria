@@ -1,7 +1,8 @@
-<div class="group product-card bg-white shadow-md rounded-lg overflow-hidden w-70 max-w-sm h-[400px] relative">
+<div
+  class="group product-card bg-white shadow-md rounded-lg overflow-hidden w-70 max-w-sm h-[400px] relative"
+>
   <!-- Image -->
   <a [routerLink]="['/furnitures', product._id]">
-
     <img
       [src]="product.thumbnail"
       [alt]="product.title"
@@ -33,7 +34,9 @@
         {{ product.title }}
       </h2>
     </div>
-    <h3 class="text-lg font-semibold text-gray-800 h-[10%]">{{ product.price }} EGP</h3>
+    <h3 class="text-lg font-semibold text-gray-800 h-[10%]">
+      {{ product.price }} EGP
+    </h3>
   </div>
 
   <!-- Animated Tags -->

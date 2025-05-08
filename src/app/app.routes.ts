@@ -5,20 +5,21 @@ import { CartComponent } from './components/cart/cart.component';
 import { SearchComponent } from './components/search/search.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
-import { CategoriesComponent } from './components/categories/categories.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
-
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent, title: 'Home' },
-  // { path: 'furnitures', component: CategoriesComponent, title: 'Categories' },
   { path: 'furnitures', component: ProductsComponent, title: 'Products' },
   {
-  path: 'furnitures/:category',
-  component: ProductsComponent
-},
-  { path: 'furnitures/:id', component: ProductDetailsComponent, title: 'Product Details' },
+    path: 'furnitures/category/:category',
+    component: ProductsComponent,
+  },
+  {
+    path: 'furnitures/:id',
+    component: ProductDetailsComponent,
+    title: 'Product Details',
+  },
   { path: 'cart', component: CartComponent, title: 'Cart' },
   { path: 'search', component: SearchComponent, title: 'Search Results' },
   {
