@@ -1,0 +1,99 @@
+<div
+  class="mx-8 lg:mx-12 xl:mx-24 my-32 flex flex-col items-center justify-center gap-3"
+>
+  <!-- Heading -->
+  <h1 class="text-gray-800 text-3xl lg:text-5xl font-semibold">Our Products</h1>
+
+  <!-- Nav & Tabs -->
+  <div class="w-full flex flex-col items-center justify-center">
+    <!-- Dropdown for sm/md screens -->
+    <div class="relative w-full md:hidden mb-4">
+      <select
+        class="appearance-none bg-gray-100 text-gray-600 text-sm font-bold w-full py-3 pl-4 pr-10 rounded-md focus:outline-none"
+        [(ngModel)]="activeTab"
+        (change)="onTabChange(activeTab)"
+      >
+        <option *ngFor="let tab of tabs" [value]="tab.key">
+          {{ tab.label }}
+        </option>
+      </select>
+
+      <!-- Custom arrow -->
+      <div
+        class="pointer-events-none absolute inset-y-0 right-3 flex items-center"
+      >
+        <svg
+          class="w-4 h-4 text-gray-600"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 9l-7 7-7-7"
+          />
+        </svg>
+      </div>
+    </div>
+
+    <!-- Tabs for lg+ screens -->
+    <div class="hidden md:flex flex-wrap gap-6 justify-center py-4 md:py-8">
+      <button
+        *ngFor="let tab of tabs"
+        type="button"
+        class="bg-white font-semibold p-1 cursor-pointer"
+        [ngClass]="
+          activeTab === tab.key
+            ? ' border-b-2 border-black text-black'
+            : 'text-gray-500'
+        "
+        (click)="onTabChange(tab.key)"
+      >
+        {{ tab.label }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Products Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+    <div class="grid grid-cols-2 gap-4 md:gap-6 order-2 md:order-1">
+      <app-product-card
+        *ngFor="let product of products.slice(0, 4)"
+        [title]="product.title"
+        [description]="product.description"
+        [thumbnail]="product.thumbnail"
+        [price]="product.price"
+      ></app-product-card>
+    </div>
+    <div class="order-1 md:order-2">
+      <app-product-card
+        [title]="products[4].title"
+        [description]="products[4].description"
+        [thumbnail]="products[4].thumbnail"
+        [price]="products[4].price"
+      ></app-product-card>
+    </div>
+    <div class="grid grid-cols-2 gap-4 md:gap-6 order-3">
+      <app-product-card
+        *ngFor="let product of products.slice(5, 9)"
+        [title]="product.title"
+        [description]="product.description"
+        [thumbnail]="product.thumbnail"
+        [price]="product.price"
+      ></app-product-card>
+    </div>
+  </div>
+
+  <!-- View All Button -->
+  <div class="flex items-center justify-center py-4 md:py-12 my-4">
+    <button
+      class="border-teal-700 text-teal-700 prim-btn-outline hover:text-white"
+      (click)="viewAllBtn()"
+    >
+      View All
+    </button>
+  </div>
+</div>
