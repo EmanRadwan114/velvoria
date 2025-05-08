@@ -5,9 +5,7 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
-
-  imports: [RouterLink, RouterLinkActive, CommonModule],
-
+  imports: [RouterLink, RouterLinkActive, CommonModule, FormsModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
 })
@@ -22,10 +20,9 @@ export class NavbarComponent {
         queryParams: { q: this.searchQuery },
       });
     }
-
+  }
 
   signOut() {
     localStorage.removeItem('user');
-
   }
 }
