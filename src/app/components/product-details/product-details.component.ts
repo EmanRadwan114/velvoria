@@ -3,10 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../../../services/products.service';
 import { CommonModule } from '@angular/common';
 import { CategoriesService } from '../../../services/categories.service';
+import { ReviewsComponent } from '../reviews/reviews.component';
 
 @Component({
   selector: 'app-product-details',
-  imports: [CommonModule],
+  imports: [CommonModule, ReviewsComponent],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.css',
 })

@@ -1,92 +1,104 @@
-<div class="flex justify-center items-start gap-6 my-6">
-  <!-- Right Side: Images -->
-  <div class="w-[40%] p-4 rounded">
-    <!-- main image -->
-    <img
-      [src]="mainImage"
-      [alt]="detailsProduct.title"
-      class="w-full h-125 object-cover rounded"
-    />
-    <!-- other images -->
-    <div class="flex justify-center items-center gap-4 mt-4">
+<section>
+  <!-- * product details section -->
+  <section class="flex justify-center items-start gap-6 my-6">
+    <!-- Right Side: Images -->
+    <div class="w-[40%] p-4 rounded">
+      <!-- main image -->
       <img
-        [src]="detailsProduct.thumbnail"
+        [src]="mainImage"
         [alt]="detailsProduct.title"
-        (click)="mainImage = detailsProduct.thumbnail"
-        class="h-30 w-30 object-cover rounded cursor-pointer hover:scale-105 transition-transform duration-200 border-2"
-        [class.border-teal-600]="mainImage === detailsProduct.thumbnail"
-        [class.border-transparent]="mainImage !== detailsProduct.thumbnail"
+        class="w-full h-125 object-cover rounded"
       />
-      <img
-        *ngFor="let img of detailsProduct.images"
-        [src]="img"
-        [alt]="detailsProduct.title"
-        (click)="mainImage = img"
-        class="h-30 w-30 object-cover rounded cursor-pointer hover:scale-105 transition-transform duration-200 border-2"
-        [class.border-teal-600]="mainImage === img"
-        [class.border-transparent]="mainImage !== img"
-      />
-    </div>
-  </div>
-  <!-- Right Side: Details -->
-<!-- Title & Price -->
-  <div class="w-[50%] p-6 rounded space-y-4 h-100 my-6">
-    <h2 class="text-3xl font-semibold text-teal-700  hover:text-teal-600">
-      {{ detailsProduct.title }}
-    </h2>
-    <p class="text-2xl font-medium text-gold-color">
-      {{ detailsProduct.price }} EGP
-    </p>
-    <hr class="w-full" />
-
-    <!-- Category & Rating -->
-    <div class="flex justify-between items-center w-full mb-6">
-      <p class="font-medium text-lg text-gray-900">
-        Category: <span class="text-teal-800 font-normal">{{ categoryName }}</span>
-      </p>
-      <div class="flex space-x-1 group">
-        <i class="text-2xl fas fa-star text-yellow-400"></i>
-        <i class="text-2xl fas fa-star text-yellow-400"></i>
-        <i class="text-2xl fas fa-star text-yellow-400"></i>
-        <i class="text-2xl fas fa-star text-yellow-400"></i>
-        <i class="text-2xl fas fa-star text-yellow-400"></i>
-
-        <p class="ml-2 text-lg text-gray-500">
-          {{ detailsProduct.avgRating }}/5 ({{ detailsProduct.numberOfReviews }}
-          reviews)
-        </p>
+      <!-- other images -->
+      <div class="flex justify-center items-center gap-4 mt-4">
+        <img
+          [src]="detailsProduct.thumbnail"
+          [alt]="detailsProduct.title"
+          (click)="mainImage = detailsProduct.thumbnail"
+          class="h-30 w-30 object-cover rounded cursor-pointer hover:scale-105 transition-transform duration-200 border-2"
+          [class.border-teal-600]="mainImage === detailsProduct.thumbnail"
+          [class.border-transparent]="mainImage !== detailsProduct.thumbnail"
+        />
+        <img
+          *ngFor="let img of detailsProduct.images"
+          [src]="img"
+          [alt]="detailsProduct.title"
+          (click)="mainImage = img"
+          class="h-30 w-30 object-cover rounded cursor-pointer hover:scale-105 transition-transform duration-200 border-2"
+          [class.border-teal-600]="mainImage === img"
+          [class.border-transparent]="mainImage !== img"
+        />
       </div>
     </div>
-    <!-- Description -->
-    <p class="text-lg font-normal text-gray-700">{{ detailsProduct.description }}</p>
-   <!-- Color -->
-    <div class="flex items-center gap-2 mt-2">
-      <p class="text-gray-900">Color:</p>
-      <div
-        class="w-6 h-6 rounded-full border border-gray-400"
-        [style.backgroundColor]="detailsProduct.color"
-      ></div>
-      <span class="text-lg text-gray-600">{{ detailsProduct.color }}</span>
+    <!-- Right Side: Details -->
+    <!-- Title & Price -->
+    <div class="w-[50%] p-6 rounded space-y-4 h-100 my-6">
+      <h2 class="text-3xl font-semibold text-teal-700 hover:text-teal-600">
+        {{ detailsProduct.title }}
+      </h2>
+      <p class="text-2xl font-medium text-gold-color">
+        {{ detailsProduct.price }} EGP
+      </p>
+      <hr class="w-full" />
+
+      <!-- Category & Rating -->
+      <div class="flex justify-between items-center w-full mb-6">
+        <p class="font-medium text-lg text-gray-900">
+          Category:
+          <span class="text-teal-800 font-normal">{{ categoryName }}</span>
+        </p>
+        <div class="flex space-x-1 group">
+          <i class="text-2xl fas fa-star text-yellow-400"></i>
+          <i class="text-2xl fas fa-star text-yellow-400"></i>
+          <i class="text-2xl fas fa-star text-yellow-400"></i>
+          <i class="text-2xl fas fa-star text-yellow-400"></i>
+          <i class="text-2xl fas fa-star text-yellow-400"></i>
+
+          <p class="ml-2 text-lg text-gray-500">
+            {{ detailsProduct.avgRating }}/5 ({{
+              detailsProduct.numberOfReviews
+            }}
+            reviews)
+          </p>
+        </div>
+      </div>
+      <!-- Description -->
+      <p class="text-lg font-normal text-gray-700">
+        {{ detailsProduct.description }}
+      </p>
+      <!-- Color -->
+      <div class="flex items-center gap-2 mt-2">
+        <p class="text-gray-900">Color:</p>
+        <div
+          class="w-6 h-6 rounded-full border border-gray-400"
+          [style.backgroundColor]="detailsProduct.color"
+        ></div>
+        <span class="text-lg text-gray-600">{{ detailsProduct.color }}</span>
+      </div>
+      <p class="text-gray-900 text-lg">
+        Material: {{ detailsProduct.material }}
+      </p>
+      <p class="text-gray-900 text-lg">In Stock: {{ detailsProduct.stock }}</p>
+
+      <!-- Add  To Fav -->
+      <div class="flex items-center gap-2 mt-2">
+        <div
+          class="text-gray-900 border hover:border-none bg-gray-50 w-12 h-12 flex items-center justify-center hover:text-white hover:bg-teal-700 rounded"
+        >
+          <i class="fas fa-heart text-xl mb-1"></i>
+        </div>
+        <p class="text-gray-900 text-lg">Add To Favourite</p>
+      </div>
+      <!-- Add To Cart -->
+      <button
+        class="text-xl h-15 btn flex items-center gap-2 w-full black-btn transition duration-200"
+      >
+        <i class="fas fa-shopping-cart"></i>
+        Add To Cart
+      </button>
     </div>
-    <p class="text-gray-900 text-lg"> Material: {{ detailsProduct.material }}</p>
-    <p class="text-gray-900 text-lg">In Stock: {{ detailsProduct.stock }}</p>
- 
+  </section>
 
-    <!-- Add  To Fav -->
-         <div class="flex items-center gap-2 mt-2">
-
-   <div
-  class="text-gray-900 border hover:border-none bg-gray-50 w-12 h-12 flex  items-center justify-center hover:text-white hover:bg-teal-700 rounded"
->
-  <i class="fas fa-heart text-xl mb-1"></i>
-</div>
-  <p class="text-gray-900 text-lg">Add To Favourite</p>
-</div>
-    <!-- Add To Cart -->
-<button class=" text-xl h-15 btn flex items-center gap-2 w-full black-btn transition duration-200">
-  <i class="fas fa-shopping-cart "></i>
-  Add To Cart
-</button>
-
-</div>
- </div>
+  <!-- * reviews section -->
+  <app-reviews></app-reviews>
+</section>
