@@ -6,20 +6,20 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class UsersService {
-  // private apiUrl = 'https://your-api.com/api/users/me'; // Replace with your actual API
+  private apiUrl = 'http://127.0.0.1:7500/users';
 
   constructor(private httpClient: HttpClient) {}
   addUser(user: any) {
     console.log(user);
     return { message: 'Hi' };
   }
-  // getUser(): Observable<any> {
-  //   return this.httpClient.get(`${this.apiUrl}`, { withCredentials: true });
-  // }
+  getUserProfile(): Observable<any> {
+    return this.httpClient.get(`${this.apiUrl}/me`, { withCredentials: true });
+  }
 
-  // updateUser(data: any): Observable<any> {
-  //   return this.httpClient.put(`${this.apiUrl}`, data, {
-  //     withCredentials: true,
-  //   });
-  // }
+  updateUserProfile(data: any): Observable<any> {
+    return this.httpClient.put(`${this.apiUrl}/me`, data, {
+      withCredentials: true,
+    });
+  }
 }
