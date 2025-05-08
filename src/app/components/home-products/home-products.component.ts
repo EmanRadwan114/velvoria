@@ -68,6 +68,14 @@ export class HomeProductsComponent {
       price: '10300',
     },
     {
+      title: 'Classic Wooden Storage Unit',
+      description:
+        'A classic wooden storage unit that offers ample space to store your  sofa that enhances any living room  sofa that enhances any living room ',
+      thumbnail:
+        'https://i.pinimg.com/736x/a2/f6/e6/a2f6e6046ab723e7061dc0d3fdd9f059.jpg',
+      price: '10300',
+    },
+    {
       title: 'Cozy Fabric Sofa',
       description:
         'A soft and cozy fabric sofa perfect for small spaces. It provides a co…',

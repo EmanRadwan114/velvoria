@@ -13,17 +13,21 @@
   <!-- Content -->
   <div class="px-4 py-2 h-[30%] flex flex-col justify-between">
     <div>
-      <div class="flex space-x-1 group">
-        <ng-container *ngFor="let star of [1, 2, 3, 4, 5]; let i = index">
-          <i
-            class="w-4 fa-star cursor-pointer text-gray-300 group-hover:text-yellow-400 hover:text-yellow-400 transition duration-200"
-            [class.fas]="hovered >= i + 1"
-            [class.far]="hovered < i + 1"
-            (mouseenter)="hovered = i + 1"
-            (mouseleave)="hovered = 0"
-          ></i>
-        </ng-container>
-        <p class="ml-2 text-sm text-gray-500">4.2/5 (12000 reviews)</p>
+      <div class="flex flex-col">
+        <div class="flex space-x-1 group">
+          <ng-container *ngFor="let star of [1, 2, 3, 4, 5]; let i = index">
+            <i
+              class="w-4 fa-star cursor-pointer text-gray-300 group-hover:text-yellow-400 hover:text-yellow-400 transition duration-200"
+              [class.fas]="hovered >= i + 1"
+              [class.far]="hovered < i + 1"
+              (mouseenter)="hovered = i + 1"
+              (mouseleave)="hovered = 0"
+            ></i>
+          </ng-container>
+          <p class="ml-2 text-sm text-gray-500">4.2/5</p>
+        </div>
+
+        <p>(12000 reviews)</p>
       </div>
       <h2 class="mt-2 text-lg font-semibold text-gray-900 hover:text-teal-700">
         {{ title }}

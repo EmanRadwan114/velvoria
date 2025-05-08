@@ -1,8 +1,8 @@
 <div
-  class="mx-8 lg:mx-12 xl:mx-24 my-32 flex flex-col items-center justify-center gap-3"
+  class="mx-8 lg:mx-12 xl:mx-24 my-32 flex flex-col items-center justify-center gap-4"
 >
   <!-- Heading -->
-  <h1 class="text-gray-800 text-3xl lg:text-5xl font-semibold">Our Products</h1>
+  <h1 class="text-gray-800 text-3xl lg:text-5xl font-medium">Our Products</h1>
 
   <!-- Nav & Tabs -->
   <div class="w-full flex flex-col items-center justify-center">
@@ -40,7 +40,7 @@
     </div>
 
     <!-- Tabs for lg+ screens -->
-    <div class="hidden md:flex flex-wrap gap-6 justify-center py-4 md:py-8">
+    <div class="hidden md:flex flex-wrap gap-16 justify-center py-4 md:py-8">
       <button
         *ngFor="let tab of tabs"
         type="button"
@@ -58,7 +58,7 @@
   </div>
 
   <!-- Products Grid -->
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
     <div class="grid grid-cols-2 gap-4 md:gap-6 order-2 md:order-1">
       <app-product-card
         *ngFor="let product of products.slice(0, 4)"
@@ -66,6 +66,7 @@
         [description]="product.description"
         [thumbnail]="product.thumbnail"
         [price]="product.price"
+        class="h-[400px]"
       ></app-product-card>
     </div>
     <div class="order-1 md:order-2">
@@ -76,13 +77,22 @@
         [price]="products[4].price"
       ></app-product-card>
     </div>
-    <div class="grid grid-cols-2 gap-4 md:gap-6 order-3">
+    <div class="hidden md:block lg:hidden md:order-3">
       <app-product-card
-        *ngFor="let product of products.slice(5, 9)"
+        [title]="products[5].title"
+        [description]="products[5].description"
+        [thumbnail]="products[5].thumbnail"
+        [price]="products[5].price"
+      ></app-product-card>
+    </div>
+    <div class="grid grid-cols-2 gap-4 md:gap-6 order-4">
+      <app-product-card
+        *ngFor="let product of products.slice(6, 10)"
         [title]="product.title"
         [description]="product.description"
         [thumbnail]="product.thumbnail"
         [price]="product.price"
+        class="h-[400px]"
       ></app-product-card>
     </div>
   </div>
