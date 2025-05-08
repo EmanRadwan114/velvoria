@@ -79,6 +79,7 @@
   --primary-btn-color: hsl(180, 79%, 20%);
   --secondary-btn-color: #dc9c13;
   --primary-btn-hover: #074444;
+  --secondary-btn-hover: #a7760c;
   /* background */
   --background-color-primary: #ffffff;
   --background-color-secondary: #f5f5f5;
@@ -88,7 +89,7 @@
   background-color: var(--background-color-primary);
 }
 
-/* Buttons Style */
+/*^^^^^^^ Buttons Style ^^^^^^^*/
 /* primary btn */
 .main-btn {
   background-color: var(--primary-btn-color);
@@ -97,9 +98,7 @@
 }
 
 .main-btn:hover {
-  background-color: var(--background-color-primary);
-  color: var(--primary-txt-color);
-  outline: 1px solid var(--primary-txt-color);
+  background-color: var(--primary-btn-hover);
 }
 /* Secondary btn */
 .sec-btn {
@@ -107,12 +106,22 @@
   color: #ffff;
 }
 .sec-btn:hover {
-  background-color: var(--background-color-primary);
+  border: 2px solid var(--primary-txt-color);
+  background-color: transparent;
   color: var(--primary-txt-color);
-  border: 1px solid var(--primary-txt-color);
 }
-/* custom links Styel */
 
+.black-btn {
+  background-color: var(--primary-txt-color);
+  color: #ffff;
+}
+.black-btn:hover {
+  border: 2px solid var(--primary-color);
+  background-color: transparent;
+  color: var(--primary-color);
+}
+
+/*^^^^^^^ custom links Styel ^^^^^^^*/
 .custom-links {
   text-decoration: none;
   color: var(--primary-txt-color);
@@ -121,14 +130,38 @@
   color: #007870;
   cursor: pointer;
 }
+
+/*^^^^^^^ Icons Style ^^^^^^^*/
 .icons {
   color: var(--primary-txt-color);
 }
 .icons:hover {
   color: #007870;
 }
-/* primary text color */
-.primary-text-color{
-  color:var(--primary-txt-color)
 
+/*^^^^^^^ Text Style ^^^^^^^*/
+/* primary text color */
+.primary-text-color {
+  color: var(--primary-txt-color);
+}
+
+
+
+.light-text-color {
+  color: var(--background-color-primary);
+}
+
+.text-gold-color {
+  color: var(--secondary-color);
+}
+
+/* yellow */
+.tex-scondery-color {
+  background-color: var(--secondary-color);
+}
+
+/*^^^^^^^ Background Style ^^^^^^^*/
+/* primary bg color */
+.primary-color-bg {
+  background-color: var(--primary-color);
 }

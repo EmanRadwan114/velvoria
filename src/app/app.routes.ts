@@ -6,13 +6,15 @@ import { SearchComponent } from './components/search/search.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { CategoriesComponent } from './components/categories/categories.component';
+import { ProductDetailsComponent } from './components/product-details/product-details.component';
 
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent, title: 'Home' },
-  { path: 'categories', component: CategoriesComponent, title: 'Categories' },
-  { path: 'products', component: ProductsComponent, title: 'Products' },
+  // { path: 'furnitures', component: CategoriesComponent, title: 'Categories' },
+  { path: 'furnitures', component: ProductsComponent, title: 'Products' },
+  { path: 'furnitures/:id', component: ProductDetailsComponent, title: 'Product Details' },
   { path: 'cart', component: CartComponent, title: 'Cart' },
   { path: 'search', component: SearchComponent, title: 'Search Results' },
   {
@@ -36,7 +38,7 @@ export const routes: Routes = [
     title: 'Login',
   },
   {
-    path: 'wishlist',
+    path: 'favorites',
     loadComponent: () =>
       import('./components/wishlist/wishlist.component').then(
         (c) => c.WishlistComponent
@@ -49,7 +51,7 @@ export const routes: Routes = [
       import('./components/profile/profile.component').then(
         (c) => c.ProfileComponent
       ),
-    title: 'Wishlist',
+    title: 'Profile',
   },
   {
     path: 'about',

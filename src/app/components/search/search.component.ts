@@ -18,16 +18,20 @@ export class SearchComponent implements OnInit {
     this.route.queryParams.subscribe((params) => {
       this.query = params['q'];
       console.log(this.query);
-      // this.http.get('http://127.0.0.1:7500/products/search?q=${this.query}').subscribe({
-      //   next: (res) => {
-      //     if (res) {
-      //       this.products = res.data;
-      //     }
-      //   },
-      //   error: (err) => {
-      //     console.log(err.error.message);
-      //   },
-      // });
+      this.http
+        .get(`http://127.0.0.1:7500/products/search?q=${this.query}`)
+        .subscribe({
+          next: (res: any) => {
+            if (res) {
+              this.products = res['data'];
+              console.log(this.products);
+              console.log(res);
+            }
+          },
+          error: (err) => {
+            console.log(err.error.message);
+          },
+        });
     });
   }
 }
