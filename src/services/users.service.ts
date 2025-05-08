@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -13,13 +14,20 @@ export class UsersService {
     console.log(user);
     return { message: 'Hi' };
   }
+
   getUserProfile(): Observable<any> {
-    return this.httpClient.get(`${this.apiUrl}/me`, { withCredentials: true });
+    return this.httpClient
+      .get<{ message: string; data: any }>(`${this.apiUrl}/me`, {
+        withCredentials: true,
+      })
+      .pipe(map((res) => res.data));
   }
 
   updateUserProfile(data: any): Observable<any> {
-    return this.httpClient.put(`${this.apiUrl}/me`, data, {
-      withCredentials: true,
-    });
+    return this.httpClient
+      .put<{ message: string; data: any }>(`${this.apiUrl}/me`, data, {
+        withCredentials: true,
+      })
+      .pipe(map((res) => res.data));
   }
 }
