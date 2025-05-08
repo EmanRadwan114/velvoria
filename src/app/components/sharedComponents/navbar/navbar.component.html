@@ -26,26 +26,28 @@
           Furniture <i class="fas fa-chevron-down ml-1 text-xs"></i>
         </a>
         <!-- Dropdown content -->
+
         <div class="absolute left-0 top-full z-50 hidden group-hover:block bg-white w-64 p-4 shadow-md rounded-md">
           <div class="grid grid-cols-2 gap-3 text-sm text-gray-700">
 
-            <a
-              routerLink="/categories"
-              class="hover:text-teal-700"
-            >All Furnitures</a>
-            <a
-              routerLink="/furnitures/sofas"
-              class="hover:hover:text-teal-700"
-            >Sofas</a>
+            <a routerLink="/furnitures" class="hover:text-teal-700"
+              >All Furnitures</a
+            >
+            <a routerLink="/furnitures/sofas" class="hover:hover:text-teal-700"
+              >Sofas</a
+            >
+
+
 
             <a
               routerLink="/furnitures/storage-units"
               class="hover:hover:text-teal-700"
-            >Storage Units</a>
-            <a
-              routerLink="/furnitures/desks"
-              class="hover:hover:text-teal-700"
-            >Desks</a>
+              >Storage Units</a
+            >
+            <a routerLink="/furnitures/beds" class="hover:hover:text-teal-700"
+              >Beds</a
+            >
+
 
             <a
               routerLink="/furnitures/dining-tables"
@@ -63,23 +65,25 @@
             <a
               routerLink="/furnitures/outdoor-sets"
               class="hover:hover:text-teal-700"
-            >Outdoor Sets</a>
-            <a
-              routerLink="/furnitures/decors"
-              class="hover:text-teal-700"
-            >Decors</a>
-            <a
-              routerLink="/furnitures/lighting"
+
+              >Outdoor Sets</a
+            >
+            <a routerLink="/furnitures/decors" class="hover:text-teal-700"
+              >Decors</a
+            >
+            <a        routerLink="/furnitures/lighting"
+
               class="hover:hover:text-teal-700"
             >Lighting</a>
           </div>
         </div>
       </div>
 
+
       <li>
         <a
           routerLink="/about"
-          class="hover:hover:text-teal-700 font-medium"
+          class="hover:text-teal-700 font-medium"
         >About</a>
       </li>
       <li>
@@ -116,21 +120,78 @@
     </ul>
 
     <!-- Login, Cart, Fav -->
-    <div class="flex items-center space-x-4">
+    <div class="flex items-center space-x-4 md:me-2">
       <!-- Login Icon -->
-      <a
-        routerLink="/login/user"
+      <!-- <a
+        routerLink="/login"
         class="hover:text-teal-700 flex items-center gap-1"
       >
         <i class="fas fa-user"></i>
         <span class="hidden md:inline">Login</span>
-      </a>
+      </a> -->
+
+      <!-- profile icon start -->
+
+      <div class="relative group inline-block md:me-6">
+        <!-- Trigger -->
+        <a class="hover:text-teal-700 flex items-center gap-1 cursor-pointer">
+          <i class="fas fa-user"></i>
+        </a>
+        <!-- Dropdown content -->
+        <div
+          class="absolute -left-28 top-fu11 z-50 hidden group-hover:block bg-white w-56 py-3 px-4 shadow-md rounded-md divide-y divide-gray-200"
+        >
+          <div class="flex items-center">
+            <img
+              class="w-10 h-10 rounded-full"
+              src="https://picsum.photos/33"
+              alt="Profile"
+            />
+            <div class="px-4 py-3 text-gray-900 dark:text-white mb-2">
+              <div class="font-medium text-lg text-black truncate">
+                Bonnie Green
+              </div>
+              <div class="text-gray-500 font-semibold">nameflowbite.com</div>
+            </div>
+          </div>
+          <div
+            class="grid grid-cols-1 gap-3 text-sm font-semibold text-gray-600 px-4 py-4"
+          >
+            <a
+              [routerLink]="['/profile']"
+              [queryParams]="{ tab: 'info' }"
+              class="hover:text-teal-700"
+            >
+              Manage Your Account
+            </a>
+
+            <a
+              [routerLink]="['/profile']"
+              [queryParams]="{ tab: 'orders' }"
+              class="hover:text-teal-700"
+            >
+              Your Orders
+            </a>
+          </div>
+
+          <div class="my-2">
+            <a
+              routerLink="/login"
+              class="block px-4 py-2 text-red-700 hover:bg-red-100 dark:hover:bg-red-500 dark:text-red-200 dark:hover:text-white font-semibold"
+              (click)="signOut()"
+            >
+              <i class="fa fa-sign-out me-1 text-sm" aria-hidden="true"></i>
+              Sign out
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- profile icon end -->
 
       <!-- Favorite Icon -->
-      <a
-        routerLink="/favorites"
-        class="hover:text-teal-700"
-      >
+      <a routerLink="/favorites" class="hover:text-teal-700 md:me-4">
+
         <i class="fas fa-heart"></i>
       </a>
 
@@ -174,7 +235,7 @@
     </div>
     <ul
       *ngIf="menuOpen"
-      class="md:hidden absolute top-10 left-0 mt-4 w-full bg-white shadow-md space-y-2 z-50 p-4"
+      class="md:hidden absolute top-10 left-0 mt-4 w-full bg-base-100 shadow-md space-y-2 z-50 p-4"
     >
       <li>
         <a
@@ -183,11 +244,7 @@
         >Home</a>
       </li>
       <li>
-
-        <a
-          routerLink="/categories"
-          class="block px-4 py-2 hover:text-teal-700"
-        >Furniture</a>
+        <a routerLink="/categories" class="block px-4 py-2 hover:text-teal-700" >Furniture</a>        
 
       </li>
       <li>
