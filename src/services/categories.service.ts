@@ -13,7 +13,9 @@ export class CategoriesService {
 
   //^ Add Category
   addCategory(newCategory: {}) {
-    return this._HttpClient.post(`${this.URL}/categories/add`, newCategory);
+    return this._HttpClient.post(`${this.URL}/categories/add`, newCategory, {
+      withCredentials: true,
+    });
   }
 
   //^ Get All Categories
@@ -28,12 +30,16 @@ export class CategoriesService {
 
   //^ Update Category By ID
   updateCategory(id: string, updatedCat: {}) {
-    return this._HttpClient.put(`${this.URL}/categories/${id}`, updatedCat);
+    return this._HttpClient.put(`${this.URL}/categories/${id}`, updatedCat, {
+      withCredentials: true,
+    });
   }
 
   //^ Delete Category By ID
   deleteCategory(id: string) {
     // return this._HttpClient.delete(`${this.URL}/categories/${id}`);
-    return this._HttpClient.delete(`${this.URL}/categories/${id}`);
+    return this._HttpClient.delete(`${this.URL}/categories/${id}`, {
+      withCredentials: true,
+    });
   }
 }
