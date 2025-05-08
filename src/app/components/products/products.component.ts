@@ -4,10 +4,11 @@ import { CommonModule } from '@angular/common';
 import { ProductsService } from '../../../services/products.service';
 import { FilterationComponent } from '../filteration/filteration.component';
 import { ActivatedRoute } from '@angular/router';
+import { BreadcrumbComponent } from "../sharedComponents/breadcrumb/breadcrumb.component";
 
 @Component({
   selector: 'app-products',
-  imports: [ProductCardComponent, CommonModule, FilterationComponent],
+  imports: [ProductCardComponent, CommonModule, FilterationComponent, BreadcrumbComponent],
   templateUrl: './products.component.html',
   styleUrl: './products.css',
 })
