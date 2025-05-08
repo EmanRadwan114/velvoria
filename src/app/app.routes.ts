@@ -14,6 +14,10 @@ export const routes: Routes = [
   { path: 'home', component: HomeComponent, title: 'Home' },
   // { path: 'furnitures', component: CategoriesComponent, title: 'Categories' },
   { path: 'furnitures', component: ProductsComponent, title: 'Products' },
+  {
+  path: 'furnitures/:category',
+  component: ProductsComponent
+},
   { path: 'furnitures/:id', component: ProductDetailsComponent, title: 'Product Details' },
   { path: 'cart', component: CartComponent, title: 'Cart' },
   { path: 'search', component: SearchComponent, title: 'Search Results' },

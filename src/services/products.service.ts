@@ -30,17 +30,25 @@ export class ProductsService {
   getProducdByCategory(category: string | null) {
     return this._HttpClient.get(`${this.URL}/products/category/${category}`);
   }
+
+  // ^ Add New Product
   addProduct(newPrd: {}) {
-    return this._HttpClient.post(`${this.URL}/products`, newPrd);
+    return this._HttpClient.post(`${this.URL}/products`, newPrd, {
+      withCredentials: true,
+    });
   }
 
   //^ Update Product By ID
   updateProduct(id: string, updatedPrd: {}) {
-    return this._HttpClient.put(`${this.URL}/products/${id}`, updatedPrd);
+    return this._HttpClient.put(`${this.URL}/products/${id}`, updatedPrd, {
+      withCredentials: true,
+    });
   }
 
   //^ Delete Product By ID
   deleteProduct(id: string) {
-    return this._HttpClient.delete(`${this.URL}/products/${id}`);
+    return this._HttpClient.delete(`${this.URL}/products/${id}`, {
+      withCredentials: true,
+    });
   }
 }
