@@ -1,9 +1,7 @@
-<div
-  class="group product-card bg-white shadow-md rounded-lg overflow-hidden w-70 max-w-sm h-[400px] relative"
->
+<div class="group product-card bg-white shadow-md rounded-lg overflow-hidden w-70 max-w-sm h-[400px] relative">
   <!-- Image -->
-<a [routerLink]="['/furnitures', product._id]">
-  
+  <a [routerLink]="['/furnitures', product._id]">
+
     <img
       [src]="product.thumbnail"
       [alt]="product.title"

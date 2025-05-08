@@ -39,14 +39,6 @@
               class="hover:hover:text-teal-700"
             >Sofas</a>
 
-            <a
-              routerLink="/categories"
-              class="hover:text-teal-700"
-            >All Furnitures</a>
-            <a
-              routerLink="/furnitures/sofas"
-              class="hover:hover:text-teal-700"
-            >Sofas</a>
 
             <a
               routerLink="/furnitures/storage-units"
@@ -56,11 +48,6 @@
               routerLink="/furnitures/beds"
               class="hover:hover:text-teal-700"
             >Beds</a>
-            >Storage Units</a>
-            <a
-              routerLink="/furnitures/desks"
-              class="hover:hover:text-teal-700"
-            >Desks</a>
 
             <a
               routerLink="/furnitures/dining-tables"
@@ -79,11 +66,6 @@
               routerLink="/furnitures/outdoor-sets"
               class="hover:hover:text-teal-700"
             >Outdoor Sets</a>
-            <a
-              routerLink="/furnitures/decors"
-              class="hover:text-teal-700"
-            >Decors</a>
-            <a routerLink="/furnitures/lighting">Outdoor Sets</a>
             <a
               routerLink="/furnitures/decors"
               class="hover:text-teal-700"
@@ -111,11 +93,7 @@
       </li>
       <!-- Search -->
       <li class="hidden md:block">
-        <form
-          class="w-full md:w-40 lg:w-64"
-          (ngSubmit)="search()"
-          #searchForm="ngForm"
-        >
+        <form class="w-full md:w-40 lg:w-64">
           <div class="relative">
             <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
               <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
@@ -123,8 +101,6 @@
             <input
               id="search-desktop"
               type="search"
-              name="query"
-              [(ngModel)]="searchQuery"
               placeholder="Search..."
               class="w-full rounded-lg border border-gray-300 bg-gray-50 p-2 pl-10 text-sm text-gray-900"
             />

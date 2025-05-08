@@ -5,15 +5,12 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
-
-  imports: [RouterLink, RouterLinkActive, CommonModule],
->>>>>>> 04067ed5976dcbdcf26fb8d35ab972a415dc3852
+  imports: [RouterLink, RouterLinkActive, CommonModule, FormsModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
 })
 export class NavbarComponent {
   menuOpen = false;
-<<<<<<< HEAD
 
   searchQuery = '';
   constructor(private router: Router) {}
@@ -23,15 +20,9 @@ export class NavbarComponent {
         queryParams: { q: this.searchQuery },
       });
     }
-=======
+  }
 
   signOut() {
     localStorage.removeItem('user');
->>>>>>> 04067ed5976dcbdcf26fb8d35ab972a415dc3852
-
-
-  signOut() {
-    localStorage.removeItem('user');
-
   }
 }

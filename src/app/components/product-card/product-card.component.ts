@@ -12,5 +12,5 @@ import { ProductsService } from '../../../services/products.service';
 })
 export class ProductCardComponent {
   hovered = 0;
-  @Input() product!: any; 
+  @Input() product: any;
 }
