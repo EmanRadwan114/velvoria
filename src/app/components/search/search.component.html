@@ -20,31 +20,45 @@
     <span class="sr-only">Loading...</span>
   </div>
 </div>
-}@else if(message==="success"){
+}
+@else{
+<app-breadcrumb></app-breadcrumb>
 <div class="flex justify-between my-5">
+  @if(message==="success"){
+  <app-filteration></app-filteration>
   <div class="w-8/12 gap-2 mx-auto flex flex-wrap">
     @for (product of products; track $index) {
     <app-product-card [product]="product"></app-product-card>
     }
   </div>
-</div>
-}@else {
-<div
-  role="alert"
-  class="alert alert-info w-full"
->
-  <svg
-    class="shrink-0 inline w-4 h-4 me-3"
-    aria-hidden="true"
-    xmlns="http://www.w3.org/2000/svg"
-    fill="currentColor"
-    viewBox="0 0 20 20"
+  }@else {
+  <div class="flex flex-col w-full min-h-56 justify-center items-center">
+    <img
+      src="https://cdn-icons-png.flaticon.com/128/16919/16919815.png"
+      width="100"
+      alt=""
+    >
+    <p class="font-medium">{{message}}</p>
+  </div>
+
+  <!-- <div
+    role="alert"
+    class="alert alert-info w-full"
   >
-    <path
-      d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
-    />
-  </svg>
-  <!-- <i class="fa-regular fa-circle-xmark h-6 w-6"></i> -->
-  <span>{{message}}</span>
+    <svg
+      class="shrink-0 inline w-4 h-4 me-3"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="currentColor"
+      viewBox="0 0 20 20"
+    >
+      <path
+        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
+      />
+    </svg>
+
+    <span>{{message}}</span>
+  </div> -->
+  }
 </div>
 }

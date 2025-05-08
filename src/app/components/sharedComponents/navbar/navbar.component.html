@@ -40,6 +40,7 @@
             >Sofas</a>
 
 
+
             <a
               routerLink="/furnitures/storage units"
               class="hover:hover:text-teal-700"
@@ -49,17 +50,19 @@
               class="hover:hover:text-teal-700"
             >Beds</a>
 
+
             <a
               routerLink="/furnitures/dining tables"
               class="hover:hover:text-teal-700"
-              >Dining Tables</a
-            >
-            <a routerLink="/furnitures/office desks" class="hover:text-teal-700"
-              >Office Desks</a
-            >
-            <a routerLink="/furnitures/chairs" class="hover:text-teal-700"
-              >Chairs</a
-            >
+            >Dining Tables</a>
+            <a
+              routerLink="/furnitures/office desks"
+              class="hover:text-teal-700"
+            >Office Desks</a>
+            <a
+              routerLink="/furnitures/chairs"
+              class="hover:text-teal-700"
+            >Chairs</a>
 
             <a
               routerLink="/furnitures/outdoor sets"
@@ -92,7 +95,11 @@
       </li>
       <!-- Search -->
       <li class="hidden md:block">
-        <form class="w-full md:w-40 lg:w-64">
+        <form
+          class="w-full md:w-40 lg:w-64"
+          (ngSubmit)="search()"
+          #searchForm="ngForm"
+        >
           <div class="relative">
             <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
               <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
@@ -100,6 +107,8 @@
             <input
               id="search-desktop"
               type="search"
+              name="query"
+              [(ngModel)]="searchQuery"
               placeholder="Search..."
               class="w-full rounded-lg border border-gray-300 bg-gray-50 p-2 pl-10 text-sm text-gray-900"
             />
@@ -244,6 +253,7 @@
           routerLink="/categories"
           class="block px-4 py-2 hover:text-teal-700"
         >Furniture</a>
+
       </li>
       <li>
         <a
@@ -259,19 +269,27 @@
         >Contact</a>
       </li>
 
-      <li>
-        <div class="relative">
-          <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-
-            <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
+      <!-- Search -->
+      <li class="hidden md:block">
+        <form
+          class="w-full md:w-40 lg:w-64"
+          (ngSubmit)="search()"
+          #searchForm="ngForm"
+        >
+          <div class="relative">
+            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+              <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
+            </div>
+            <input
+              id="search-desktop"
+              type="search"
+              name="query"
+              [(ngModel)]="searchQuery"
+              placeholder="Search..."
+              class="w-full rounded-lg border border-gray-300 bg-gray-50 p-2 pl-10 text-sm text-gray-900"
+            />
           </div>
-          <input
-            id="search-mobile"
-            type="search"
-            placeholder="Search..."
-            class="w-full rounded-lg border border-gray-300 bg-gray-50 p-2 pl-10 text-sm text-gray-900"
-          />
-        </div>
+        </form>
       </li>
     </ul>
   </div>

@@ -3,9 +3,16 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductCardComponent } from '../product-card/product-card.component';
+import { FilterationComponent } from '../filteration/filteration.component';
+import { BreadcrumbComponent } from '../sharedComponents/breadcrumb/breadcrumb.component';
 @Component({
   selector: 'app-search',
-  imports: [CommonModule, ProductCardComponent],
+  imports: [
+    CommonModule,
+    ProductCardComponent,
+    FilterationComponent,
+    BreadcrumbComponent,
+  ],
   templateUrl: './search.component.html',
   styles: ``,
 })
@@ -32,7 +39,7 @@ export class SearchComponent implements OnInit {
           },
           error: (err) => {
             console.log(err.error.message);
-            this.message = 'No products were found matching your selection.';
+            this.message = 'No products were found matching your selection';
           },
         });
     });

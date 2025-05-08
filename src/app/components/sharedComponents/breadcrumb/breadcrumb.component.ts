@@ -10,13 +10,10 @@ import { CommonModule } from '@angular/common';
   templateUrl: './breadcrumb.component.html',
   // styleUrls: ['./breadcrumb.component.css'],
 })
-export class BreadcrumbComponent  {
+export class BreadcrumbComponent {
   breadcrumb: string[] = [];
 
-  constructor(
-    private router: Router,
-
-  ) {
+  constructor(private router: Router) {
     // Only continue with events where the navigation has successfully ended.
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
@@ -35,7 +32,8 @@ export class BreadcrumbComponent  {
   }
 
   formatSegments(segment: string): string {
-    const decoded = decodeURIComponent(segment);
+    let decoded = decodeURIComponent(segment);
+    decoded = decoded.replace('?q=', ' for ');
     return decoded.replace(/-/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase());
   }
 }
