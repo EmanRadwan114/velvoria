@@ -5,9 +5,7 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
-<<<<<<< HEAD
-  imports: [RouterLink, CommonModule, FormsModule],
-=======
+
   imports: [RouterLink, RouterLinkActive, CommonModule],
 >>>>>>> 04067ed5976dcbdcf26fb8d35ab972a415dc3852
   templateUrl: './navbar.component.html',
@@ -16,6 +14,7 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 export class NavbarComponent {
   menuOpen = false;
 <<<<<<< HEAD
+
   searchQuery = '';
   constructor(private router: Router) {}
   search() {
@@ -29,5 +28,10 @@ export class NavbarComponent {
   signOut() {
     localStorage.removeItem('user');
 >>>>>>> 04067ed5976dcbdcf26fb8d35ab972a415dc3852
+
+
+  signOut() {
+    localStorage.removeItem('user');
+
   }
 }
