@@ -1,0 +1,78 @@
+<h2 class="text-gray-800 text-xl font-semibold mb-4">Filters</h2>
+<div class="filter-container flex flex-col items-center space-y-4 mb-6">
+  <!-- Material -->
+  <label
+    class="block bg-gray-100 text-gray-700 h-10 w-full text-center p-2 text-lg font-medium"
+    >Material</label
+  >
+  <!-- 
+  <select class="w-full p-2 rounded text-gray-700">
+    <option>All</option>
+    <option>Wood</option>
+    <option>Metal</option>
+    <option>Leather</option>
+    <option>Steal</option>
+    <option>Textile</option>
+  </select> -->
+
+  <fieldset
+    class="fieldset bg-base-100 border-base-300 text-lg rounded-box w-[50%] text border p-4"
+  >
+    <legend class="fieldset-legend"></legend>
+    <label class="label">
+      <input type="checkbox" checked="checked" class="checkbox" />
+      All Materials
+    </label>
+    <label class="label">
+      <input type="checkbox" class="checkbox" />
+      Metal
+    </label>
+    <label class="label">
+      <input type="checkbox" class="checkbox" />
+      leather
+    </label>
+    <label class="label">
+      <input type="checkbox" class="checkbox" />
+      Wood
+    </label>
+  </fieldset>
+</div>
+<!-- Color -->
+<div class="filter-container flex flex-col items-center space-y-4 mb-6">
+  <h2
+    class="bg-gray-100 text-gray-700 h-10 text-center p-2 text-lg font-medium w-full"
+  >
+    Color
+  </h2>
+
+  <div class="flex justify-center w-full mt-2"></div>
+</div>
+
+<!-- Price -->
+<div class="filter-container flex flex-col items-center space-y-4">
+  <h2
+    class="bg-gray-100 text-gray-700 h-10 text-center p-2 text-lg font-medium w-full"
+  >
+    Price
+  </h2>
+
+  <!-- Price Range Display -->
+  <div class="flex items-center space-x-4">
+    <label class="text-lg text-gray-600">Price: </label>
+    <span class="text-teal-600 font-semibold">{{ price }} EGP</span>
+  </div>
+
+  <!-- Price Range Slider -->
+  <input
+    type="range"
+    [min]="minPrice"
+    [max]="maxPrice"
+    [(ngModel)]="price"
+    class="range-slider w-full mt-4 range range-xs range-neutral"
+  />
+
+  <div class="flex justify-between w-full mt-2">
+    <span>{{ minPrice }} EGP</span>
+    <span>{{ maxPrice }} EGP</span>
+  </div>
+</div>
