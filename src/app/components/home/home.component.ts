@@ -4,6 +4,8 @@ import { DOTDComponent } from '../dotd/dotd.component';
 import { ShopByCategoriesComponent } from '../shop-by-categories/shop-by-categories.component';
 import { GoodVibesComponent } from '../good-vibes/good-vibes.component';
 import { CategoriesService } from '../../../services/categories.service';
+import { HomeProductsComponent } from '../home-products/home-products.component';
+
 @Component({
   selector: 'app-home',
   imports: [
@@ -11,6 +13,7 @@ import { CategoriesService } from '../../../services/categories.service';
     DOTDComponent,
     GoodVibesComponent,
     ShopByCategoriesComponent,
+    HomeProductsComponent,
   ],
   templateUrl: './home.component.html',
   styles: ``,

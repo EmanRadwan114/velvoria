@@ -6,7 +6,7 @@
 }
 
 .prim-btn-outline {
-  @apply mt-2 px-6 py-3 text-sm md:text-base text-white border-2 font-semibold rounded hover:bg-teal-700 hover:border-teal-700 transition duration-400 ease-in-out cursor-pointer;
+  @apply mt-2 px-6 py-3 text-sm md:text-base border-2 font-semibold rounded hover:bg-teal-700 hover:border-teal-700 transition duration-400 ease-in-out cursor-pointer;
 }
 
 .header-txt {
@@ -140,11 +140,11 @@
 }
 
 /*^^^^^^^ Text Style ^^^^^^^*/
+
 /* primary text color */
 .primary-text-color {
   color: var(--primary-txt-color);
 }
-
 
 
 .light-text-color {
