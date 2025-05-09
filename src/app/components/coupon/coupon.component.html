@@ -1,0 +1,28 @@
+<form>
+  <div class="relative w-full px-4">
+    <input
+      type="text"
+      id="coupon"
+      [(ngModel)]="couponCode"
+      class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-200 rounded-lg rounded-gray-100 rounded-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+      placeholder="Enter coupon code"
+      required
+    />
+
+    <button
+      (click)="applyCoupon()"
+      [disabled]="isLoading"
+      class="absolute top-0 end-4 p-2.5 h-full text-sm font-medium text-white bg-blue-700 rounded-e-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 transition duration-300"
+    >
+      {{ isLoading ? "Applying..." : "Apply Coupon" }}
+    </button>
+  </div>
+  <div
+    *ngIf="message"
+    class="mt-4 text-center text-sm"
+    [class.text-green-600]="discount"
+    [class.text-red-600]="!discount"
+  >
+    {{ message }}
+  </div>
+</form>
