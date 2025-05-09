@@ -22,12 +22,12 @@ export class ProductsService {
   }
 
   //^ Get Product By Label
-  getProducdByLabel(label: string | null) {
+  getProductByLabel(label: string | null) {
     return this._HttpClient.get(`${this.URL}/products/label/${label}`);
   }
 
   //^ Get Product By Category
-  getProducdByCategory(category: string | null) {
+  getProductByCategory(category: string | null) {
     return this._HttpClient.get(`${this.URL}/products/category/${category}`);
   }
 

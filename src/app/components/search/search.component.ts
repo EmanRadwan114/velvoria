@@ -2,22 +2,15 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ProductCardComponent } from '../product-card/product-card.component';
-import { FilterationComponent } from '../filteration/filteration.component';
-import { BreadcrumbComponent } from '../sharedComponents/breadcrumb/breadcrumb.component';
+import { ProductsComponent } from '../products/products.component';
 @Component({
   selector: 'app-search',
-  imports: [
-    CommonModule,
-    ProductCardComponent,
-    FilterationComponent,
-    BreadcrumbComponent,
-  ],
+  imports: [CommonModule, ProductsComponent],
   templateUrl: './search.component.html',
   styles: ``,
 })
 export class SearchComponent implements OnInit {
-  products = [CommonModule];
+  products = [];
   query = '';
   message = 'loading';
   constructor(private route: ActivatedRoute, private http: HttpClient) {}
