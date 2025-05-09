@@ -71,17 +71,21 @@ export class RegisterComponent {
         password: this.userData.controls.password.value,
         role: fullUrl.includes('user') ? 'user' : 'admin',
       };
-      this.http.post('http://127.0.0.1:7500/auth/register', user).subscribe({
-        next: (res) => {
-          if (res) {
-            this.signUp = true;
-          }
-        },
-        error: (err) => {
-          this.message = err.error.message;
-          this.clickA();
-        },
-      });
+      this.http
+        .post('http://127.0.0.1:7500/auth/register', user, {
+          withCredentials: true,
+        })
+        .subscribe({
+          next: (res) => {
+            if (res) {
+              this.signUp = true;
+            }
+          },
+          error: (err) => {
+            this.message = err.error.message;
+            this.clickA();
+          },
+        });
     }
   }
   clickA() {

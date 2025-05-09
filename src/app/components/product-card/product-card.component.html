@@ -2,58 +2,75 @@
   class="group product-card bg-white shadow-md rounded-lg overflow-hidden w-full h-full relative"
 >
   <!-- Image -->
-  <a routerLink="/product-details">
+  <a [routerLink]="['/furnitures', product._id]">
     <img
-      [src]="thumbnail"
-      [alt]="title"
+      [src]="product.thumbnail"
+      [alt]="product.title"
       class="w-full h-[60%] object-cover hover:scale-105 transition-transform duration-300"
     />
   </a>
 
   <!-- Content -->
-  <div class="px-4 py-2 h-[30%] flex flex-col justify-between">
+  <div
+    class="px-4 py-4 h-[30%] flex flex-col justify-between"
+    routerLink="/product-details"
+  >
     <div>
-      <div class="flex flex-col">
-        <div class="flex space-x-1 group">
-          <ng-container *ngFor="let star of [1, 2, 3, 4, 5]; let i = index">
-            <i
-              class="w-4 fa-star cursor-pointer text-gray-300 group-hover:text-yellow-400 hover:text-yellow-400 transition duration-200"
-              [class.fas]="hovered >= i + 1"
-              [class.far]="hovered < i + 1"
-              (mouseenter)="hovered = i + 1"
-              (mouseleave)="hovered = 0"
-            ></i>
-          </ng-container>
-          <p class="ml-2 text-sm text-gray-500">4.2/5</p>
-        </div>
-
-        <p>(12000 reviews)</p>
+      <div class="flex space-x-1 group">
+        <ng-container *ngFor="let star of [1, 2, 3, 4, 5]; let i = index">
+          <i
+            class="w-4 fa-star cursor-pointer text-gray-300 group-hover:text-yellow-400 hover:text-yellow-400 transition duration-200"
+            [class.fas]="hovered >= i + 1"
+            [class.far]="hovered < i + 1"
+            (mouseenter)="hovered = i + 1"
+            (mouseleave)="hovered = 0"
+          ></i>
+        </ng-container>
+        <p class="ml-2 text-sm text-gray-500">
+          {{ product.avgRating }}/5 ({{ product.numberOfReviews }} reviews)
+        </p>
       </div>
       <h2 class="mt-2 text-lg font-semibold text-gray-900 hover:text-teal-700">
-        {{ title }}
+        {{ product.title }}
       </h2>
     </div>
-    <h3 class="text-lg text-red-600 h-[10%]">{{ price }} EGP</h3>
+    <h3 class="text-lg font-semibold text-gray-800 h-[10%]">
+      {{ product.price }} EGP
+    </h3>
   </div>
 
   <!-- Animated Tags -->
+  <!-- Hot Tag -->
   <div
-    class="absolute top-2 left-0 transform -translate-x-full group-hover:translate-x-[10px] transition-transform duration-500 bg-orange-500 text-gray-50 w-12 px-2 text-center"
+    *ngIf="product.label?.includes('trendy')"
+    class="absolute top-2 left-0 transform -translate-x-full group-hover:translate-x-[10px] transition-transform duration-500 bg-orange-500 text-gray-50 w-18 px-2 text-center"
+  >
+    Trendy
+  </div>
+  <!-- Sale Tag -->
+  <div
+    *ngIf="product.label?.includes('hot')"
+    class="absolute top-2 right-0 bg-red-500 text-gray-50 w-18 px-2 text-center transform translate-x-full hover:border-none group-hover:translate-x-[-10px] transition-transform duration-500"
   >
     Hot
   </div>
+
+  <!-- New Arrival Tag -->
   <div
-    class="absolute top-2 right-0 bg-red-500 text-gray-50 w-12 px-2 text-center transform translate-x-full hover:border-none group-hover:translate-x-[-10px] transition-transform duration-500"
+    *ngIf="product.label?.includes('new')"
+    class="absolute top-12 left-0 transform -translate-x-full group-hover:translate-x-[10px] transition-transform duration-500 bg-green-500 text-gray-50 w-18 px-2 text-center"
   >
-    -10%
+    New
   </div>
 
+  <!-- Fav Tag -->
   <div
     class="absolute text-gray-500 border-1 top-35 right-0 transform translate-x-full hover:border-none group-hover:translate-x-[-10px] transition-transform duration-500 bg-gray-50 w-10 h-10 flex items-center justify-center hover:text-white hover:bg-teal-700 rounded"
   >
     <i class="fas fa-heart"></i>
   </div>
 
+  <!-- Add to Cart -->
   <div
     class="absolute text-gray-500 border-1 top-48 right-0 transform translate-x-full hover:border-none group-hover:translate-x-[-10px] transition-transform duration-500 bg-gray-50 w-10 h-10 flex items-center justify-center hover:text-white hover:bg-teal-700 rounded"
   >
