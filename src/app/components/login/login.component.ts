@@ -10,6 +10,7 @@ import {
 } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -56,7 +57,7 @@ export class LoginComponent {
         password: this.userData.controls.password.value,
       };
       this.http
-        .post('http://127.0.0.1:7500/auth/login', user, {
+        .post(`${environment.backUrl}/auth/login`, user, {
           withCredentials: true,
         })
         .subscribe({
