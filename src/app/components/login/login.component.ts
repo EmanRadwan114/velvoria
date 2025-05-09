@@ -55,17 +55,22 @@ export class LoginComponent {
         email: this.userData.controls.email.value,
         password: this.userData.controls.password.value,
       };
-      this.http.post('http://127.0.0.1:7500/auth/login', user).subscribe({
-        next: (res) => {
-          if (res) {
-            this.router.navigate(['/home']);
-          }
-        },
-        error: (err) => {
-          this.message = err.error.message;
-          this.clickA();
-        },
-      });
+      this.http
+        .post('http://127.0.0.1:7500/auth/login', user, {
+          withCredentials: true,
+        })
+        .subscribe({
+          next: (res) => {
+            if (res) {
+              this.router.navigate(['/home']);
+            }
+          },
+          error: (err) => {
+            console.log(err);
+            this.message = err.error.message;
+            this.clickA();
+          },
+        });
     }
   }
   clickA() {

@@ -1,46 +1,52 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ProductCardComponent } from '../product-card/product-card.component';
 import { CommonModule } from '@angular/common';
+import { ProductsService } from '../../../services/products.service';
+import { FilterationComponent } from '../filteration/filteration.component';
+import { ActivatedRoute } from '@angular/router';
+import { BreadcrumbComponent } from "../sharedComponents/breadcrumb/breadcrumb.component";
 
 @Component({
   selector: 'app-products',
-  imports: [ProductCardComponent, CommonModule],
+  imports: [ProductCardComponent, CommonModule, FilterationComponent, BreadcrumbComponent],
   templateUrl: './products.component.html',
-  styles: ``,
+  styleUrl: './products.css',
 })
-export class ProductsComponent {
-  products = [
-    {
-      title: 'Luxury Leather Sofa',
-      description:
-        'A comfortable and stylish leather sofa that enhances any living room  sofa that enhances any living room  ',
-      thumbnail:
-        'https://i.pinimg.com/736x/6a/bc/5e/6abc5ee32be8dd302c4bfdca33373c4b.jpg',
-      price: '15000',
+export class ProductsComponent implements OnInit {
+  productsList: object[] = [];
+  filteredProductsList: object[] = [];
+  categoryName = '';
+
+  private readonly _ActivatedRoute = inject(ActivatedRoute);
+
+  constructor(private prdServices: ProductsService) {}
+
+ngOnInit(): void {
+  this._ActivatedRoute.paramMap.subscribe({
+    next: (p) => {
+      const category = p.get('category');
+      this.categoryName = category || 'all';
+
+      if (this.categoryName === 'all') {
+        // Get All Products
+        this.prdServices.getAllProducts().subscribe({
+          next: (res: any) => {
+            this.productsList = res.data;
+            this.filteredProductsList = [...this.productsList];
+          },
+          error: (err) => console.log(err),
+        });
+      } else {
+        // Get Products by Category
+        this.prdServices.getProducdByCategory(this.categoryName).subscribe({
+          next: (res: any) => {
+            this.productsList = res.data;
+            this.filteredProductsList = [...this.productsList];
+          },
+          error: (err) => console.log(err),
+        });
+      }
     },
-    {
-      title: 'Cozy Fabric Sofa',
-      description:
-        'A soft and cozy fabric sofa perfect for small spaces. It provides a co…',
-      thumbnail:
-        'https://i.pinimg.com/736x/8b/a7/f1/8ba7f1b9a4f3bc481bb55128d78cb13c.jpg',
-      price: '12300',
-    },
-    {
-      title: 'Classic Wooden Storage Unit',
-      description:
-        'A classic wooden storage unit that offers ample space to store your  sofa that enhances any living room  sofa that enhances any living room ',
-      thumbnail:
-        'https://i.pinimg.com/736x/a2/f6/e6/a2f6e6046ab723e7061dc0d3fdd9f059.jpg',
-      price: '10300',
-    },
-    {
-      title: 'Modern Storage Shelf',
-      description:
-        'A sleek, modern storage shelf that combines style with functionality.',
-      thumbnail:
-        'https://i.pinimg.com/736x/c7/bd/05/c7bd055105d2eba84e81b90038f5f8b9.jpg',
-      price: '2300',
-    },
-  ];
-}
+    error: (err) => console.log(err),
+  });
+}}
