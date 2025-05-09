@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductsComponent } from '../products/products.component';
+import { environment } from '../../../environments/environment';
 @Component({
   selector: 'app-search',
   imports: [CommonModule, ProductsComponent],
@@ -20,7 +21,7 @@ export class SearchComponent implements OnInit {
       this.query = params['q'];
       console.log(this.query);
       this.http
-        .get(`http://127.0.0.1:7500/products/search?q=${this.query}`)
+        .get(`${environment.backUrl}/products/search?q=${this.query}`)
         .subscribe({
           next: (res: any) => {
             if (res) {

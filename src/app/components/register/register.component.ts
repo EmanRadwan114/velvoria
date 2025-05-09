@@ -10,6 +10,7 @@ import {
 } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
 import { UsersService } from '../../../services/users.service';
+import { environment } from '../../../environments/environment';
 @Component({
   selector: 'app-register',
   imports: [
@@ -72,7 +73,7 @@ export class RegisterComponent {
         role: fullUrl.includes('user') ? 'user' : 'admin',
       };
       this.http
-        .post('http://127.0.0.1:7500/auth/register', user, {
+        .post(`${environment.backUrl}/auth/register`, user, {
           withCredentials: true,
         })
         .subscribe({
