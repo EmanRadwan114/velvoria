@@ -1,8 +1,8 @@
-<section>
+<section class="flex flex-col">
   <!-- * product details section -->
-  <section class="flex justify-center items-start gap-6 my-6">
-    <!-- Right Side: Images -->
-    <div class="w-[40%] p-4 rounded">
+  <section class="flex flex-col lg:flex-row justify-between gap-8 my-6">
+    <!-- Left Side: Images -->
+    <div class="w-full lg:w-[50%] p-4 rounded">
       <!-- main image -->
       <img
         [src]="mainImage"
@@ -10,7 +10,7 @@
         class="w-full h-125 object-cover rounded"
       />
       <!-- other images -->
-      <div class="flex justify-center items-center gap-4 mt-4">
+      <div class="flex justify-center items-center gap-4 mt-4 flex-wrap">
         <img
           [src]="detailsProduct.thumbnail"
           [alt]="detailsProduct.title"
@@ -30,31 +30,32 @@
         />
       </div>
     </div>
+
     <!-- Right Side: Details -->
-    <!-- Title & Price -->
-    <div class="w-[50%] p-6 rounded space-y-4 h-100 my-6">
-      <h2 class="text-3xl font-semibold text-teal-700 hover:text-teal-600">
+    <div class="w-full lg:w-[50%] p-6 rounded">
+      <h2 class="text-3xl font-semibold text-teal-700 hover:text-teal-600 my-4">
         {{ detailsProduct.title }}
       </h2>
-      <p class="text-2xl font-medium text-gold-color">
+      <p class="text-2xl font-medium text-gold-color my-4">
         {{ detailsProduct.price }} EGP
       </p>
-      <hr class="w-full" />
+      <hr class="w-full my-4" />
 
       <!-- Category & Rating -->
-      <div class="flex justify-between items-center w-full mb-6">
+      <div
+        class="flex justify-between items-center w-full mb-6 flex-wrap gap-4"
+      >
         <p class="font-medium text-lg text-gray-900">
           Category:
           <span class="text-teal-800 font-normal">{{ categoryName }}</span>
         </p>
-        <div class="flex space-x-1 group">
-          <i class="text-2xl fas fa-star text-yellow-400"></i>
-          <i class="text-2xl fas fa-star text-yellow-400"></i>
-          <i class="text-2xl fas fa-star text-yellow-400"></i>
-          <i class="text-2xl fas fa-star text-yellow-400"></i>
-          <i class="text-2xl fas fa-star text-yellow-400"></i>
-
-          <p class="ml-2 text-lg text-gray-500">
+        <div class="flex flex-wrap items-center group">
+          <i class="text-2xl fas fa-star text-yellow-400 my-2"></i>
+          <i class="text-2xl fas fa-star text-yellow-400 my-2"></i>
+          <i class="text-2xl fas fa-star text-yellow-400 my-2"></i>
+          <i class="text-2xl fas fa-star text-yellow-400 my-2"></i>
+          <i class="text-2xl fas fa-star text-yellow-400 my-2"></i>
+          <p class="ml-2 text-lg text-gray-500 my-2">
             {{ detailsProduct.avgRating }}/5 ({{
               detailsProduct.numberOfReviews
             }}
@@ -62,12 +63,14 @@
           </p>
         </div>
       </div>
+
       <!-- Description -->
       <p class="text-lg font-normal text-gray-700">
         {{ detailsProduct.description }}
       </p>
+
       <!-- Color -->
-      <div class="flex items-center gap-2 mt-2">
+      <div class="flex items-center gap-2 mt-4">
         <p class="text-gray-900">Color:</p>
         <div
           class="w-6 h-6 rounded-full border border-gray-400"
@@ -75,23 +78,27 @@
         ></div>
         <span class="text-lg text-gray-600">{{ detailsProduct.color }}</span>
       </div>
-      <p class="text-gray-900 text-lg">
+
+      <p class="text-gray-900 text-lg my-1">
         Material: {{ detailsProduct.material }}
       </p>
-      <p class="text-gray-900 text-lg">In Stock: {{ detailsProduct.stock }}</p>
+      <p class="text-gray-900 text-lg mb-4">
+        In Stock: {{ detailsProduct.stock }}
+      </p>
 
-      <!-- Add  To Fav -->
-      <div class="flex items-center gap-2 mt-2">
+      <!-- Add To Favourite -->
+      <div class="flex items-center gap-2 my-4">
         <div
-          class="text-gray-900 border hover:border-none bg-gray-50 w-12 h-12 flex items-center justify-center hover:text-white hover:bg-teal-700 rounded"
+          class="text-gray-900 border hover:border-none bg-gray-50 w-12 h-12 flex items-center justify-center hover:text-white hover:bg-teal-700 rounded cursor-pointer"
         >
-          <i class="fas fa-heart text-xl mb-1"></i>
+          <i class="fas fa-heart text-xl"></i>
         </div>
         <p class="text-gray-900 text-lg">Add To Favourite</p>
       </div>
+
       <!-- Add To Cart -->
       <button
-        class="text-xl h-15 btn flex items-center gap-2 w-full black-btn transition duration-200"
+        class="text-xl h-15 btn flex items-center gap-2 w-full black-btn transition duration-200 my-4"
       >
         <i class="fas fa-shopping-cart"></i>
         Add To Cart
@@ -100,5 +107,5 @@
   </section>
 
   <!-- * reviews section -->
-  <app-reviews></app-reviews>
+  <app-reviews class="mt-12"></app-reviews>
 </section>

@@ -1,8 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 @import "tailwindcss";
+@plugin "daisyui";
 
 * {
   box-sizing: border-box;
+}
+
+button {
+  cursor: pointer !important;
 }
 
 .prim-btn-outline {
@@ -58,8 +63,6 @@
 }
 
 /*# hero section end */
-
-@plugin "daisyui";
 
 /* src/styles.css or src/styles.scss */
 
@@ -145,7 +148,6 @@
 .primary-text-color {
   color: var(--primary-txt-color);
 }
-
 
 .light-text-color {
   color: var(--background-color-primary);
