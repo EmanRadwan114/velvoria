@@ -29,7 +29,7 @@ export class HomeProductsComponent implements OnInit {
   filteredList: object[] = [];
 
   ngOnInit(): void {
-    this.prdServices.getProducdByLabel(this.activeTab).subscribe({
+    this.prdServices.getProductByLabel(this.activeTab).subscribe({
       next: (res: any) => {
         this.products = res.data;
         this.filteredList = [...this.products];
@@ -41,7 +41,7 @@ export class HomeProductsComponent implements OnInit {
   onTabChange(tab: string): void {
     this.activeTab = tab;
 
-    this.prdServices.getProducdByLabel(this.activeTab).subscribe({
+    this.prdServices.getProductByLabel(this.activeTab).subscribe({
       next: (res: any) => {
         this.products = res.data;
         this.filteredList = [...this.products];

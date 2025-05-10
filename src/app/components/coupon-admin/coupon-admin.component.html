@@ -1,7 +1,8 @@
-<div class="max-w-3xl mx-auto p-6 bg-white shadow-md rounded-lg">
+<div class="max-w-3xl mx-auto p-6 bg-white shadow-md rounded-lg my-10">
   <!-- Tabs -->
   <div class="flex border-b border-teal-300 mb-6">
     <button
+      type="button"
       *ngFor="let tab of tabs"
       (click)="activeTab = tab"
       class="px-4 py-2 text-sm font-medium transition-colors duration-200"
@@ -14,11 +15,20 @@
     </button>
   </div>
 
+  <!-- Success & Error Messages -->
+  <div *ngIf="message" class="text-green-600 mb-4 text-center">
+    {{ message }}
+  </div>
+  <div *ngIf="error" class="text-red-600 mb-4 text-center">
+    {{ error }}
+  </div>
+
   <!-- Get All Coupons -->
   <div *ngIf="activeTab === 'Get All'" class="space-y-4">
     <button
+      type="button"
       class="bg-teal-600 text-white py-2 px-6 rounded-md hover:bg-teal-700 transition"
-      (click)="getAllCoupons()"
+      (click)="getCoupons()"
     >
       Fetch All Coupons
     </button>
@@ -33,12 +43,14 @@
   <div *ngIf="activeTab === 'Get By ID'" class="space-y-4">
     <input
       [(ngModel)]="couponId"
+      name="getById_couponId"
       class="w-full border border-teal-300 rounded-md px-4 py-2"
       placeholder="Enter Coupon ID"
     />
     <button
+      type="button"
       class="bg-teal-600 text-white py-2 px-6 rounded-md hover:bg-teal-700 transition"
-      (click)="getCouponById()"
+      (click)="getCoupById()"
     >
       Fetch Coupon
     </button>
@@ -51,12 +63,14 @@
   <div *ngIf="activeTab === 'Delete'" class="space-y-4">
     <input
       [(ngModel)]="couponId"
+      name="delete_couponId"
       class="w-full border border-teal-300 rounded-md px-4 py-2"
       placeholder="Enter Coupon ID to delete"
     />
     <button
+      type="button"
       class="bg-red-600 text-white py-2 px-6 rounded-md hover:bg-red-700 transition"
-      (click)="deleteCoupon()"
+      (click)="deleteCoup()"
     >
       Delete Coupon
     </button>
@@ -66,42 +80,51 @@
   <div *ngIf="activeTab === 'Update'" class="space-y-4">
     <input
       [(ngModel)]="couponId"
+      name="update_couponId"
       class="w-full border border-teal-300 rounded-md px-4 py-2"
       placeholder="Coupon ID to Update"
     />
     <input
       [(ngModel)]="updateData.CouponCode"
+      name="update_couponCode"
       class="w-full border border-teal-300 rounded-md px-4 py-2"
       placeholder="New Code (optional)"
     />
     <input
       [(ngModel)]="updateData.CouponPercentage"
+      name="update_couponPercentage"
       type="number"
       class="w-full border border-teal-300 rounded-md px-4 py-2"
       placeholder="New Percentage (optional)"
     />
     <input
       [(ngModel)]="updateData.expirationDate"
+      name="update_expirationDate"
       type="date"
       class="w-full border border-teal-300 rounded-md px-4 py-2"
     />
     <input
       [(ngModel)]="updateData.maxUsageLimit"
+      name="update_maxUsageLimit"
       type="number"
       class="w-full border border-teal-300 rounded-md px-4 py-2"
       placeholder="Max Usage Limit (optional)"
     />
-    <label class="inline-flex items-center space-x-2">
-      <input
-        type="checkbox"
-        [(ngModel)]="updateData.isActive"
-        class="form-checkbox text-teal-600"
-      />
-      <span>Active</span>
-    </label>
+    <div>
+      <label class="inline-flex items-center space-x-2">
+        <input
+          type="checkbox"
+          [(ngModel)]="updateData.isActive"
+          name="update_isActive"
+          class="form-checkbox text-teal-600"
+        />
+        <span>Active</span>
+      </label>
+    </div>
     <button
+      type="button"
       class="bg-teal-600 text-white py-2 px-6 rounded-md hover:bg-teal-700 transition"
-      (click)="updateCoupon()"
+      (click)="updateCoup()"
     >
       Update Coupon
     </button>
@@ -111,37 +134,45 @@
   <div *ngIf="activeTab === 'Add New'" class="space-y-4">
     <input
       [(ngModel)]="newCoupon.CouponCode"
+      name="new_couponCode"
       class="w-full border border-teal-300 rounded-md px-4 py-2"
       placeholder="Coupon Code"
     />
     <input
       [(ngModel)]="newCoupon.CouponPercentage"
+      name="new_couponPercentage"
       type="number"
       class="w-full border border-teal-300 rounded-md px-4 py-2"
       placeholder="Percentage"
     />
     <input
       [(ngModel)]="newCoupon.expirationDate"
+      name="new_expirationDate"
       type="date"
       class="w-full border border-teal-300 rounded-md px-4 py-2"
     />
     <input
       [(ngModel)]="newCoupon.maxUsageLimit"
+      name="new_maxUsageLimit"
       type="number"
       class="w-full border border-teal-300 rounded-md px-4 py-2"
       placeholder="Max Usage Limit"
     />
-    <label class="inline-flex items-center space-x-2">
-      <input
-        type="checkbox"
-        [(ngModel)]="newCoupon.isActive"
-        class="form-checkbox text-teal-600"
-      />
-      <span>Active</span>
-    </label>
+    <div>
+      <label class="inline-flex items-center space-x-2">
+        <input
+          type="checkbox"
+          [(ngModel)]="newCoupon.isActive"
+          name="new_isActive"
+          class="form-checkbox text-teal-600"
+        />
+        <span>Active</span>
+      </label>
+    </div>
     <button
+      type="button"
       class="bg-teal-600 text-white py-2 px-6 rounded-md hover:bg-teal-700 transition"
-      (click)="addNewCoupon()"
+      (click)="addNewCoup()"
     >
       Create Coupon
     </button>
