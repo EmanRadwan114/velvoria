@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductsService {
-  private URL = 'http://127.0.0.1:7500';
+  private URL = environment.backUrl;
 
   constructor(private _HttpClient: HttpClient) {
     console.log(_HttpClient);
@@ -22,12 +23,12 @@ export class ProductsService {
   }
 
   //^ Get Product By Label
-  getProducdByLabel(label: string | null) {
+  getProductByLabel(label: string | null) {
     return this._HttpClient.get(`${this.URL}/products/label/${label}`);
   }
 
   //^ Get Product By Category
-  getProducdByCategory(category: string | null) {
+  getProductByCategory(category: string | null) {
     return this._HttpClient.get(`${this.URL}/products/category/${category}`);
   }
 
