@@ -29,6 +29,7 @@ export class ProfileComponent implements OnInit {
   passwordForm!: FormGroup;
 
   originalEmail: string = '';
+  role: string = '';
 
   successMessage: string | null = null;
   errorMessage: string | null = null;
@@ -51,10 +52,10 @@ export class ProfileComponent implements OnInit {
     });
 
     this.usersService.getUserProfile().subscribe((user) => {
-      console.log(user.name);
       this.originalEmail = user.email;
+      this.role = user.role;
 
-      this.personalInfoForm = this.fb.group({
+      const formConfig: any = {
         name: [user.name, [Validators.required, Validators.minLength(3)]],
         email: [
           user.email,
@@ -63,12 +64,17 @@ export class ProfileComponent implements OnInit {
             Validators.pattern(/^[\w.-]+@([\w-]+\.)+[a-zA-Z]{2,}$/),
           ],
         ],
-        address: [
+        image: [user.image || '', [Validators.required]],
+      };
+
+      if (user.role === 'user') {
+        formConfig.address = [
           user.address?.[user.address.length - 1] || '',
           [Validators.required],
-        ],
-        image: [user.image || '', [Validators.required]],
-      });
+        ];
+      }
+
+      this.personalInfoForm = this.fb.group(formConfig);
 
       this.passwordForm = this.fb.group({
         currentPassword: ['', [Validators.required]],
@@ -125,8 +131,14 @@ export class ProfileComponent implements OnInit {
   savePersonalInfo(): void {
     if (this.personalInfoForm.invalid) return;
 
-    const { name, email, address } = this.personalInfoForm.value;
-    this.usersService.updateUserProfile({ name, email, address }).subscribe({
+    const { name, email, image, address } = this.personalInfoForm.value;
+    const updatedData: any = { name, email, image };
+
+    if (this.role === 'user') {
+      updatedData.address = address;
+    }
+
+    this.usersService.updateUserProfile(updatedData).subscribe({
       next: () => {
         this.successMessage = 'Profile updated successfully.';
         this.errorMessage = null;
