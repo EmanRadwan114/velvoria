@@ -11,6 +11,7 @@
       <select
         class="appearance-none bg-gray-100 text-gray-600 text-sm font-bold w-full py-3 pl-4 pr-10 rounded-md focus:outline-none"
         [(ngModel)]="activeTab"
+        [ngModelOptions]="{ standalone: true }"
         (change)="onTabChange(activeTab)"
       >
         <option *ngFor="let tab of tabs" [value]="tab.key">
@@ -61,37 +62,21 @@
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
     <div class="grid grid-cols-2 gap-4 md:gap-6 order-2 md:order-1">
       <app-product-card
-        *ngFor="let product of products.slice(0, 4)"
-        [title]="product.title"
-        [description]="product.description"
-        [thumbnail]="product.thumbnail"
-        [price]="product.price"
+        *ngFor="let product of filteredList.slice(0, 4)"
+        [product]="product"
         class="h-[400px]"
       ></app-product-card>
     </div>
     <div class="order-1 md:order-2">
-      <app-product-card
-        [title]="products[4].title"
-        [description]="products[4].description"
-        [thumbnail]="products[4].thumbnail"
-        [price]="products[4].price"
-      ></app-product-card>
+      <app-product-card [product]="filteredList[4]"></app-product-card>
     </div>
     <div class="hidden md:block lg:hidden md:order-3">
-      <app-product-card
-        [title]="products[5].title"
-        [description]="products[5].description"
-        [thumbnail]="products[5].thumbnail"
-        [price]="products[5].price"
-      ></app-product-card>
+      <app-product-card [product]="filteredList[5]"></app-product-card>
     </div>
     <div class="grid grid-cols-2 gap-4 md:gap-6 order-4">
       <app-product-card
-        *ngFor="let product of products.slice(6, 10)"
-        [title]="product.title"
-        [description]="product.description"
-        [thumbnail]="product.thumbnail"
-        [price]="product.price"
+        *ngFor="let product of filteredList.slice(6, 10)"
+        [product]="product"
         class="h-[400px]"
       ></app-product-card>
     </div>
