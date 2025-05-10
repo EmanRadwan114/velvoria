@@ -34,7 +34,7 @@ export class HomeProductsComponent implements OnInit {
         this.products = res.data;
         this.filteredList = [...this.products];
       },
-      error: (err) => console.log(err),
+      error: (err:any) => console.log(err),
     });
   }
 
