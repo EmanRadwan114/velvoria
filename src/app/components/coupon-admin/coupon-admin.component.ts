@@ -1,118 +1,73 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CouponsService } from '../../../services/coupons.service';
+import { ModalComponent } from '../modal/modal.component';
 
 @Component({
   selector: 'app-coupon-admin',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ModalComponent],
   templateUrl: './coupon-admin.component.html',
   styleUrl: './coupon-admin.component.css',
 })
-export class CouponAdminComponent {
-  constructor(private coupServices: CouponsService) {}
-
-  tabs = ['Get All', 'Get By ID', 'Delete', 'Update', 'Add New'];
-  activeTab = 'Get All';
-
-  couponId = '';
+export class CouponAdminComponent implements OnInit {
   coupons: any[] = [];
-  couponData: any = null;
-  message = '';
-  error = '';
+  activeModal: 'getById' | 'update' | 'add' | null = null;
+  selectedId: string | null = null;
 
-  updateData = {
-    CouponCode: '',
-    CouponPercentage: null,
-    expirationDate: '',
-    maxUsageLimit: null,
-    isActive: true,
-  };
+  constructor(private couponsService: CouponsService) {}
 
-  newCoupon = {
-    CouponCode: '',
-    CouponPercentage: null,
-    expirationDate: '',
-    maxUsageLimit: null,
-    isActive: true,
-  };
+  ngOnInit(): void {
+    this.fetchCoupons();
+  }
 
-  addNewCoup() {
-    this.resetMessages();
-    this.coupServices.addCoupon(this.newCoupon).subscribe({
+  fetchCoupons() {
+    this.couponsService.getAllCoupons().subscribe({
       next: (res: any) => {
-        this.message = res.message || 'Coupon added successfully';
-        this.newCoupon = {
-          CouponCode: '',
-          CouponPercentage: null,
-          expirationDate: '',
-          maxUsageLimit: null,
-          isActive: true,
-        };
-        this.getCoupons();
+        this.coupons = res.data || res;
       },
       error: (err) => {
-        this.error = err.error?.message || 'Failed to add coupon';
+        console.error('Failed to fetch coupons', err);
       },
     });
   }
 
-  updateCoup() {
-    this.resetMessages();
-    this.coupServices.updateCoupon(this.couponId, this.updateData).subscribe({
-      next: (res: any) => {
-        this.message = res.message || 'Coupon updated successfully';
-        this.getCoupons();
-      },
-      error: (err) => {
-        this.error = err.error?.message || 'Failed to update coupon';
-      },
-    });
+  openModal(type: 'getById' | 'update' | 'add', id: string | null = null) {
+    this.activeModal = type;
+    this.selectedId = id;
   }
 
-  getCoupons() {
-    this.resetMessages();
-    this.coupServices.getAllCoupons().subscribe({
-      next: (res: any) => {
-        this.coupons = res.data || res; // depending on your API structure
-        this.message = 'Coupons fetched successfully';
-      },
-      error: (err) => {
-        this.error = err.error?.message || 'Failed to fetch coupons';
-      },
-    });
+  closeModal() {
+    this.activeModal = null;
+    this.selectedId = null;
   }
 
-  getCoupById() {
-    this.resetMessages();
-    this.coupServices.getCouponByID(this.couponId).subscribe({
-      next: (res: any) => {
-        this.couponData = res.data || res;
-        this.message = 'Coupon fetched successfully';
-      },
-      error: (err) => {
-        this.error = err.error?.message || 'Failed to fetch coupon by ID';
-        this.couponData = null;
-      },
-    });
+  deleteId: string | null = null;
+  showDeleteConfirm = false;
+
+  triggerDelete(id: string) {
+    this.deleteId = id;
+    this.showDeleteConfirm = true;
   }
 
-  deleteCoup() {
-    this.resetMessages();
-    this.coupServices.deleteCoupon(this.couponId).subscribe({
-      next: (res: any) => {
-        this.message = res.message || 'Coupon deleted successfully';
-        this.getCoupons();
-      },
-      error: (err) => {
-        this.error = err.error?.message || 'Failed to delete coupon';
-      },
-    });
+  confirmDelete() {
+    if (this.deleteId) {
+      this.couponsService.deleteCoupon(this.deleteId).subscribe({
+        next: () => {
+          this.fetchCoupons();
+          this.cancelDelete();
+        },
+        error: (err) => {
+          console.error('Failed to delete coupon', err);
+          this.cancelDelete();
+        },
+      });
+    }
   }
 
-  resetMessages() {
-    this.message = '';
-    this.error = '';
+  cancelDelete() {
+    this.showDeleteConfirm = false;
+    this.deleteId = null;
   }
 }

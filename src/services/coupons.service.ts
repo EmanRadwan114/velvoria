@@ -14,12 +14,16 @@ export class CouponsService {
 
   //^ Get All Coupons
   getAllCoupons() {
-    return this._HttpClient.get(`${this.URL}/coupons`);
+    return this._HttpClient.get(`${this.URL}/coupons`, {
+      withCredentials: true,
+    });
   }
 
   //^ Get Coupon By ID
-  getCouponByID(id: string | null) {
-    return this._HttpClient.get(`${this.URL}/coupons/${id}`);
+  getCouponById(id: string | null) {
+    return this._HttpClient.get(`${this.URL}/coupons/${id}`, {
+      withCredentials: true,
+    });
   }
 
   //^ Add New Coupon
