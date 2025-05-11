@@ -7,9 +7,10 @@ import {
 } from '@angular/router';
 import { NavbarComponent } from './components/sharedComponents/navbar/navbar.component';
 import { FooterComponent } from './components/sharedComponents/footer/footer.component';
+import { ToastComponent } from './components/sharedComponents/toast/toast.component';
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterModule, NavbarComponent, FooterComponent],
+  imports: [RouterOutlet, RouterModule, NavbarComponent, FooterComponent,ToastComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
