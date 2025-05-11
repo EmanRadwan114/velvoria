@@ -2,10 +2,10 @@
   class="group product-card bg-white shadow-md rounded-lg overflow-hidden w-full h-full relative"
 >
   <!-- Image -->
-  <a [routerLink]="['/furnitures', product._id]">
+  <a [routerLink]="['/furnitures', product?._id]">
     <img
-      [src]="product.thumbnail"
-      [alt]="product.title"
+      [src]="product?.thumbnail"
+      [alt]="product?.title"
       class="w-full h-[60%] object-cover hover:scale-105 transition-transform duration-300"
     />
   </a>
@@ -27,29 +27,29 @@
           ></i>
         </ng-container>
         <p class="ml-2 text-sm text-gray-500">
-          {{ product.avgRating }}/5 ({{ product.numberOfReviews }} reviews)
+          {{ product?.avgRating }}/5 ({{ product?.numberOfReviews }} reviews)
         </p>
       </div>
       <h2 class="mt-2 text-lg font-semibold text-gray-900 hover:text-teal-700">
-        {{ product.title }}
+        {{ product?.title }}
       </h2>
     </div>
     <h3 class="text-lg font-semibold text-gray-800 h-[10%]">
-      {{ product.price }} EGP
+      {{ product?.price }} EGP
     </h3>
   </div>
 
   <!-- Animated Tags -->
   <!-- Hot Tag -->
   <div
-    *ngIf="product.label?.includes('trendy')"
+    *ngIf="product?.label?.includes('trendy')"
     class="absolute top-2 left-0 transform -translate-x-full group-hover:translate-x-[10px] transition-transform duration-500 bg-orange-500 text-gray-50 w-18 px-2 text-center"
   >
     Trendy
   </div>
   <!-- Sale Tag -->
   <div
-    *ngIf="product.label?.includes('hot')"
+    *ngIf="product?.label?.includes('hot')"
     class="absolute top-2 right-0 bg-red-500 text-gray-50 w-18 px-2 text-center transform translate-x-full hover:border-none group-hover:translate-x-[-10px] transition-transform duration-500"
   >
     Hot
@@ -57,7 +57,7 @@
 
   <!-- New Arrival Tag -->
   <div
-    *ngIf="product.label?.includes('new')"
+    *ngIf="product?.label?.includes('new')"
     class="absolute top-12 left-0 transform -translate-x-full group-hover:translate-x-[10px] transition-transform duration-500 bg-green-500 text-gray-50 w-18 px-2 text-center"
   >
     New
