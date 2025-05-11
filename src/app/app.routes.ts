@@ -7,6 +7,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { ProductsCategoryComponent } from './components/products-category/products-category.component';
+import { DashboardComponent } from './components/dashboard/dashboard/dashboard.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -27,6 +28,8 @@ export const routes: Routes = [
   },
   { path: 'cart', component: CartComponent, title: 'Cart' },
   { path: 'search', component: SearchComponent, title: 'Search Results' },
+  // DASHBOARD
+  { path: 'dashboard', component: DashboardComponent, title: 'dashboard' },
   {
     path: 'register/user',
     component: RegisterComponent,
