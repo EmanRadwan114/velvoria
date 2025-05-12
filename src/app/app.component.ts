@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
   NavigationEnd,
@@ -29,20 +30,25 @@ export class AppComponent implements OnInit {
   constructor(private router: Router) {}
   ngOnInit(): void {
     this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        if (event.url.includes('/dashboard')) {
-          this.showSideBar = true;
-          this.showNavAndFoot=false
-        } else if (
-          event.url.includes('/register') ||
-          event.url.includes('/login') ||
-          event.url.includes('/dashboard') 
-        ) {
-          this.showNavAndFoot = false;
-        }
-      } else {
-        this.showNavAndFoot = true;
-      }
+       if (event instanceof NavigationEnd) {
+      const url = event.url;
+      this.showSideBar = url.includes('/dashboard');
+      this.showNavAndFoot = !url.includes('/login') && !url.includes('/register');
+    }
+      // if (event instanceof NavigationEnd) {
+      //   if (event.url.includes('/dashboard')) {
+      //     this.showSideBar = true;
+      //     this.showNavAndFoot=false
+      //   } else if (
+      //     event.url.includes('/register') ||
+      //     event.url.includes('/login') ||
+      //     event.url.includes('/dashboard') 
+      //   ) {
+      //     this.showNavAndFoot = false;
+      //   }
+      // } else {
+      //   this.showNavAndFoot = true;
+      // }
     });
   }
 }
