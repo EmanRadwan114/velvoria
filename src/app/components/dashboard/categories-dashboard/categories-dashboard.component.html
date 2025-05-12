@@ -1,4 +1,9 @@
 <div class="px-4">
+    <!-- Add Button -->
+      <div class="flex justify-end mb-4">
+        <button (click)="openModal('add')" class="btn-teal">Add New Coupon</button>
+      </div>
+  
   <div class="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3"   
   >
     <div
@@ -17,7 +22,7 @@
         <div class="relative space-y-1 p-4">
           <h4 class="text-lg text-teal-900 font-semibold">{{category.name}}</h4>
           <div class="relative  text-teal-700 text-sm ">
-            <div class="flex  gap-2 mt-4">
+            <div class="flex  gap-6 mt-4">
                 <a  href="#">
                   <i class="fa-solid fa-eye text-base hover:text-gray-800"></i>              </a>
                 <a  href="#">
@@ -31,4 +36,13 @@
     </div>
 
   </div>
+  
+  <!-- Reusable Modal Component -->
+ 
 </div>
+<!-- <app-modal
+  [activeModal]="activeModal"
+    [couponId]="selectedId"
+    (close)="closeModal()"
+    (refresh)="fetchCoupons()"
+/> -->
