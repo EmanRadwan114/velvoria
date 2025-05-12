@@ -2,79 +2,102 @@
   <div class="w-full overflow-auto">
     <div class="rounded-lg border border-gray-200 shadow-md">
       <table class="w-full table-auto">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-4 text-left">Image</th>
+            <th class="px-6 py-4 text-left">Name</th>
+            <th class="px-6 py-4 text-left">Description</th>
+            <th class="px-6 py-4 text-left">Price</th>
+            <th class="px-6 py-4"></th>
+          </tr>
+        </thead>
+        <tbody *ngIf="productsList.length > 0; else noData">
+          <tr *ngFor="let prd of productsList" class="hover:bg-gray-50">
+            <!-- Image & Title -->
+            <th class="flex gap-3 px-6 py-4 font-normal text-gray-900">
+              <div class="relative h-10 w-10">
+                <!-- thumbnail -->
+                <img
+                  class="h-full w-full rounded-lg object-cover object-center"
+                  [src]="prd.thumbnail"
+                  alt="{{ prd.title }}"
+                />
+              </div>
+              <div class="text-sm">
+                <!-- title -->
+                <div class="font-medium text-gray-700">{{ prd.title }}</div>
+                <!-- you could show material or category instead of brand -->
+                <div class="text-gray-400">{{ prd.material }}</div>
+              </div>
+            </th>
+        
+            <!-- Labels (e.g. hot, new arrival) -->
+            <td class="px-6 py-4">
+              <ng-container *ngFor="let tag of prd.label">
+                <!-- new -->
+                <span   *ngIf="tag.includes('new arrival')"
 
-<!-- <div class="h-dvh w-full overflow-hidden " > -->
-    <!-- <div class="table-container p-4"> -->
-        <!-- <div class="rounded-lg border border-gray-200 shadow-md m-3"> -->
-  <!-- <table class=" border-collapse bg-white text-left text-sm text-gray-500 min-w-full"> -->
-    <thead class="bg-gray-50">
-      <tr>
-        <th scope="col" class="px-6 py-4 font-medium text-gray-900">Name</th>
-        <th scope="col" class="px-6 py-4 font-medium text-gray-900">State</th>
-        <th scope="col" class="px-6 py-4 font-medium text-gray-900">Role</th>
-        <th scope="col" class="px-6 py-4 font-medium text-gray-900">Team</th>
-        <th scope="col" class="px-6 py-4 font-medium text-gray-900"></th>
-      </tr>
-    </thead>
-    <tbody class="divide-y divide-gray-100 border-t border-gray-100">
-      <tr class="hover:bg-gray-50">
-        <th class="flex gap-3 px-6 py-4 font-normal text-gray-900">
-          <div class="relative h-10 w-10">
-            <img
-              class="h-full w-full rounded-full object-cover object-center"
-              src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-              alt=""
-            />
-            <span class="absolute right-0 bottom-0 h-2 w-2 rounded-full bg-green-400 ring ring-white"></span>
-          </div>
-          <div class="text-sm">
-            <div class="font-medium text-gray-700">Steven Jobs</div>
-            <div class="text-gray-400">jobs.com</div>
-          </div>
-        </th>
-        <td class="px-6 py-4">
-          <span
-            class="inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-xs font-semibold text-green-600"
-          >
-            <span class="h-1.5 w-1.5 rounded-full bg-green-600"></span>
-            Active
-          </span>
-        </td>
-        <td class="px-6 py-4">Product Designer</td>
-        <td class="px-6 py-4">
-          <div class="flex gap-2">
-            <span
-              class="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2 py-1 text-xs font-semibold text-blue-600"
-            >
-              Design
-            </span>
-            <span
-              class="inline-flex items-center gap-1 rounded-full bg-indigo-50 px-2 py-1 text-xs font-semibold text-indigo-600"
-            >
-              Product
-            </span>
-            <span
-              class="inline-flex items-center gap-1 rounded-full bg-violet-50 px-2 py-1 text-xs font-semibold text-violet-600"
-            >
-              Develop
-            </span>
-          </div>
-        </td>
-        <td class="px-6 py-4">
-          <div class="flex justify-end gap-7">
-              <a  href="#">
-                <i class="fa-solid fa-eye text-xl"></i>              </a>
-              <a  href="#">
-                  <i class="fa-solid fa-pencil text-xl"></i>
-              </a>
-            <a  href="#">
-                <i class="fa-regular fa-trash-can text-xl"></i>
-            </a>
-          </div>
-        </td>
-      </tr>
+                class="inline-flex items-center gap-1 rounded-full bg-green-500 px-2 py-1 text-xs font-semibold text-gray-50 mr-1"
+              >
+                {{ tag }}
+              </span>
+                <!-- hot -->
+                <span   *ngIf="tag.includes('hot')"
 
-    </tbody>
-  </table>
-</div>
+                  class="inline-flex items-center gap-1 rounded-full bg-red-500 px-2 py-1 text-xs font-semibold text-gray-50 mr-1"
+                >
+                  {{ tag }}
+                </span>
+
+                <!-- trendy -->
+                <span   *ngIf="tag.includes('trendy')"
+
+                class="inline-flex items-center gap-1 rounded-full bg-orange-500 px-2 py-1 text-xs font-semibold text-gray-50 mr-1"
+              >
+                {{ tag }}
+              </span>
+              </ng-container>
+            </td>
+        
+            <!-- Description -->
+            <td class="px-6 py-4">
+              {{ prd.description | slice:0:50 }}{{ prd.description.length > 200 ? '...' : '' }}
+            </td>
+        
+            <!-- Price -->
+            <td class="px-6 py-4">
+              {{ prd.price | currency:'USD':'symbol' }}
+            </td>
+        
+            <!-- Action buttons -->
+            <td class="px-6 py-4">
+              <div class="flex justify-end gap-4">
+                <i class="fa-solid fa-eye cursor-pointer"></i>
+                <i class="fa-solid fa-pencil cursor-pointer"></i>
+                <i class="fa-regular fa-trash-can cursor-pointer"></i>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+        
+        <ng-template #noData>
+          <tr>
+            <td colspan="5" class="px-6 py-4 text-center text-gray-500">
+              No products available.
+            </td>
+          </tr>
+        </ng-template>
+        
+        <ng-template #noData>
+          <tbody>
+            <tr>
+              <td colspan="5" class="px-6 py-4 text-center text-gray-500">
+                No products available.
+              </td>
+            </tr>
+          </tbody>
+        </ng-template>
+      </table>
+    </div>
+  </div>
 </div>
