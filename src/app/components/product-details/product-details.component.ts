@@ -21,7 +21,7 @@ export class ProductDetailsComponent implements OnInit {
   private readonly _CategoriesService = inject(CategoriesService);
   private readonly _WishlistService = inject(WishlistService);
   private _ToastService = inject(ToastService);
-
+  isInWishlist=false;
   mainImage: string = '';
   detailsProduct: any = {};
   categoryID: string = '';
@@ -55,40 +55,40 @@ export class ProductDetailsComponent implements OnInit {
           });
       });
   }
-}
 
-this._ActivatedRoute.paramMap.subscribe({
-      next: (p) => {
-        this.productID = p.get('id');
 
-        // Call API For Specific Product
-        this._ProductsService.getSpecificProduct(this.productID).subscribe({
-          next: (res: any) => {
-            console.log(res.data);
-            this.detailsProduct = res.data[0];
-            this.mainImage = this.detailsProduct.thumbnail;
-            this.categoryID = this.detailsProduct.categoryID;
-          },
-          error: (err) => {
-            console.log(err);
-          },
-        });
-        // get category name
-        this._CategoriesService.getSpecificCategry(this.categoryID).subscribe({
-          next: (res: any) => {
-            this.category = res.data[0];
-            this.categoryName = this.category.name;
-          },
-          error: (err) => {
-            console.log(err);
-          },
-        });
-      },
-    });
-  }
+// this._ActivatedRoute.paramMap.subscribe({
+//       next: (p) => {
+//         this.productID = p.get('id');
+
+//         // Call API For Specific Product
+//         this._ProductsService.getSpecificProduct(this.productID).subscribe({
+//           next: (res: any) => {
+//             console.log(res.data);
+//             this.detailsProduct = res.data[0];
+//             this.mainImage = this.detailsProduct.thumbnail;
+//             this.categoryID = this.detailsProduct.categoryID;
+//           },
+//           error: (err) => {
+//             console.log(err);
+//           },
+//         });
+//         // get category name
+//         this._CategoriesService.getSpecificCategry(this.categoryID).subscribe({
+//           next: (res: any) => {
+//             this.category = res.data[0];
+//             this.categoryName = this.category.name;
+//           },
+//           error: (err) => {
+//             console.log(err);
+//           },
+//         });
+//       },
+//     });
+  
 
   //add to wishlist
-  isInWishlist=false;
+
   addToWishList(): void {
     this._WishlistService.addToWishlist(this.productID).subscribe({
       next: (res: any) => {
