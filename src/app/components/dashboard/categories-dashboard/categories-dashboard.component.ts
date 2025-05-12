@@ -1,12 +1,18 @@
 import { filter } from 'rxjs';
 import { Component, inject, OnInit } from '@angular/core';
 import { CategoriesService } from '../../../../services/categories.service';
-import { FormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  Validators,
+} from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { CategoriesModalComponent } from '../../modals/categories-modal/categories-modal.component';
 
 @Component({
   selector: 'app-categories-dashboard',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, CategoriesModalComponent],
   templateUrl: './categories-dashboard.component.html',
   styleUrl: './categories-dashboard.component.css',
 })
@@ -14,14 +20,26 @@ export class CategoriesDashboardComponent implements OnInit {
   private readonly _CategoryServices = inject(CategoriesService);
   categoriesList: any[] = [];
   editingCategory: any = null;
+
   activeModal: 'getById' | 'update' | 'add' | null = null;
   selectedId: string | null = null;
+  selectedCategory: any = null;
+  categoryForm: FormGroup;
+  loading = false;
 
-  constructor(private _CategoryService: CategoriesService) {}
+  constructor(
+    private fb: FormBuilder,
+    private categoriesService: CategoriesService
+  ) {
+    this.categoryForm = this.fb.group({
+      name: ['', Validators.required],
+      thumbnail: ['', Validators.required],
+    });
+  }
+
   ngOnInit(): void {
     this.fetchCategories();
   }
-
   fetchCategories() {
     this._CategoryServices.getAllCategories().subscribe({
       next: (res: any) => {
@@ -33,49 +51,118 @@ export class CategoriesDashboardComponent implements OnInit {
       },
     });
   }
-  deleteCategory(categoryID: string): void {
-    const confirmed = confirm('Are you sure you want to delete this category?');
-    if (confirmed) {
-      this._CategoryServices.deleteCategory(categoryID).subscribe({
-        next: () => {
-          this.categoriesList = this.categoriesList.filter(
-            (category: any) => category._id !== categoryID
-          );
-        },
-        error: (err) => {
-          console.log('delete failed', err);
-        },
-      });
-    }
-  }
+  // deleteCategory(categoryID: string): void {
+  //   const confirmed = confirm('Are you sure you want to delete this category?');
+  //   if (confirmed) {
+  //     this._CategoryServices.deleteCategory(categoryID).subscribe({
+  //       next: () => {
+  //         this.categoriesList = this.categoriesList.filter(
+  //           (category: any) => category._id !== categoryID
+  //         );
+  //       },
+  //       error: (err) => {
+  //         console.log('delete failed', err);
+  //       },
+  //     });
+  //   }
+  // }
 
-  // Open the modal for adding a new category
   openModal(type: 'add' | 'update' | 'getById', id: string | null = null) {
     this.activeModal = type;
     this.selectedId = id;
 
-    // If we are opening the modal for editing or viewing, we fetch the category data
-    if (type === 'update' || type === 'getById') {
-      this.fetchCategoryById(id);
+    if (type === 'add') {
+      this.selectedCategory = null;
+      this.categoryForm.reset();
+    } else if (type === 'update' && id) {
+      this.loading = true;
+      this.categoriesService.getSpecificCategry(id).subscribe({
+        next: (res: any) => {
+          this.selectedCategory = res.data;
+          this.categoryForm.patchValue({
+            name: res.data.name,
+            thumbnail: res.data.thumbnail,
+          });
+          this.loading = false;
+        },
+        error: () => (this.loading = false),
+      });
     }
   }
 
-  // Fetch category by ID (for update or view)
-  fetchCategoryById(id: string | null) {
-    if (id) {
-      this._CategoryServices.getSpecificCategry(id).subscribe({
-        next: (res: any) => {
-          console.log(res.data);
+  closeModal() {
+    this.activeModal = null;
+    this.selectedId = null;
+    this.selectedCategory = null;
+  }
+
+  // deleteCategory(categoryID: string): void {
+  //   const confirmed = confirm('Are you sure you want to delete this category?');
+  //   if (confirmed) {
+  //     this.categoriesService.deleteCategory(categoryID).subscribe({
+  //       next: () => {
+  //         this.categoriesList = this.categoriesList.filter(
+  //           (category: any) => category._id !== categoryID
+  //         );
+  //       },
+  //       error: (err) => {
+  //         console.log('delete failed', err);
+  //       },
+  //     });
+  //   }
+  // }
+
+  submitForm() {
+    if (this.categoryForm.invalid) return;
+
+    const formData = this.categoryForm.value;
+
+    if (this.activeModal === 'add') {
+      this.categoriesService.addCategory(formData).subscribe({
+        next: () => {
+          this.fetchCategories();
+          this.closeModal();
         },
-        error: (err: any) => {
-          console.log('Failed to fetch category data:', err);
+        error: (err) => console.log(err),
+      });
+    } else if (this.activeModal === 'update' && this.selectedId) {
+      this.categoriesService
+        .updateCategory(this.selectedId, formData)
+        .subscribe({
+          next: () => {
+            this.fetchCategories();
+            this.closeModal();
+          },
+          error: (err) => console.log(err),
+        });
+    }
+  }
+
+  deleteId: string | null = null;
+  showDeleteConfirm = false;
+
+  triggerDelete(id: string) {
+    this.deleteId = id;
+    this.showDeleteConfirm = true;
+  }
+
+  confirmDelete() {
+    if (this.deleteId) {
+      this.categoriesService.deleteCategory(this.deleteId).subscribe({
+        next: () => {
+          this.fetchCategories();
+          this.cancelDelete();
+        },
+        error: (err:any) => {
+          console.error('Failed to delete coupon', err);
+          this.cancelDelete();
         },
       });
     }
   }
-  // Close the modal
-  closeModal() {
-    this.activeModal = null;
-    this.selectedId = null;
+
+  cancelDelete() {
+    this.showDeleteConfirm = false;
+    this.deleteId = null;
   }
 }

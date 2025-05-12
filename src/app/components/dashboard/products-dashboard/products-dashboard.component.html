@@ -84,9 +84,16 @@
             <!-- Action buttons -->
             <td class="px-6 py-4">
               <div class="flex justify-end gap-4">
-                <i class="fa-solid fa-eye cursor-pointer"></i>
-                <i class="fa-solid fa-pencil cursor-pointer"></i>
-                <i class="fa-regular fa-trash-can cursor-pointer"></i>
+                <button   (click)="openModal('getById', prd._id)"
+                <i class="fa-solid fa-eye cursor-pointer text-lg  text-gray-900"></i>
+ 
+                ></button>
+                <button (click)="openModal('update', prd._id)">
+                  <i class="fa-solid fa-pencil cursor-pointer text-lg text-blue-900"></i>
+                </button>
+                <button (click)="triggerDelete(prd._id)">
+                <i class="fa-regular fa-trash-can cursor-pointer text-lg text-red-800"></i>
+              </button>
               </div>
             </td>
           </tr>

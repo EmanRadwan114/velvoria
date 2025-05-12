@@ -1,1 +1,118 @@
-<p>categories-modal works!</p>
+<!-- Overlay -->
+<div
+  *ngIf="activeModal"
+  class="fixed inset-0 z-50 bg-[rgba(0,0,0,0.6)] flex items-center justify-center p-4 transition-opacity duration-300 ease-in-out"
+  (click)="closeModal()"
+>
+  <!-- Modal Container -->
+  <div
+    class="bg-white w-full max-w-md rounded-xl p-6 space-y-4 relative"
+    (click)="$event.stopPropagation()"
+  >
+    <!-- Close Button -->
+    <button
+      (click)="closeModal()"
+      class="absolute top-3 right-3 text-gray-600 hover:text-gray-800 hover:bg-[rgba(0,0,0,0.15)] p-1 px-2 rounded-lg"
+    >
+      ✕
+    </button>
+
+    <!-- ADD or UPDATE FORM -->
+    <form
+      *ngIf="activeModal === 'add' || activeModal === 'update'"
+      [formGroup]="categoryForm"
+      (ngSubmit)="submitForm()"
+    >
+      <h2 class="text-2xl font-bold text-teal-600 mb-4 border-b pb-2">
+        {{ activeModal === "add" ? "Add New Category" : "Update Category" }}
+      </h2>
+
+      <div class="space-y-2.5">
+        <!-- Category Name -->
+        <div>
+          <label class="block mb-1 text-teal-900 font-medium">Category Name</label>
+          <input
+            class="input"
+            type="text"
+            placeholder="Enter category name"
+            formControlName="categoryName"
+          />
+          <div
+            *ngIf="categoryForm.get('categoryName')?.invalid && categoryForm.get('categoryName')?.touched"
+            class="text-red-500 text-sm mt-1"
+          >
+            <ng-container
+              *ngIf="categoryForm.get('categoryName')?.errors?.['required']; else patternError"
+            >
+              Category Name is required.
+            </ng-container>
+            <ng-template #patternError>
+              Category Name must include letters.
+            </ng-template>
+          </div>
+        </div>
+
+        <!-- Thumbnail -->
+        <div>
+          <label class="block mb-1 text-teal-900 font-medium">Category Thumbnail</label>
+          <input
+            class="input"
+            type="text"
+            placeholder="Enter thumbnail URL"
+            formControlName="categoryThumbnail"
+          />
+          <div
+            *ngIf="categoryForm.get('categoryThumbnail')?.invalid && categoryForm.get('categoryThumbnail')?.touched"
+            class="text-red-500 text-sm mt-1"
+          >
+            <ng-container
+              *ngIf="categoryForm.get('categoryThumbnail')?.errors?.['required']; else patternError"
+            >
+              Thumbnail is required.
+            </ng-container>
+            <ng-template #patternError>
+              Please provide a valid thumbnail URL.
+            </ng-template>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button
+          type="submit"
+          class="btn-teal w-full"
+          [disabled]="categoryForm.invalid"
+        >
+          {{ activeModal === "add" ? "Add Category" : "Update Category" }}
+        </button>
+      </div>
+    </form>
+
+    <!-- SHOW CATEGORY DETAILS -->
+    <div *ngIf="activeModal === 'getById' && categoryData" class="space-y-4">
+      <h2 class="text-2xl font-bold text-teal-600 border-b pb-2">
+        Category Details
+      </h2>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-gray-800">
+        <!-- Category Name -->
+        <div class="p-3 border-2 border-teal-500 rounded-lg bg-gray-50 shadow-sm">
+          <span class="font-semibold text-teal-800">Name:</span>
+          <div class="mt-1 text-base text-black">{{ categoryData.name }}</div>
+        </div>
+
+        <!-- Thumbnail -->
+        <div class="p-3 border-2 border-teal-500 rounded-lg bg-gray-50 shadow-sm">
+          <span class="font-semibold text-teal-800">Thumbnail:</span>
+          <div class="mt-1 text-base text-black">
+            <img src="{{ categoryData.thumbnail }}" alt="Category Thumbnail" />
+          </div>
+        </div>
+
+     
+      </div>
+    </div>
+
+    <!-- LOADING -->
+    <div *ngIf="loading" class="text-center text-gray-500">Loading...</div>
+  </div>
+</div>
