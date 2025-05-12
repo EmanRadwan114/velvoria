@@ -1,13 +1,17 @@
 <div class="p-4">
-  <div class="w-full overflow-auto">
-    <div class="rounded-lg border border-gray-200 shadow-md">
-      <table class="w-full table-auto">
+  <div class="w-full overflow-x-auto">
+    <div
+      class="min-w-[800px] md:min-w-full rounded-lg border border-gray-200 shadow-md"
+    >
+      <table class="w-full table-auto text-sm md:text-base">
         <thead class="bg-gray-50">
           <tr>
             <th class="px-6 py-4 text-left">Image</th>
-            <th class="px-6 py-4 text-left">Name</th>
+            <th class="px-6 py-4 text-left">Labels</th>
             <th class="px-6 py-4 text-left">Description</th>
-            <th class="px-6 py-4 text-left">Price</th>
+            <th class="px-3 py-2 text-center">Stock</th>
+            <th class="px-3 py-2 text-center">Category</th>
+            <th class="px-3 py-2 text-center">Price</th>
             <th class="px-6 py-4"></th>
           </tr>
         </thead>
@@ -30,45 +34,53 @@
                 <div class="text-gray-400">{{ prd.material }}</div>
               </div>
             </th>
-        
+
             <!-- Labels (e.g. hot, new arrival) -->
             <td class="px-6 py-4">
               <ng-container *ngFor="let tag of prd.label">
                 <!-- new -->
-                <span   *ngIf="tag.includes('new arrival')"
-
-                class="inline-flex items-center gap-1 rounded-full bg-green-500 px-2 py-1 text-xs font-semibold text-gray-50 mr-1"
-              >
-                {{ tag }}
-              </span>
+                <span
+                  *ngIf="tag.includes('new arrival')"
+                  class="inline-flex items-center gap-1 rounded-full bg-green-500 px-2 py-1 text-xs font-semibold text-gray-50 mr-1"
+                >
+                  {{ tag }}
+                </span>
                 <!-- hot -->
-                <span   *ngIf="tag.includes('hot')"
-
+                <span
+                  *ngIf="tag.includes('hot')"
                   class="inline-flex items-center gap-1 rounded-full bg-red-500 px-2 py-1 text-xs font-semibold text-gray-50 mr-1"
                 >
                   {{ tag }}
                 </span>
 
                 <!-- trendy -->
-                <span   *ngIf="tag.includes('trendy')"
-
-                class="inline-flex items-center gap-1 rounded-full bg-orange-500 px-2 py-1 text-xs font-semibold text-gray-50 mr-1"
-              >
-                {{ tag }}
-              </span>
+                <span
+                  *ngIf="tag.includes('trendy')"
+                  class="inline-flex items-center gap-1 rounded-full bg-orange-500 px-2 py-1 text-xs font-semibold text-gray-50 mr-1"
+                >
+                  {{ tag }}
+                </span>
               </ng-container>
             </td>
-        
+
             <!-- Description -->
             <td class="px-6 py-4">
-              {{ prd.description | slice:0:50 }}{{ prd.description.length > 200 ? '...' : '' }}
+              {{ prd.description | slice : 0 : 50
+              }}{{ prd.description.length > 200 ? "..." : "" }}
             </td>
-        
+            <!-- Stock -->
+            <td class="px-3 py-2 text-center">
+              {{ prd.stock }}
+            </td>
+            <!-- category -->
+            <td class="px-3 py-2 text-center">
+              {{ prd.categoryName }}
+            </td>
             <!-- Price -->
             <td class="px-6 py-4">
-              {{ prd.price | currency:'USD':'symbol' }}
+              {{ prd.price | currency : "EGP" : "symbol" }}
             </td>
-        
+
             <!-- Action buttons -->
             <td class="px-6 py-4">
               <div class="flex justify-end gap-4">
@@ -79,7 +91,7 @@
             </td>
           </tr>
         </tbody>
-        
+
         <ng-template #noData>
           <tr>
             <td colspan="5" class="px-6 py-4 text-center text-gray-500">
@@ -87,12 +99,12 @@
             </td>
           </tr>
         </ng-template>
-        
+
         <ng-template #noData>
           <tbody>
             <tr>
               <td colspan="5" class="px-6 py-4 text-center text-gray-500">
-                No products available.
+                loading products ..
               </td>
             </tr>
           </tbody>
