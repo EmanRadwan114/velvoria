@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { TogglePasswordDirective } from '../../../directives/toggle-password.directive';
-import axios from 'axios';
+import { HttpClient } from '@angular/common/http';
 import {
   FormControl,
   FormGroup,
@@ -10,6 +10,7 @@ import {
 } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
 import { UsersService } from '../../../services/users.service';
+import { environment } from '../../../environments/environment';
 @Component({
   selector: 'app-register',
   imports: [
@@ -25,7 +26,7 @@ export class RegisterComponent {
   signUp = false;
   showAlert = false;
   message = '';
-  constructor(public router: Router) {}
+  constructor(public router: Router, private http: HttpClient) {}
   userData = new FormGroup({
     name: new FormControl(null, [Validators.required, Validators.minLength(3)]),
     email: new FormControl(null, [
@@ -60,7 +61,8 @@ export class RegisterComponent {
   }
   addUser() {
     if (!this.userData.valid || !this.passwordsMatch) {
-      alert('You must fill registration form');
+      this.message = 'you must fill registration form';
+      this.clickA();
     } else {
       const fullUrl = this.router.url;
       console.log(fullUrl); //user or admin
@@ -70,17 +72,20 @@ export class RegisterComponent {
         password: this.userData.controls.password.value,
         role: fullUrl.includes('user') ? 'user' : 'admin',
       };
-      axios
-        .post('http://127.0.0.1:7500/auth/register', user)
-        .then((res) => {
-          if (res.data) {
-            this.signUp = true;
-          }
+      this.http
+        .post(`${environment.backUrl}/auth/register`, user, {
+          withCredentials: true,
         })
-        .catch((err) => {
-          this.message = err.response.data.message;
-          this.clickA();
-          // console.log();
+        .subscribe({
+          next: (res) => {
+            if (res) {
+              this.signUp = true;
+            }
+          },
+          error: (err) => {
+            this.message = err.error.message;
+            this.clickA();
+          },
         });
     }
   }

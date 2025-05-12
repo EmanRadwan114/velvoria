@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { TogglePasswordDirective } from '../../../directives/toggle-password.directive';
-import axios from 'axios';
+
 import {
   FormControl,
   FormGroup,
@@ -9,6 +9,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +26,7 @@ import { RouterLink, Router } from '@angular/router';
 export class LoginComponent {
   showAlert = false;
   message = '';
-  constructor(public router: Router) {}
+  constructor(public router: Router, private http: HttpClient) {}
   userData = new FormGroup({
     email: new FormControl(null, [
       Validators.required,
@@ -45,7 +47,8 @@ export class LoginComponent {
   }
   addUser() {
     if (!this.userData.valid) {
-      alert('You must fill login form');
+      this.message = 'you must fill login form';
+      this.clickA();
     } else {
       const fullUrl = this.router.url;
       console.log(fullUrl); //user or admin
@@ -53,16 +56,21 @@ export class LoginComponent {
         email: this.userData.controls.email.value,
         password: this.userData.controls.password.value,
       };
-      axios
-        .post('http://127.0.0.1:7500/auth/login', user)
-        .then((res) => {
-          if (res.data) {
-            this.router.navigate(['/home']);
-          }
+      this.http
+        .post(`${environment.backUrl}/auth/login`, user, {
+          withCredentials: true,
         })
-        .catch((err) => {
-          this.message = err.response.data.message;
-          this.clickA();
+        .subscribe({
+          next: (res) => {
+            if (res) {
+              this.router.navigate(['/home']);
+            }
+          },
+          error: (err) => {
+            console.log(err);
+            this.message = err.error.message;
+            this.clickA();
+          },
         });
     }
   }
