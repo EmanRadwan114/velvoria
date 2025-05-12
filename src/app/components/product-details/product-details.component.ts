@@ -7,10 +7,16 @@ import { ReviewsComponent } from '../reviews/reviews.component';
 import { WishlistService } from '../../../services/wishlist.service';
 import { ToastComponent } from '../sharedComponents/toast/toast.component';
 import { ToastService } from '../../../services/toast.service';
+import { RelatedProdComponent } from '../related-prod/related-prod.component';
 
 @Component({
   selector: 'app-product-details',
-  imports: [CommonModule, ReviewsComponent, ToastComponent],
+  imports: [
+    CommonModule,
+    ReviewsComponent,
+    ToastComponent,
+    RelatedProdComponent,
+  ],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.css',
 })
