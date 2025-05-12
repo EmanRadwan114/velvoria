@@ -32,6 +32,7 @@ export class CouponsModalComponent implements OnChanges {
   couponForm!: FormGroup;
   couponData: any;
   loading = false;
+  isClosing = false;
 
   constructor(private fb: FormBuilder, private service: CouponsService) {}
 
@@ -128,9 +129,11 @@ export class CouponsModalComponent implements OnChanges {
   }
 
   closeModal() {
+    this.isClosing = true;
     this.close.emit();
     this.couponForm?.reset();
     this.couponData = null;
     this.loading = false;
+    this.isClosing = false;
   }
 }
