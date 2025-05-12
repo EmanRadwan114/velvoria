@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { TogglePasswordDirective } from '../../../directives/toggle-password.directive';
-
+import { AuthService } from '../../../services/auth.service';
 import {
   FormControl,
   FormGroup,
@@ -26,7 +26,11 @@ import { environment } from '../../../environments/environment';
 export class LoginComponent {
   showAlert = false;
   message = '';
-  constructor(public router: Router, private http: HttpClient) {}
+  constructor(
+    public router: Router,
+    private http: HttpClient,
+    private authService: AuthService
+  ) {}
   userData = new FormGroup({
     email: new FormControl(null, [
       Validators.required,
@@ -35,7 +39,7 @@ export class LoginComponent {
     password: new FormControl(null, [
       Validators.required,
       Validators.pattern(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@_$-])[A-Za-z\d@_$-]{8,}$/g
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@_$-])[A-Za-z\d@_$-]{8,}$/
       ),
     ]),
   });
@@ -43,6 +47,7 @@ export class LoginComponent {
     return this.userData.controls.email;
   }
   get validPassword() {
+    console.log(this.userData.controls.password);
     return this.userData.controls.password;
   }
   addUser() {
@@ -61,8 +66,10 @@ export class LoginComponent {
           withCredentials: true,
         })
         .subscribe({
-          next: (res) => {
+          next: (res: any) => {
             if (res) {
+              localStorage.setItem('user', JSON.stringify(res.user));
+              this.authService.notifyLogin();
               this.router.navigate(['/home']);
             }
           },
