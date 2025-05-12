@@ -1,54 +1,73 @@
-import { Component } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { CouponsService } from '../../../services/coupons.service';
+import { ModalComponent } from '../modal/modal.component';
 
 @Component({
   selector: 'app-coupon-admin',
-  imports: [CommonModule, FormsModule],
+  standalone: true,
+  imports: [CommonModule, FormsModule, ModalComponent],
   templateUrl: './coupon-admin.component.html',
   styleUrl: './coupon-admin.component.css',
 })
-export class CouponAdminComponent {
-  tabs = ['Get All', 'Get By ID', 'Delete', 'Update', 'Add New'];
-  activeTab = 'Get All';
-
-  couponId = '';
+export class CouponAdminComponent implements OnInit {
   coupons: any[] = [];
-  couponData: any = null;
+  activeModal: 'getById' | 'update' | 'add' | null = null;
+  selectedId: string | null = null;
 
-  updateData = {
-    CouponCode: '',
-    CouponPercentage: null,
-    expirationDate: '',
-    maxUsageLimit: null,
-    isActive: true,
-  };
+  constructor(private couponsService: CouponsService) {}
 
-  newCoupon = {
-    CouponCode: '',
-    CouponPercentage: null,
-    expirationDate: '',
-    maxUsageLimit: null,
-    isActive: true,
-  };
+  ngOnInit(): void {
+    this.fetchCoupons();
+  }
 
-  // Implement the corresponding service methods for:
+  fetchCoupons() {
+    this.couponsService.getAllCoupons().subscribe({
+      next: (res: any) => {
+        this.coupons = res.data || res;
+      },
+      error: (err) => {
+        console.error('Failed to fetch coupons', err);
+      },
+    });
+  }
 
-  // Functions like:
-  addNewCoupon() {
-    /* service call */
+  openModal(type: 'getById' | 'update' | 'add', id: string | null = null) {
+    this.activeModal = type;
+    this.selectedId = id;
   }
-  updateCoupon() {
-    /* needs couponData.id */
+
+  closeModal() {
+    this.activeModal = null;
+    this.selectedId = null;
   }
-  getAllCoupons() {
-    /* sets list */
+
+  deleteId: string | null = null;
+  showDeleteConfirm = false;
+
+  triggerDelete(id: string) {
+    this.deleteId = id;
+    this.showDeleteConfirm = true;
   }
-  getCouponById() {
-    /* uses targetCouponId */
+
+  confirmDelete() {
+    if (this.deleteId) {
+      this.couponsService.deleteCoupon(this.deleteId).subscribe({
+        next: () => {
+          this.fetchCoupons();
+          this.cancelDelete();
+        },
+        error: (err) => {
+          console.error('Failed to delete coupon', err);
+          this.cancelDelete();
+        },
+      });
+    }
   }
-  deleteCoupon() {
-    /* uses targetCouponId */
+
+  cancelDelete() {
+    this.showDeleteConfirm = false;
+    this.deleteId = null;
   }
 }
