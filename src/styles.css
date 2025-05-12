@@ -190,3 +190,11 @@ button {
 .swiper-button-prev {
   color: #0f766e; /* Tailwind teal-700 */
 }
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
