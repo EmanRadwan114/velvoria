@@ -22,14 +22,15 @@ export class ProductDetailsComponent implements OnInit {
   categoryID: string = '';
   categoryName: string = '';
   category: any = {};
+  productID: any = '';
 
   ngOnInit(): void {
     this._ActivatedRoute.paramMap.subscribe({
       next: (p) => {
-        let productID = p.get('id');
+        this.productID = p.get('id');
 
         // Call API For Specific Product
-        this._ProductsService.getSpecificProduct(productID).subscribe({
+        this._ProductsService.getSpecificProduct(this.productID).subscribe({
           next: (res: any) => {
             console.log(res.data);
             this.detailsProduct = res.data[0];
