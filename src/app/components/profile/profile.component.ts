@@ -9,6 +9,9 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -41,7 +44,9 @@ export class ProfileComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private usersService: UsersService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private http: HttpClient,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -168,6 +173,19 @@ export class ProfileComponent implements OnInit {
           this.passwordErrorMessage =
             err.error?.message || 'Failed to update password.';
           this.passwordSuccessMessage = null;
+        },
+      });
+  }
+  signOut() {
+    this.http
+      .post(`${environment.backUrl}/auth/logout`, null, {
+        withCredentials: true,
+      })
+      .subscribe({
+        next: (res: any) => {
+          localStorage.removeItem('user');
+          this.authService.notifyLogout();
+          this.router.navigate(['/login/user']);
         },
       });
   }
