@@ -9,21 +9,31 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './filteration.component.css',
 })
 export class FilterationComponent {
-  materials: string[] = [];
-  colors: string[] = [];
+  materials: string[] = [
+    'All',
+    'Wood',
+    'Leather',
+    'Rattan',
+    'Metal',
+    'Fabric',
+    'Glass',
+    'Plastic',
+  ];
+  colors: string[] = ['White','Beige ','Brown', "Gray","Black",'Blue','Green','Red','Pink','Teal'];
 
   material = 'all';
   color = 'all';
-  price = 6000;
-  minPrice = 0;
-  maxPrice = 30000;
+  minPrice: number = 200;
+  maxPrice: number = 20000;
+
+  price: number = this.maxPrice;
 
   @Output() filterChanged = new EventEmitter<any>();
 
   onFilterChange() {
     const filterQuery = {
-      material: this.material !== 'all' ? this.material : null,
-      color: this.color !== 'all' ? this.color : null,
+      material: this.material !== 'all' ? this.material.toLowerCase() : null,
+      color: this.color !== 'all' ? this.color.toLowerCase() : null,
       price: this.price,
     };
     console.log('Filteration emits:', filterQuery);
