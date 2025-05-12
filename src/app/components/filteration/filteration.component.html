@@ -20,19 +20,48 @@
   >
     <legend class="fieldset-legend"></legend>
     <label class="label">
-      <input type="checkbox" checked="checked" class="checkbox" />
+      <input
+        type="radio"
+        class="radio"
+        checked="checked"
+        name="material"
+        value="all"
+        [(ngModel)]="material"
+        (change)="onFilterChange()"
+      />
       All Materials
     </label>
     <label class="label">
-      <input type="checkbox" class="checkbox" />
+      <input
+        type="radio"
+        class="radio"
+        name="material"
+        value="metal"
+        [(ngModel)]="material"
+        (change)="onFilterChange()"
+      />
       Metal
     </label>
     <label class="label">
-      <input type="checkbox" class="checkbox" />
+      <input
+        type="radio"
+        class="radio"
+        value="leather"
+        name="material"
+        (change)="onFilterChange()"
+        [(ngModel)]="material"
+      />
       leather
     </label>
     <label class="label">
-      <input type="checkbox" class="checkbox" />
+      <input
+        type="radio"
+        class="radio"
+        value="wood"
+        [(ngModel)]="material"
+        name="material"
+        (change)="onFilterChange()"
+      />
       Wood
     </label>
   </fieldset>
@@ -44,6 +73,37 @@
   >
     Color
   </h2>
+  <fieldset
+    class="fieldset bg-base-100 border-base-300 text-lg rounded-box w-[50%] text border p-4"
+  >
+    <legend class="fieldset-legend"></legend>
+    <label class="label">
+      <input
+        type="radio"
+        checked="checked"
+        class="radio"
+        value="all"
+        [(ngModel)]="color"
+      
+      />
+      All colors
+    </label>
+    <label class="label">
+      <input type="radio" class="radio" [(ngModel)]="color" value="black"   name="color"
+      (change)="onFilterChange()">/>
+      black
+    </label>
+    <label class="label">
+      <input type="radio" class="radio" [(ngModel)]="color" value="gray"   name="color"
+      (change)="onFilterChange()">/>
+      gray
+    </label>
+    <label class="label">
+      <input type="radio" class="radio" [(ngModel)]="color" value="red"   name="color"
+      (change)="onFilterChange()">/>
+      red
+    </label>
+  </fieldset>
 
   <div class="flex justify-center w-full mt-2"></div>
 </div>
@@ -68,6 +128,8 @@
     [min]="minPrice"
     [max]="maxPrice"
     [(ngModel)]="price"
+    (change)="onFilterChange()">
+
     class="range-slider w-full mt-4 range range-xs range-neutral"
   />
 

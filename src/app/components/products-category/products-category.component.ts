@@ -23,28 +23,49 @@ export class ProductsCategoryComponent implements OnInit {
       next: (p) => {
         const category = p.get('category');
         this.categoryName = category || 'all';
-
-        if (this.categoryName === 'all') {
-          // Get All Products
-          this.prdServices.getAllProducts().subscribe({
-            next: (res: any) => {
-              this.productsList = res.data;
-              this.filteredProductsList = [...this.productsList];
-            },
-            error: (err) => console.log(err),
-          });
-        } else {
-          // Get Products by Category
-          this.prdServices.getProductByCategory(this.categoryName).subscribe({
-            next: (res: any) => {
-              this.productsList = res.data;
-              this.filteredProductsList = [...this.productsList];
-            },
-            error: (err) => console.log(err),
-          });
-        }
+        this.fetchProducts();
       },
       error: (err) => console.log(err),
     });
   }
+
+  private fetchProducts(): void {
+    const obs =
+      this.categoryName === 'all'
+        ? this.prdServices.getAllProducts()
+        : this.prdServices.getProductByCategory(this.categoryName);
+
+    obs.subscribe({
+      next: (res: any) => {
+        this.productsList = res.data;
+        this.filteredProductsList = [...this.productsList];
+      },
+      error: (err) => console.log(err),
+    });
+  }
+
+  // /** Called when ProductsComponent emits filterChanged */
+  // handleFilterChange(filterQuery: any): void {
+  //   console.log('Category got filter:', filterQuery);
+  //   this.prdServices.filterProducts(filterQuery).subscribe({
+  //     next: (res: any) => (this.filteredProductsList = res.data),
+  //     error: (err) => console.log(err),
+  //   });
+  // }}
+  /** Called when ProductsComponent emits filterChanged */
+handleFilterChange(filterQuery: any): void {
+  // 1) Merge in the category
+  const fullQuery = {
+    category: this.categoryName !== 'all' ? this.categoryName : null,
+    ...filterQuery
+  };
+
+  console.log('Full filter query:', fullQuery);
+
+  // 2) Call the same filter endpoint with category + other filters
+  this.prdServices.filterProducts(fullQuery).subscribe({
+    next: (res: any) => this.filteredProductsList = res.data,
+    error: (err) => console.log(err),
+  });
+}
 }

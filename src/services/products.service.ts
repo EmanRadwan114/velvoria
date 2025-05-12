@@ -52,4 +52,22 @@ export class ProductsService {
       withCredentials: true,
     });
   }
+
+// Filter Products based on the query
+filterProducts(filterQuery: any) {
+  const query = this.buildFilterQuery(filterQuery); // Convert the filter object to a query string
+  return this._HttpClient.get(`${this.URL}/products/filter${query}`);
+}
+
+// Build the query string from the filter object
+private buildFilterQuery(filterQuery: any) {
+  let query = '?';
+  for (const key in filterQuery) {
+    if (filterQuery[key]) {
+      query += `${key}=${filterQuery[key]}&`;
+    }
+  }
+  return query.endsWith('&') ? query.slice(0, -1) : query; // Remove trailing '&'
+}
+
 }
