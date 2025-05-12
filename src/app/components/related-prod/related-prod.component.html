@@ -1,0 +1,121 @@
+<div class="relative px-4 py-8">
+  <h2 class="text-3xl font-semibold mb-6 text-center">Product Related</h2>
+
+  <!-- Slider wrapper with overflow -->
+  <div class="relative flex items-center overflow-hidden group">
+    <!-- Left button -->
+    <button
+      class="z-10 absolute left-0 bg-teal-800 text-white p-3 rounded-full shadow hidden group-hover:block"
+      (click)="scrollSlider(-1)"
+    >
+      <i class="fas fa-chevron-left"></i>
+    </button>
+
+    <!-- Slider track -->
+    <div
+      #slider
+      class="flex gap-6 overflow-x-auto scroll-smooth no-scrollbar px-2"
+    >
+      <!-- Product Card -->
+      <div
+        *ngFor="let product of products"
+        class="group relative min-w-[250px] max-w-[250px] bg-white shadow-md rounded-lg overflow-hidden"
+      >
+        <div
+          class="relative bg-white shadow-md rounded-lg overflow-hidden transition hover:shadow-xl"
+        >
+          <!-- Image -->
+          <a [routerLink]="['/furnitures', product._id]">
+            <div class="aspect-[4/5] overflow-hidden">
+              <img
+                [src]="product.thumbnail"
+                [alt]="product.title"
+                class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+              />
+            </div>
+          </a>
+
+          <!-- Content -->
+          <div
+            class="flex flex-col justify-between h-[30%] p-4 text-center space-y-1"
+            [routerLink]="['/furnitures', product._id]"
+          >
+            <div>
+              <div class="flex items-center space-x-1">
+                <ng-container
+                  *ngFor="let star of [1, 2, 3, 4, 5]; let i = index"
+                >
+                  <i
+                    class="fa-star w-4 transition duration-200"
+                    [class.fas]="i < product.rating"
+                    [class.far]="i >= product.rating"
+                    [ngClass]="{
+                      'text-yellow-400': i < product.rating,
+                      'text-gray-300': i >= product.rating
+                    }"
+                  ></i>
+                </ng-container>
+                <p class="ml-2 text-sm text-gray-500">
+                  {{ product.avgRating }}/5 ({{ product.numberOfReviews }}
+                  reviews)
+                </p>
+              </div>
+              <h2
+                class="mt-2 text-base font-semibold text-gray-900 hover:text-teal-700 truncate"
+              >
+                {{ product.title }}
+              </h2>
+            </div>
+            <h3 class="text-sm font-semibold text-gray-800">
+              {{ product.price }} EGP
+            </h3>
+          </div>
+
+          <!-- Animated Tags - properly stacked -->
+          <div
+            *ngIf="product.label?.includes('trendy')"
+            class="absolute top-2 left-0 bg-orange-500 text-white px-2 text-xs"
+          >
+            Trendy
+          </div>
+          <div
+            *ngIf="product.label?.includes('hot')"
+            class="absolute top-8 left-0 bg-red-500 text-white px-2 text-xs"
+          >
+            Hot
+          </div>
+          <div
+            *ngIf="product.label?.includes('new')"
+            class="absolute top-14 left-0 bg-green-500 text-white px-2 text-xs"
+          >
+            New
+          </div>
+
+          <!-- Favorite & Cart icons scoped to each card -->
+          <div
+            class="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col gap-2"
+          >
+            <div
+              class="bg-gray-100 hover:bg-teal-700 text-gray-500 hover:text-white w-10 h-10 flex items-center justify-center rounded"
+            >
+              <i class="fas fa-heart"></i>
+            </div>
+            <div
+              class="bg-gray-100 hover:bg-teal-700 text-gray-500 hover:text-white w-10 h-10 flex items-center justify-center rounded"
+            >
+              <i class="fas fa-shopping-cart text-lg"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right button -->
+    <button
+      class="z-10 absolute right-0 bg-teal-800 text-white p-3 rounded-full shadow hidden group-hover:block"
+      (click)="scrollSlider(1)"
+    >
+      <i class="fas fa-chevron-right"></i>
+    </button>
+  </div>
+</div>
