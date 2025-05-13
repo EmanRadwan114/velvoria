@@ -1,10 +1,16 @@
+<div class=" mx-auto">
+    <h2 class="header-txt font-semibold text-center mb-5 primary-text-color">
+       Our Features
+    </h2>
+    <div class="flex flex-wrap justify-center gap-4 my-24 ">
 
-<div class="flex flex-wrap justify-center gap-4 my-8 ">
-    @for (feature of ArrayFeatures; track $index) {
-        <div  class=" w-80 text-center border-2 border-[#F5F5F5] py-8  hover:border-[#0B5D5D]  transition duration-1000 ease-in-out  ">
+        @for (feature of ArrayFeatures; track $index) {
+        <div
+            class=" w-80 text-center border-2 border-[#F5F5F5] py-8  hover:border-[#0B5D5D]  transition duration-1000 ease-in-out  ">
             <i [class]="feature.img + ' text-gray-400 mb-3'"></i>
             <h1 style="padding:16px 0px ;" class="text-md font-bold ">{{ feature.title }}</h1>
             <p class="text-gray-400">{{ feature.des }}</p>
         </div>
-}
+        }
+    </div>
 </div>
