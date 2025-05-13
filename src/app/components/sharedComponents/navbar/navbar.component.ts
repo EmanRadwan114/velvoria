@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 import { AuthService } from '../../../../services/auth.service';
+import { CartService } from '../../../../services/cart.service';
 @Component({
   selector: 'app-navbar',
   imports: [RouterLink, RouterLinkActive, CommonModule, FormsModule],
@@ -16,16 +17,23 @@ export class NavbarComponent implements OnInit {
   isLoggedIn: boolean = false;
   user: any;
   searchQuery = '';
+  totalItems = -1;
   constructor(
-    private router: Router,
+    protected router: Router,
     private http: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private cartService: CartService
   ) {}
   ngOnInit() {
     this.authService.isLoggedIn.subscribe((status) => {
       this.isLoggedIn = status;
     });
     this.user = JSON.parse(localStorage.getItem('user') || 'null');
+    if (this.user) {
+      this.cartService.cartItems$.subscribe((items) => {
+        this.totalItems = items.reduce((sum, i) => sum + i.quantity, 0);
+      });
+    }
   }
   search() {
     if (this.searchQuery.trim()) {

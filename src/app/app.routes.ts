@@ -13,6 +13,7 @@ import { UsersDashboardComponent } from './components/dashboard/users-dashboard/
 import { OrdersDashboardComponent } from './components/dashboard/orders-dashboard/orders-dashboard.component';
 import { CouponsDashboardComponent } from './components/dashboard/coupons-dashboard/coupons-dashboard.component';
 import { AdminsDashboardComponent } from './components/dashboard/admins-dashboard/admins-dashboard.component';
+
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { OrderConfirmationComponent } from './components/order-confirmation/order-confirmation.component';
 

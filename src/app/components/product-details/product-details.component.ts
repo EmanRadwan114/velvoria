@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsService } from '../../../services/products.service';
 import { CommonModule } from '@angular/common';
 import { CategoriesService } from '../../../services/categories.service';
@@ -7,7 +7,9 @@ import { ReviewsComponent } from '../reviews/reviews.component';
 import { WishlistService } from '../../../services/wishlist.service';
 import { ToastComponent } from '../sharedComponents/toast/toast.component';
 import { ToastService } from '../../../services/toast.service';
+import { CartService } from '../../../services/cart.service';
 import { RelatedProdComponent } from '../related-prod/related-prod.component';
+
 
 @Component({
   selector: 'app-product-details',
@@ -27,6 +29,8 @@ export class ProductDetailsComponent implements OnInit {
   private readonly _CategoriesService = inject(CategoriesService);
   private readonly _WishlistService = inject(WishlistService);
   private _ToastService = inject(ToastService);
+
+  constructor(private cartService: CartService, private router: Router) {}
   isInWishlist = false;
   mainImage: string = '';
   detailsProduct: any = {};
@@ -112,6 +116,18 @@ export class ProductDetailsComponent implements OnInit {
             },
           });
         } else this._ToastService.show('success', err.error.message);
+      },
+    });
+  }
+  addToCart() {
+    const fullUrl = this.router.url;
+    let id = fullUrl.split('/')[2];
+    this.cartService.addToCart({ productId: id }).subscribe({
+      next: (res: any) => {
+        this.cartService.setCartItems(res.data);
+      },
+      error: (err) => {
+        console.log(err.error.message);
       },
     });
   }

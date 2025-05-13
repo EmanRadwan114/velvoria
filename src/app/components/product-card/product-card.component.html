@@ -1,5 +1,7 @@
+
 <div class="group product-card bg-white shadow-md rounded-lg overflow-hidden w-full relative h-full">
   <!-- Image Container with Fixed Aspect Ratio -->
+
   <a [routerLink]="['/furnitures', product?._id]">
     <div class="relative w-full aspect-[9/8] overflow-hidden">
       <!-- Image -->
@@ -28,6 +30,7 @@
     <h3 class="font-semibold text-gray-800 m-2">{{ product?.price }} EGP</h3>
   </div>
 
+
   <!-- Tags -->
   <div *ngIf="product?.label?.includes('trendy')"
     class="absolute top-2 left-0 transform -translate-x-full group-hover:translate-x-[10px] transition-transform duration-500 bg-orange-500 text-gray-50 w-18 px-2 text-center">
@@ -37,6 +40,7 @@
     class="absolute top-2 right-0 bg-red-500 text-gray-50 w-18 px-2 text-center transform translate-x-full hover:border-none group-hover:translate-x-[-10px] transition-transform duration-500">
     Hot
   </div>
+
   <div *ngIf="product?.label?.includes('new')"
     class="absolute top-12 left-0 transform -translate-x-full group-hover:translate-x-[10px] transition-transform duration-500 bg-green-500 text-gray-50 w-18 px-2 text-center">
     New
@@ -49,11 +53,17 @@
     [ngClass]="{
     'text-white bg-teal-700 border-none': isInWishlist,
     'text-gray-500 bg-gray-50 hover:text-white hover:bg-teal-700': !isInWishlist
+
   }">
+
     <!-- 'text-white bg-teal-700 border-none': isInWishlist,
   'text-gray-500 bg-gray-50 hover:text-white hover:bg-teal-700': -->
     <i class="fas fa-heart"></i>
   </div>
+
+
+
+
   <app-toast [showToast]="showToast" (close)="showToast =false"></app-toast>
 
   
@@ -63,4 +73,5 @@
 
     <i class="fas fa-shopping-cart text-lg"></i>
   </div>
+
 </div>
