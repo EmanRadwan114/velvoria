@@ -10,7 +10,12 @@ import { loadStripe } from '@stripe/stripe-js';
 export class OrdersService {
   private stripePromise = loadStripe(environment.stripe_public_key);
 
+  private defaultShippingPrice = 50;
+
   constructor(private http: HttpClient) {}
+  getShippingPrice(): number {
+    return this.defaultShippingPrice;
+  }
 
   createOrder(orderData: {
     shippingAddress: string;
