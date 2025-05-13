@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { CouponsService } from '../../../services/coupons.service';
 
 @Component({
   selector: 'app-coupon',
@@ -9,45 +10,29 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './coupon.component.html',
 })
 export class CouponComponent {
-  couponCode = '';
-  orderAmount = 0;
-  finalAmount: number | null = null;
+  couponCode: string = '';
   discount: number | null = null;
-  message = '';
+  message: string = '';
   isLoading = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(private coupServices: CouponsService) {}
 
   applyCoupon() {
     this.isLoading = true;
-    this.finalAmount = null;
-    this.discount = null;
+    this.discount = 0;
     this.message = '';
 
-    const token = localStorage.getItem('token'); // Assumes token is stored here
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-
-    this.http
-      .post<any>(
-        'http://localhost:5000/api/coupons/apply-coupon',
-        {
-          couponCode: this.couponCode,
-          orderAmount: this.orderAmount,
-          userId: 'replace_with_logged_in_user_id', // Or fetch it dynamically
-        },
-        { headers }
-      )
-      .subscribe({
-        next: (res) => {
-          this.discount = res.discount;
-          this.finalAmount = res.finalAmount;
-          this.message = res.message;
-          this.isLoading = false;
-        },
-        error: (err) => {
-          this.message = err.error?.message || 'Error applying coupon';
-          this.isLoading = false;
-        },
-      });
+    this.coupServices.applyCoupon(this.couponCode).subscribe({
+      next: (res: any) => {
+        this.discount = +res.discount;
+        this.message = res.message;
+        this.isLoading = false;
+        this.coupServices.setCouponCode(this.couponCode, this.discount);
+      },
+      error: (err) => {
+        this.message = err.error?.message || 'Error applying coupon';
+        this.isLoading = false;
+      },
+    });
   }
 }

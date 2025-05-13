@@ -20,7 +20,6 @@
         d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
       />
     </svg>
-    <!-- <i class="fa-regular fa-circle-xmark h-6 w-6"></i> -->
     <span>{{message|titlecase}}</span>
   </div>
   <div class="w-10/12 lg:w-8/12 flex bg-gray-100/90 rounded-2xl p-1 pl-2 items-center">
@@ -29,7 +28,11 @@
       class="flex flex-col p-3 flex-1/2"
     >
       <div>
-        <h1 class="aboreto-regular text-3xl font-bold mt-5 mb-3">VELVORIA</h1>
+        <h1
+          class="aboreto-regular text-3xl font-bold mt-5 mb-3 cursor-pointer"
+          (click)="router.navigate([
+          '/home']);"
+        >VELVORIA</h1>
       </div>
       <p class="italic text-sm mb-4 ml-2">Welcome back! Log in to continue enjoying the timeless comfort of Velvoria.
       </p>
@@ -81,17 +84,18 @@
             • one special character (&commat;, _, $, or -)<br></div>
           }
         </div>
-        <div class="mt-7 ml-2">
+        <div class="mt-5 ml-2">
           <button
-            class="main-btn p-2 rounded-xl w-6/12"
+            class="main-btn p-2 rounded-xl w-6/12 mb-2 block"
             (click)="addUser()"
           >Sign in</button>
+          <a
+            [routerLink]="router.url.includes('user')?'/register/user':'/register/admin'"
+            class="text-teal-700 underline cursor-pointer pl-1"
+          >
+            New user? Sign up.</a>
         </div>
-        <a
-          [routerLink]="router.url.includes('user')?'/register/user':'/register/admin'"
-          class="text-teal-700 underline ml-4 mt-2 cursor-pointer block"
-        >
-          New user? Sign up.</a>
+
       </div>
     </form>
     <img

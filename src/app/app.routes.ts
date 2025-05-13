@@ -7,6 +7,14 @@ import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { ProductsCategoryComponent } from './components/products-category/products-category.component';
+import { ProductsDashboardComponent } from './components/dashboard/products-dashboard/products-dashboard.component';
+import { CategoriesDashboardComponent } from './components/dashboard/categories-dashboard/categories-dashboard.component';
+import { UsersDashboardComponent } from './components/dashboard/users-dashboard/users-dashboard.component';
+import { OrdersDashboardComponent } from './components/dashboard/orders-dashboard/orders-dashboard.component';
+import { CouponsDashboardComponent } from './components/dashboard/coupons-dashboard/coupons-dashboard.component';
+import { AdminsDashboardComponent } from './components/dashboard/admins-dashboard/admins-dashboard.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
+import { OrderConfirmationComponent } from './components/order-confirmation/order-confirmation.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -27,6 +35,40 @@ export const routes: Routes = [
   },
   { path: 'cart', component: CartComponent, title: 'Cart' },
   { path: 'search', component: SearchComponent, title: 'Search Results' },
+
+  // DASHBOARD
+  {
+    path: 'dashboard/categories',
+    component: CategoriesDashboardComponent,
+    title: 'categories dashboard',
+  },
+  {
+    path: 'dashboard/products',
+    component: ProductsDashboardComponent,
+    title: 'products dashboard',
+  },
+  {
+    path: 'dashboard/users',
+    component: UsersDashboardComponent,
+    title: 'users dashboard',
+  },
+  {
+    path: 'dashboard/admins',
+    component: AdminsDashboardComponent,
+    title: 'admins dashboard',
+  },
+  {
+    path: 'dashboard/coupons',
+    component: CouponsDashboardComponent,
+    title: 'coupons dashboard',
+  },
+  {
+    path: 'dashboard/orders',
+    component: OrdersDashboardComponent,
+    title: 'orders dashboard',
+  },
+
+  /////
   {
     path: 'register/user',
     component: RegisterComponent,
@@ -78,6 +120,12 @@ export const routes: Routes = [
         (c) => c.ContactsComponent
       ),
     title: 'Contact Us',
+  },
+  { path: 'checkout', component: CheckoutComponent, title: 'Checkout' },
+  {
+    path: 'orders/:orderId',
+    component: OrderConfirmationComponent,
+    title: 'Order Confirmation',
   },
   {
     path: '**',

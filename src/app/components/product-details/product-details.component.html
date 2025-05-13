@@ -86,10 +86,16 @@
         In Stock: {{ detailsProduct.stock }}
       </p>
 
-      <!-- Add To Favourite -->
+      <!-- Add To Favourite 💖 💖 -->
       <div class="flex items-center gap-2 my-4">
         <div
+          (click)="addToWishList()"
           class="text-gray-900 border hover:border-none bg-gray-50 w-12 h-12 flex items-center justify-center hover:text-white hover:bg-teal-700 rounded cursor-pointer"
+          [ngClass]="{
+            'text-white bg-teal-700 border-none': isInWishlist,
+            'text-gray-500 bg-gray-50 hover:text-white hover:bg-teal-700':
+              !isInWishlist
+          }"
         >
           <i class="fas fa-heart text-xl"></i>
         </div>
@@ -108,4 +114,10 @@
 
   <!-- * reviews section -->
   <app-reviews class="mt-12"></app-reviews>
+
+  <app-related-prod
+    *ngIf="categoryName"
+    [categoryName]="categoryName"
+    [productID]="productID"
+  ></app-related-prod>
 </section>

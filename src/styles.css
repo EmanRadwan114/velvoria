@@ -167,3 +167,34 @@ button {
 .primary-color-bg {
   background-color: var(--primary-color);
 }
+
+/*~~~~~~~~~~~ MODAL STYE ~~~~~~~~~~~~`*/
+
+.input {
+  @apply w-full border-teal-400 border-2 rounded-md px-4 py-2 text-sm focus:border-teal-600 focus:outline-none focus:ring-0;
+}
+
+.btn-teal {
+  @apply bg-teal-600 text-white py-2 px-4 rounded hover:bg-teal-700 transition mt-2;
+}
+
+.btn-red {
+  @apply bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700 transition mt-2;
+}
+
+.btn-gray {
+  @apply bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition mt-2;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: #0f766e; /* Tailwind teal-700 */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
