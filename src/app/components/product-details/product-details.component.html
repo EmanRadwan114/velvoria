@@ -4,18 +4,30 @@
     <!-- Left Side: Images -->
     <div class="w-full lg:w-[50%] p-4 rounded">
       <!-- main image -->
-      <img [src]="mainImage" [alt]="detailsProduct.title" class="w-full h-125 object-cover rounded" />
+      <img
+        [src]="mainImage"
+        [alt]="detailsProduct.title"
+        class="w-full h-125 object-cover rounded"
+      />
       <!-- other images -->
       <div class="flex justify-center items-center gap-4 mt-4 flex-wrap">
-        <img [src]="detailsProduct.thumbnail" [alt]="detailsProduct.title"
+        <img
+          [src]="detailsProduct.thumbnail"
+          [alt]="detailsProduct.title"
           (click)="mainImage = detailsProduct.thumbnail"
           class="h-30 w-30 object-cover rounded cursor-pointer hover:scale-105 transition-transform duration-200 border-2"
           [class.border-teal-600]="mainImage === detailsProduct.thumbnail"
-          [class.border-transparent]="mainImage !== detailsProduct.thumbnail" />
-        <img *ngFor="let img of detailsProduct.images" [src]="img" [alt]="detailsProduct.title"
+          [class.border-transparent]="mainImage !== detailsProduct.thumbnail"
+        />
+        <img
+          *ngFor="let img of detailsProduct.images"
+          [src]="img"
+          [alt]="detailsProduct.title"
           (click)="mainImage = img"
           class="h-30 w-30 object-cover rounded cursor-pointer hover:scale-105 transition-transform duration-200 border-2"
-          [class.border-teal-600]="mainImage === img" [class.border-transparent]="mainImage !== img" />
+          [class.border-teal-600]="mainImage === img"
+          [class.border-transparent]="mainImage !== img"
+        />
       </div>
     </div>
 
@@ -58,7 +70,10 @@
       <!-- Color -->
       <div class="flex items-center gap-2 mt-4">
         <p class="text-gray-900">Color:</p>
-        <div class="w-6 h-6 rounded-full border border-gray-400" [style.backgroundColor]="detailsProduct.color"></div>
+        <div
+          class="w-6 h-6 rounded-full border border-gray-400"
+          [style.backgroundColor]="detailsProduct.color"
+        ></div>
         <span class="text-lg text-gray-600">{{ detailsProduct.color }}</span>
       </div>
 
@@ -71,18 +86,23 @@
 
       <!-- Add To Favourite 💖 💖 -->
       <div class="flex items-center gap-2 my-4">
-        <div (click)="addToWishList()"
+        <div
+          (click)="addToWishList()"
           class="text-gray-900 border hover:border-none bg-gray-50 w-12 h-12 flex items-center justify-center hover:text-white hover:bg-teal-700 rounded cursor-pointer"
           [ngClass]="{
     'text-white bg-teal-700 border-none': isInWishlist,
-    'text-gray-500 bg-gray-50 hover:text-white hover:bg-teal-700': !isInWishlist}">
+    'text-gray-500 bg-gray-50 hover:text-white hover:bg-teal-700': !isInWishlist}"
+        >
           <i class="fas fa-heart text-xl"></i>
         </div>
         <p class="text-gray-900 text-lg">Add To Favourite</p>
       </div>
 
       <!-- Add To Cart -->
-      <button class="text-xl h-15 btn flex items-center gap-2 w-full black-btn transition duration-200 my-4">
+      <button
+        class="text-xl h-15 btn flex items-center gap-2 w-full black-btn transition duration-200 my-4"
+        (click)="addToCart()"
+      >
         <i class="fas fa-shopping-cart"></i>
         Add To Cart
       </button>

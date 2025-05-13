@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsService } from '../../../services/products.service';
 import { CommonModule } from '@angular/common';
 import { CategoriesService } from '../../../services/categories.service';
@@ -7,6 +7,7 @@ import { ReviewsComponent } from '../reviews/reviews.component';
 import { WishlistService } from '../../../services/wishlist.service';
 import { ToastComponent } from '../sharedComponents/toast/toast.component';
 import { ToastService } from '../../../services/toast.service';
+import { CartService } from '../../../services/cart.service';
 
 @Component({
   selector: 'app-product-details',
@@ -21,7 +22,8 @@ export class ProductDetailsComponent implements OnInit {
   private readonly _CategoriesService = inject(CategoriesService);
   private readonly _WishlistService = inject(WishlistService);
   private _ToastService = inject(ToastService);
-  isInWishlist=false;
+  constructor(private cartService: CartService, private router: Router) {}
+  isInWishlist = false;
   mainImage: string = '';
   detailsProduct: any = {};
   categoryID: string = '';
@@ -30,62 +32,59 @@ export class ProductDetailsComponent implements OnInit {
   productID: any;
 
   ngOnInit(): void {
-    this._ActivatedRoute.paramMap
-      .subscribe(p => {
-        const productID = p.get('id')!;
-        // 1) fetch product
-        this._ProductsService.getSpecificProduct(productID)
-          .subscribe({
-            next: (res: any) => {
-              this.detailsProduct = res.data[0];
-              this.categoryID    = this.detailsProduct.categoryID;
-              this.mainImage     = this.detailsProduct.thumbnail;
-  
-              // 2) now that categoryID is set, fetch category
-              this._CategoriesService.getSpecificCategry(this.categoryID)
-                .subscribe({
-                  next: (catRes: any) => {
-                    this.categoryName = catRes.data.name;
-                    console.log('Category Name:', this.categoryName);
-                  },
-                  error: err => console.error('Category API Error:', err)
-                });
-            },
-            error: err => console.error('Product API Error:', err)
-          });
+    this._ActivatedRoute.paramMap.subscribe((p) => {
+      const productID = p.get('id')!;
+      // 1) fetch product
+      this._ProductsService.getSpecificProduct(productID).subscribe({
+        next: (res: any) => {
+          this.detailsProduct = res.data[0];
+          this.categoryID = this.detailsProduct.categoryID;
+          this.mainImage = this.detailsProduct.thumbnail;
+
+          // 2) now that categoryID is set, fetch category
+          this._CategoriesService
+            .getSpecificCategry(this.categoryID)
+            .subscribe({
+              next: (catRes: any) => {
+                this.categoryName = catRes.data.name;
+                console.log('Category Name:', this.categoryName);
+              },
+              error: (err) => console.error('Category API Error:', err),
+            });
+        },
+        error: (err) => console.error('Product API Error:', err),
       });
+    });
   }
 
+  // this._ActivatedRoute.paramMap.subscribe({
+  //       next: (p) => {
+  //         this.productID = p.get('id');
 
-// this._ActivatedRoute.paramMap.subscribe({
-//       next: (p) => {
-//         this.productID = p.get('id');
-
-//         // Call API For Specific Product
-//         this._ProductsService.getSpecificProduct(this.productID).subscribe({
-//           next: (res: any) => {
-//             console.log(res.data);
-//             this.detailsProduct = res.data[0];
-//             this.mainImage = this.detailsProduct.thumbnail;
-//             this.categoryID = this.detailsProduct.categoryID;
-//           },
-//           error: (err) => {
-//             console.log(err);
-//           },
-//         });
-//         // get category name
-//         this._CategoriesService.getSpecificCategry(this.categoryID).subscribe({
-//           next: (res: any) => {
-//             this.category = res.data[0];
-//             this.categoryName = this.category.name;
-//           },
-//           error: (err) => {
-//             console.log(err);
-//           },
-//         });
-//       },
-//     });
-  
+  //         // Call API For Specific Product
+  //         this._ProductsService.getSpecificProduct(this.productID).subscribe({
+  //           next: (res: any) => {
+  //             console.log(res.data);
+  //             this.detailsProduct = res.data[0];
+  //             this.mainImage = this.detailsProduct.thumbnail;
+  //             this.categoryID = this.detailsProduct.categoryID;
+  //           },
+  //           error: (err) => {
+  //             console.log(err);
+  //           },
+  //         });
+  //         // get category name
+  //         this._CategoriesService.getSpecificCategry(this.categoryID).subscribe({
+  //           next: (res: any) => {
+  //             this.category = res.data[0];
+  //             this.categoryName = this.category.name;
+  //           },
+  //           error: (err) => {
+  //             console.log(err);
+  //           },
+  //         });
+  //       },
+  //     });
 
   //add to wishlist
 
@@ -93,7 +92,7 @@ export class ProductDetailsComponent implements OnInit {
     this._WishlistService.addToWishlist(this.productID).subscribe({
       next: (res: any) => {
         console.log('Product added to wishlist!', res);
-         this.isInWishlist=true;
+        this.isInWishlist = true;
         this._ToastService.show('success', 'Product added to wishlist!');
       },
       error: (err) => {
@@ -101,15 +100,26 @@ export class ProductDetailsComponent implements OnInit {
         if (err.error.message == 'Product already in wishlist') {
           this._WishlistService.deleteFromWishlist(this.productID).subscribe({
             next: (res: any) => {
-               this.isInWishlist=false;
+              this.isInWishlist = false;
               this._ToastService.show(
                 'error',
                 'Product removed from wishlist!'
               );
             },
           });
-        }
-         else this._ToastService.show('success', err.error.message);
+        } else this._ToastService.show('success', err.error.message);
+      },
+    });
+  }
+  addToCart() {
+    const fullUrl = this.router.url;
+    let id = fullUrl.split('/')[2];
+    this.cartService.addToCart({ productId: id }).subscribe({
+      next: (res: any) => {
+        this.cartService.setCartItems(res.data);
+      },
+      error: (err) => {
+        console.log(err.error.message);
       },
     });
   }

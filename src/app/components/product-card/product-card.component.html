@@ -1,6 +1,4 @@
-<div
-  class="group product-card bg-white shadow-md rounded-lg overflow-hidden w-full  relative h-[400px]"
->
+<div class="group product-card bg-white shadow-md rounded-lg overflow-hidden w-full  relative h-[400px]">
   <!-- Image -->
   <a [routerLink]="['/furnitures', product?._id]">
     <img
@@ -43,7 +41,8 @@
   <!-- trend Tag -->
   <div
     *ngIf="product?.label?.includes('trendy')"
-    class="absolute top-12 left-0 transform -translate-x-full group-hover:translate-x-[10px] transition-transform duration-500 bg-orange-500 text-gray-50 w-18 px-2 text-center"  >
+    class="absolute top-12 left-0 transform -translate-x-full group-hover:translate-x-[10px] transition-transform duration-500 bg-orange-500 text-gray-50 w-18 px-2 text-center"
+  >
     Trendy
   </div>
   <!-- Sale Tag -->
@@ -58,32 +57,35 @@
   <div
     *ngIf="product?.label?.includes('new arrival')"
     class="absolute top-2 left-0 transform -translate-x-full group-hover:translate-x-[10px] transition-transform duration-500 bg-green-500 text-gray-50 w-18 px-2 text-center"
-
   >
     New
   </div>
 
   <!-- Fav Tag -->
-  <div  (click)="addToWishList(product?._id)"
+  <div
+    (click)="addToWishList(product?._id)"
     class="absolute text-gray-500 border-1 top-35 right-0 transform translate-x-full hover:border-none group-hover:translate-x-[-10px] transition-transform duration-500 bg-gray-50 w-10 h-10 flex items-center justify-center hover:text-white hover:bg-teal-700 rounded"
     [ngClass]="{
     'text-white bg-teal-700 border-none': isInWishlist,
     'text-gray-500 bg-gray-50 hover:text-white hover:bg-teal-700': !isInWishlist
   }"
   >
-   <!-- 'text-white bg-teal-700 border-none': isInWishlist,
+    <!-- 'text-white bg-teal-700 border-none': isInWishlist,
   'text-gray-500 bg-gray-50 hover:text-white hover:bg-teal-700': -->
     <i class="fas fa-heart"></i>
   </div>
-   <app-toast [showToast]="showToast" (close)="showToast =false"></app-toast>
+  <app-toast
+    [showToast]="showToast"
+    (close)="showToast =false"
+  ></app-toast>
   <!-- Add to Cart -->
   <div
     class="absolute text-gray-500 border-1 top-48 right-0 transform translate-x-full hover:border-none group-hover:translate-x-[-10px] transition-transform duration-500 bg-gray-50 w-10 h-10 flex items-center justify-center hover:text-white hover:bg-teal-700 rounded"
+    (click)="addToCart(product?._id)"
   >
     <i class="fas fa-shopping-cart text-lg"></i>
   </div>
- 
- 
+
+
 
 </div>
-

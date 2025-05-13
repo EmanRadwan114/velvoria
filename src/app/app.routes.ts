@@ -13,7 +13,6 @@ import { UsersDashboardComponent } from './components/dashboard/users-dashboard/
 import { OrdersDashboardComponent } from './components/dashboard/orders-dashboard/orders-dashboard.component';
 import { CouponsDashboardComponent } from './components/dashboard/coupons-dashboard/coupons-dashboard.component';
 import { AdminsDashboardComponent } from './components/dashboard/admins-dashboard/admins-dashboard.component';
-
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent, title: 'Home' },
