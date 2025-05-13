@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -19,12 +19,24 @@ export class FilterationComponent {
     'Glass',
     'Plastic',
   ];
-  colors: string[] = ['White','Beige ','Brown', "Gray","Black",'Blue','Green','Red','Pink','Teal'];
+  colors: string[] = [
+    'White',
+    'Beige ',
+    'Brown',
+    'Gray',
+    'Black',
+    'Blue',
+    'Green',
+    'Red',
+    'Pink',
+    'Teal',
+  ];
 
   material = 'all';
   color = 'all';
   minPrice: number = 200;
   maxPrice: number = 20000;
+
 
   price: number = this.maxPrice;
 

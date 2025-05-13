@@ -50,7 +50,7 @@ export class ProductCardComponent {
               this.isInWishlist = false;
             },
           });
-        } else this._ToastService.show('success', err.error.message);
+        } else this._ToastService.show('error', err.error.message);
       },
     });
   }
