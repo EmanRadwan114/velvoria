@@ -2,8 +2,6 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
-  FormGroup,
-  Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
 import { ProductsService } from '../../../../services/products.service';
@@ -20,7 +18,6 @@ import { LoadingButtonComponent } from '../../sharedComponents/loading-button/lo
     LoadingButtonComponent,
   ],
   templateUrl: './products-dashboard.component.html',
-  styleUrls: ['./products-dashboard.component.css'],
 })
 export class ProductsDashboardComponent implements OnInit {
   private productsSvc = inject(ProductsService);

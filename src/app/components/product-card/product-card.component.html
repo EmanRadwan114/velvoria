@@ -1,47 +1,55 @@
-
-<div class="group product-card bg-white shadow-md rounded-lg overflow-hidden w-full relative h-full">
+<div
+  class="group product-card bg-white shadow-md rounded-lg overflow-hidden w-full relative h-full"
+>
   <a [routerLink]="['/furnitures', product?._id]">
     <div class="relative w-full aspect-[9/8] overflow-hidden">
       <!-- Image -->
-      <img [src]="product?.thumbnail" [alt]="product?.title"
-        class="  w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
+      <img
+        [src]="product?.thumbnail"
+        [alt]="product?.title"
+        class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+      />
     </div>
   </a>
 
   <!-- Content -->
-  <div class="flex flex-col justify-evenly items-center  h-[25%] lg:h-[33%] p-4 text-center " [routerLink]="['/furnitures', product?._id]">
+  <div
+    class="flex flex-col justify-evenly items-center h-[25%] lg:h-[33%] p-4 text-center"
+    [routerLink]="['/furnitures', product?._id]"
+  >
     <div>
-        <!-- Overall Average Rating -->
-        <div  class="mb-2 flex  flex-wrap gap-1 items-center  group"
-        >
+      <!-- Overall Average Rating -->
+      <div class="mb-2 flex flex-wrap gap-1 items-center group">
         <div class="flex items-center gap-1 text-yellow-500 text-base mb-4">
           <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
             <i
               class="fa-star"
               [ngClass]="
-                product.avgRating && star <=(product.avgRating) ? 'fas' : 'far'
+                product.avgRating && star <= product.avgRating ? 'fas' : 'far'
               "
             ></i>
           </ng-container>
-        <div> <span class="text-gray-700 text-sm  lg:block ">
-          {{ product.avgRating ? (product.avgRating + '/5 ') : 'no reveiws ' }}
-        </span></div>
-         
+          <div>
+            <span class="text-gray-700 text-sm lg:block">
+              {{
+                product.avgRating ? product.avgRating + "/5 " : "no reveiws "
+              }}
+            </span>
+          </div>
         </div>
-        
-      
-        </div>
-  
-      <h2 class=" text-lg font-semibold text-gray-900 hover:text-teal-700 truncate">
+      </div>
+
+      <h2
+        class="text-lg font-semibold text-gray-900 hover:text-teal-700 truncate"
+      >
         {{ product?.title }}
       </h2>
     </div>
     <h3 class="font-semibold text-gray-800 mt-2">{{ product?.price }} EGP</h3>
   </div>
 
-
   <!-- Tags -->
- 
+
   <div
     *ngIf="product?.label?.includes('hot')"
     class="absolute top-2 right-0 bg-red-500 text-gray-50 w-18 px-2 text-center transform translate-x-full hover:border-none group-hover:translate-x-[-10px] transition-transform duration-500"
@@ -49,41 +57,36 @@
     Hot
   </div>
   <div
-  *ngIf="product?.label?.includes('trendy')"
-  class="absolute top-10 right-0 bg-orange-500 text-gray-50 w-18 px-2 text-center transform translate-x-full hover:border-none group-hover:translate-x-[-10px] transition-transform duration-500"
->
-  Trendy
-</div>
+    *ngIf="product?.label?.includes('trendy')"
+    class="absolute top-10 right-0 bg-orange-500 text-gray-50 w-18 px-2 text-center transform translate-x-full hover:border-none group-hover:translate-x-[-10px] transition-transform duration-500"
+  >
+    Trendy
+  </div>
   <div
     *ngIf="product?.label?.includes('new arrival')"
     class="absolute top-2 left-0 transform -translate-x-full group-hover:translate-x-[10px] transition-transform duration-500 bg-green-500 text-gray-50 w-18 px-2 text-center"
   >
-  New
+    New
   </div>
 
-
-  <div (click)="addToWishList(product?._id)"
+  <div
+    (click)="addToWishList(product?._id)"
     class="absolute text-gray-500 border-1 top-[25%] right-0 transform translate-x-full hover:border-none group-hover:translate-x-[-10px] transition-transform duration-500 bg-gray-50 w-10 h-10 flex items-center justify-center hover:text-white hover:bg-teal-700 rounded"
     [ngClass]="{
-    'text-white bg-teal-700 border-none': isInWishlist,
-    'text-gray-500 bg-gray-50 hover:text-white hover:bg-teal-700': !isInWishlist
-
-  }">
-
+      'text-white bg-teal-700 border-none': isInWishlist,
+      'text-gray-500 bg-gray-50 hover:text-white hover:bg-teal-700':
+        !isInWishlist
+    }"
+  >
     <i class="fas fa-heart"></i>
   </div>
-
-
-
-
-  <app-toast [showToast]="showToast" (close)="showToast =false"></app-toast>
-
+  
+  <app-toast [showToast]="showToast" (close)="showToast = false"></app-toast>
   <!-- Add to Cart -->
   <div
     (click)="addToCart(product?._id)"
-  
-    class="absolute text-gray-500 border-1 top-[40%]  right-0 transform translate-x-full hover:border-none group-hover:translate-x-[-10px] transition-transform duration-500 bg-gray-50 w-10 h-10 flex items-center justify-center hover:text-white hover:bg-teal-700 rounded">
+    class="absolute text-gray-500 border-1 top-[40%] right-0 transform translate-x-full hover:border-none group-hover:translate-x-[-10px] transition-transform duration-500 bg-gray-50 w-10 h-10 flex items-center justify-center hover:text-white hover:bg-teal-700 rounded"
+  >
     <i class="fas fa-shopping-cart text-lg"></i>
   </div>
-
 </div>

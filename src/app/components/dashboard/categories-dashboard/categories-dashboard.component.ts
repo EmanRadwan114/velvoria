@@ -19,7 +19,6 @@ import { LoadingButtonComponent } from '../../sharedComponents/loading-button/lo
     LoadingButtonComponent,
   ],
   templateUrl: './categories-dashboard.component.html',
-  styleUrl: './categories-dashboard.component.css',
 })
 export class CategoriesDashboardComponent implements OnInit {
   private readonly _CategoryServices = inject(CategoriesService);
