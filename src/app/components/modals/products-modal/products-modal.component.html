@@ -1,1 +1,222 @@
-<p>products-modal works!</p>
+<!-- Overlay -->
+<div
+  *ngIf="activeModal"
+  class="fixed inset-0 z-50 bg-[rgba(0,0,0,0.6)] flex items-center justify-center p-4 transition-opacity duration-300 ease-in-out"
+  (click)="closeModal()"
+>
+  <!-- Modal Container -->
+  <div
+    class="bg-white w-full max-w-lg rounded-xl p-6 space-y-4 relative"
+    (click)="$event.stopPropagation()"
+  >
+    <!-- Close Button -->
+    <button
+      (click)="closeModal()"
+      class="absolute top-3 right-3 text-gray-600 hover:text-gray-800 hover:bg-[rgba(0,0,0,0.15)] p-1 px-2 rounded-lg"
+    >
+      ✕
+    </button>
+
+    <!-- ADD/UPDATE FORM -->
+    <form
+      *ngIf="activeModal === 'add' || activeModal === 'update'"
+      [formGroup]="productForm"
+      (ngSubmit)="submitForm()"
+    >
+      <h2 class="text-2xl font-bold text-teal-600 mb-4 border-b pb-2">
+        {{ activeModal === "add" ? "Add Product" : "Update Product" }}
+      </h2>
+
+      <div class="space-y-3">
+        <input
+          formControlName="title"
+          class="input w-full"
+          placeholder="Title"
+        />
+        <div
+          *ngIf="
+            productForm.get('title')?.touched &&
+            productForm.get('title')?.invalid
+          "
+          class="text-red-500 text-sm"
+        >
+          Title is required and must be at least 3 characters.
+        </div>
+
+        <textarea
+          formControlName="description"
+          placeholder="Description"
+          class="input w-full"
+        ></textarea>
+        <div
+          *ngIf="
+            productForm.get('description')?.touched &&
+            productForm.get('description')?.invalid
+          "
+          class="text-red-500 text-sm"
+        >
+          Description is required and must be at least 3 words.
+        </div>
+
+        <input
+          formControlName="thumbnail"
+          placeholder="Thumbnail URL"
+          class="input w-full"
+        />
+        <div
+          *ngIf="
+            productForm.get('thumbnail')?.touched &&
+            productForm.get('thumbnail')?.invalid
+          "
+          class="text-red-500 text-sm"
+        >
+          Enter Valid URL
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <!-- Price -->
+          <input
+            formControlName="price"
+            type="number"
+            placeholder="Price"
+            class="input"
+          />
+          <div
+            *ngIf="
+              productForm.get('price')?.touched &&
+              productForm.get('price')?.invalid
+            "
+            class="text-red-500 text-sm"
+          >
+            Enter Valid Price
+          </div>
+          <!-- Stock -->
+          <input
+            formControlName="stock"
+            type="number"
+            placeholder="Stock"
+            class="input"
+          />
+          <div
+            *ngIf="
+              productForm.get('stock')?.touched &&
+              productForm.get('stock')?.invalid
+            "
+            class="text-red-500 text-sm"
+          >
+            Enter Valid Stock Number
+          </div>
+        </div>
+
+        <select formControlName="categoryID" class="input w-full">
+          <option value="" disabled>Select Category</option>
+          <!-- Category -->
+          <option *ngFor="let c of categories" [value]="c._id">
+            {{ c.name }}
+          </option>
+          <div
+            *ngIf="
+              productForm.get('categoryID')?.touched &&
+              productForm.get('categoryID')?.invalid
+            "
+            class="text-red-500 text-sm"
+          >
+            Select Category
+          </div>
+        </select>
+        <!-- Material -->
+        <input
+          formControlName="material"
+          placeholder="Material"
+          class="input w-full"
+        />
+        <div
+          *ngIf="
+            productForm.get('material')?.touched &&
+            productForm.get('material')?.invalid
+          "
+          class="text-red-500 text-sm"
+        >
+          Enter Valid Material Name
+        </div>
+        <!-- Coloe -->
+        <input
+          formControlName="color"
+          placeholder="Color"
+          class="input w-full"
+        />
+        <div
+          *ngIf="
+            productForm.get('color')?.touched &&
+            productForm.get('color')?.invalid
+          "
+          class="text-red-500 text-sm"
+        >
+          Enter Valid Color Name
+        </div>
+        <button type="submit" class="btn-teal w-full" [disabled]="productForm.invalid || loading">
+          {{ activeModal === "add" ? "Add Product" : "Update Product" }}
+        </button>
+        
+      </div>
+    </form>
+
+    <!-- VIEW PRODUCT DETAILS -->
+    <div *ngIf="activeModal === 'getById' && productData" class="space-y-4">
+      <h2 class="text-2xl font-bold text-teal-600 border-b pb-2">
+        Product Details
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-800">
+        <div
+          class="p-3 border-2 border-teal-500 rounded-lg bg-gray-50 shadow-sm"
+        >
+          <strong class="text-teal-800">Title:</strong>
+          <div class="mt-1 text-base text-black">{{ productData.title }}</div>
+        </div>
+        <div
+          class="p-3 border-2 border-teal-500 rounded-lg bg-gray-50 shadow-sm"
+        >
+          <strong class="text-teal-800">Price:</strong>
+          <div class="mt-1 text-base text-black">
+            {{ productData.price | currency : "EGP" : "symbol" }}
+          </div>
+        </div>
+        <div
+          class="p-3 border-2 border-teal-500 rounded-lg bg-gray-50 shadow-sm"
+        >
+          <strong class="text-teal-800">Stock:</strong>
+          <div class="mt-1 text-base text-black">{{ productData.stock }}</div>
+        </div>
+        <div
+          class="p-3 border-2 border-teal-500 rounded-lg bg-gray-50 shadow-sm"
+        >
+          <strong class="text-teal-800">Category:</strong>
+          <div class="mt-1 text-base text-black">
+            {{ productData.categoryName }}
+          </div>
+        </div>
+        <div
+          class="col-span-full p-3 border-2 border-teal-500 rounded-lg bg-gray-50 shadow-sm"
+        >
+          <strong class="text-teal-800">Thumbnail:</strong>
+          <div class="mt-2">
+            <img
+              [src]="productData.thumbnail"
+              alt="Product Thumbnail"
+              class="w-full h-48 object-cover rounded"
+            />
+          </div>
+        </div>
+        <div
+          class="col-span-full p-3 border-2 border-teal-500 rounded-lg bg-gray-50 shadow-sm"
+        >
+          <strong class="text-teal-800">Description:</strong>
+          <p class="mt-1 text-black">{{ productData.description }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- LOADING -->
+    <div *ngIf="loading" class="text-center text-gray-500">Loading...</div>
+  </div>
+</div>

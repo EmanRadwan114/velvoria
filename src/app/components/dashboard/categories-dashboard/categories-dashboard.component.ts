@@ -19,7 +19,7 @@ import { CategoriesModalComponent } from '../../modals/categories-modal/categori
 export class CategoriesDashboardComponent implements OnInit {
   private readonly _CategoryServices = inject(CategoriesService);
   categoriesList: any[] = [];
-  editingCategory: any = null;
+  // editingCategory: any = null;
 
   activeModal: 'getById' | 'update' | 'add' | null = null;
   selectedId: string | null = null;
@@ -51,21 +51,6 @@ export class CategoriesDashboardComponent implements OnInit {
       },
     });
   }
-  // deleteCategory(categoryID: string): void {
-  //   const confirmed = confirm('Are you sure you want to delete this category?');
-  //   if (confirmed) {
-  //     this._CategoryServices.deleteCategory(categoryID).subscribe({
-  //       next: () => {
-  //         this.categoriesList = this.categoriesList.filter(
-  //           (category: any) => category._id !== categoryID
-  //         );
-  //       },
-  //       error: (err) => {
-  //         console.log('delete failed', err);
-  //       },
-  //     });
-  //   }
-  // }
 
   openModal(type: 'add' | 'update' | 'getById', id: string | null = null) {
     this.activeModal = type;
@@ -96,21 +81,6 @@ export class CategoriesDashboardComponent implements OnInit {
     this.selectedCategory = null;
   }
 
-  // deleteCategory(categoryID: string): void {
-  //   const confirmed = confirm('Are you sure you want to delete this category?');
-  //   if (confirmed) {
-  //     this.categoriesService.deleteCategory(categoryID).subscribe({
-  //       next: () => {
-  //         this.categoriesList = this.categoriesList.filter(
-  //           (category: any) => category._id !== categoryID
-  //         );
-  //       },
-  //       error: (err) => {
-  //         console.log('delete failed', err);
-  //       },
-  //     });
-  //   }
-  // }
 
   submitForm() {
     if (this.categoryForm.invalid) return;
