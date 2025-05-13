@@ -8,10 +8,17 @@ import { WishlistService } from '../../../services/wishlist.service';
 import { ToastComponent } from '../sharedComponents/toast/toast.component';
 import { ToastService } from '../../../services/toast.service';
 import { CartService } from '../../../services/cart.service';
+import { RelatedProdComponent } from '../related-prod/related-prod.component';
+
 
 @Component({
   selector: 'app-product-details',
-  imports: [CommonModule, ReviewsComponent, ToastComponent],
+  imports: [
+    CommonModule,
+    ReviewsComponent,
+    ToastComponent,
+    RelatedProdComponent,
+  ],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.css',
 })
@@ -22,6 +29,7 @@ export class ProductDetailsComponent implements OnInit {
   private readonly _CategoriesService = inject(CategoriesService);
   private readonly _WishlistService = inject(WishlistService);
   private _ToastService = inject(ToastService);
+
   constructor(private cartService: CartService, private router: Router) {}
   isInWishlist = false;
   mainImage: string = '';
@@ -29,13 +37,13 @@ export class ProductDetailsComponent implements OnInit {
   categoryID: string = '';
   categoryName: string = '';
   category: any = {};
-  productID: any;
+  productID: any = '';
 
   ngOnInit(): void {
     this._ActivatedRoute.paramMap.subscribe((p) => {
-      const productID = p.get('id')!;
+      this.productID = p.get('id')!;
       // 1) fetch product
-      this._ProductsService.getSpecificProduct(productID).subscribe({
+      this._ProductsService.getSpecificProduct(this.productID).subscribe({
         next: (res: any) => {
           this.detailsProduct = res.data[0];
           this.categoryID = this.detailsProduct.categoryID;

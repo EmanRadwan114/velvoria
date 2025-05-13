@@ -1,0 +1,218 @@
+<!-- Overlay -->
+<div
+  *ngIf="activeModal"
+  class="fixed inset-0 z-50 bg-[rgba(0,0,0,0.6)] flex items-center justify-center p-4 transition-opacity duration-300 ease-in-out"
+  (click)="closeModal()"
+>
+  <!-- Modal Container -->
+  <div
+    class="bg-white w-full max-w-md rounded-xl p-6 space-y-4 relative"
+    (click)="$event.stopPropagation()"
+  >
+    <!-- Close Button -->
+    <button
+      (click)="closeModal()"
+      class="absolute top-3 right-3 text-gray-600 hover:text-gray-800 hover:bg-[rgba(0,0,0,0.15)] p-1 px-2 rounded-lg"
+    >
+      ✕
+    </button>
+
+    <!-- ADD or UPDATE FORM -->
+    <form
+      *ngIf="activeModal === 'add' || activeModal === 'update'"
+      [formGroup]="couponForm"
+      (ngSubmit)="submitForm()"
+    >
+      <h2 class="text-2xl font-bold text-teal-600 mb-4 border-b pb-2">
+        {{ activeModal === "add" ? "Add New Coupon" : "Update Coupon" }}
+      </h2>
+
+      <div class="space-y-2.5">
+        <!-- Coupon Code -->
+        <div>
+          <label class="block mb-1 text-teal-900 font-medium"
+            >Coupon Code</label
+          >
+          <input
+            class="input"
+            type="text"
+            placeholder="Enter coupon code"
+            formControlName="CouponCode"
+          />
+          <div
+            *ngIf="
+              couponForm.get('CouponCode')?.invalid &&
+              couponForm.get('CouponCode')?.touched &&
+              activeModal === 'add'
+            "
+            class="text-red-500 text-sm mt-1"
+          >
+            <ng-container
+              *ngIf="couponForm.get('CouponCode')?.errors?.['required']; else patternError"
+            >
+              Coupon Code is required.
+            </ng-container>
+            <ng-template #patternError>
+              Coupon Code must include letters (not just numbers).
+            </ng-template>
+          </div>
+        </div>
+
+        <!-- Percentage -->
+        <div>
+          <label class="block mb-1 text-teal-900 font-medium"
+            >Discount Percentage</label
+          >
+          <input
+            class="input"
+            type="number"
+            placeholder="1 - 100"
+            formControlName="CouponPercentage"
+          />
+          <div
+            *ngIf="couponForm.get('CouponPercentage')?.errors?.['required'] && couponForm.get('CouponPercentage')?.touched && activeModal === 'add'"
+            class="text-red-500 text-sm mt-1"
+          >
+            Percentage is required.
+          </div>
+          <div
+            *ngIf="couponForm.get('CouponPercentage')?.errors?.['min'] || couponForm.get('CouponPercentage')?.errors?.['max']"
+            class="text-red-500 text-sm mt-1"
+          >
+            Percentage must be between 1 and 100.
+          </div>
+        </div>
+
+        <!-- Expiration Date -->
+        <div>
+          <label class="block mb-1 text-teal-900 font-medium"
+            >Expiration Date</label
+          >
+          <input class="input" type="date" formControlName="expirationDate" />
+          <div
+            *ngIf="
+              couponForm.get('expirationDate')?.invalid &&
+              couponForm.get('expirationDate')?.touched &&
+              activeModal === 'add'
+            "
+            class="text-red-500 text-sm mt-1"
+          >
+            Expiration date is required.
+          </div>
+        </div>
+
+        <!-- Max Usage Limit -->
+        <div>
+          <label class="block mb-1 text-teal-900 font-medium"
+            >Max Usage Limit</label
+          >
+          <input
+            class="input"
+            type="number"
+            placeholder="Enter max usage limit"
+            formControlName="maxUsageLimit"
+          />
+          <div
+            *ngIf="
+              couponForm.get('maxUsageLimit')?.invalid &&
+              couponForm.get('maxUsageLimit')?.touched &&
+              activeModal === 'add'
+            "
+            class="text-red-500 text-sm mt-1"
+          >
+            Max usage limit is required.
+          </div>
+        </div>
+
+        <!-- Is Active -->
+        <label class="inline-flex items-center gap-2">
+          <input
+            type="checkbox"
+            formControlName="isActive"
+            class="form-checkbox accent-teal-600"
+          />
+          <span class="text-teal-900">Active</span>
+        </label>
+
+        <!-- Submit Button -->
+        <button
+          type="submit"
+          class="btn-teal w-full"
+          [disabled]="activeModal === 'add' && couponForm.invalid"
+        >
+          {{ activeModal === "add" ? "Add Coupon" : "Update Coupon" }}
+        </button>
+      </div>
+    </form>
+
+    <!-- SHOW MODAL -->
+    <div *ngIf="activeModal === 'getById' && couponData" class="space-y-4">
+      <h2 class="text-2xl font-bold text-teal-600 border-b pb-2">
+        Coupon Details
+      </h2>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-gray-800">
+        <!-- Coupon Code -->
+        <div
+          class="p-3 border-2 border-teal-500 rounded-lg bg-gray-50 shadow-sm"
+        >
+          <span class="font-semibold text-teal-800">Code:</span>
+          <div class="mt-1 text-base text-black">
+            {{ couponData.CouponCode }}
+          </div>
+        </div>
+
+        <!-- Percentage -->
+        <div
+          class="p-3 border-2 border-teal-500 rounded-lg bg-gray-50 shadow-sm"
+        >
+          <span class="font-semibold text-teal-800">Discount:</span>
+          <div class="mt-1 text-base text-black">
+            {{ couponData.CouponPercentage }}%
+          </div>
+        </div>
+
+        <!-- Expiration Date -->
+        <div
+          class="p-3 border-2 border-teal-500 rounded-lg bg-gray-50 shadow-sm"
+        >
+          <span class="font-semibold text-teal-800">Expires On:</span>
+          <div class="mt-1 text-base text-black">
+            {{ couponData.expirationDate | date : "mediumDate" }}
+          </div>
+        </div>
+
+        <!-- Max Usage Limit -->
+        <div
+          class="p-3 border-2 border-teal-500 rounded-lg bg-gray-50 shadow-sm"
+        >
+          <span class="font-semibold text-teal-800">Max Usage Limit:</span>
+          <div class="mt-1 text-base text-black">
+            {{ couponData.maxUsageLimit }}
+          </div>
+        </div>
+
+        <!-- Is Active -->
+        <div
+          class="p-3 border-2 border-teal-500 rounded-lg bg-gray-50 shadow-sm sm:col-span-2"
+        >
+          <span class="font-semibold text-teal-800">Status:</span>
+          <div class="mt-1 text-base">
+            <span
+              [ngClass]="
+                couponData.isActive
+                  ? 'text-green-600 font-semibold'
+                  : 'text-red-500 font-semibold'
+              "
+            >
+              {{ couponData.isActive ? "Active" : "Inactive" }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LOADING -->
+    <div *ngIf="loading" class="text-center text-gray-500">Loading...</div>
+  </div>
+</div>

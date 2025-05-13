@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
 
 @Injectable({
@@ -7,9 +7,20 @@ import { environment } from '../environments/environment';
 })
 export class CouponsService {
   private URL = environment.backUrl;
+  couponApplied = new EventEmitter<{ couponCode: string; discount: number }>();
+
+  private defaultShippingPrice = 50;
+
+  getShippingPrice(): number {
+    return this.defaultShippingPrice;
+  }
 
   constructor(private _HttpClient: HttpClient) {
     console.log(_HttpClient);
+  }
+
+  setCouponCode(couponCode: string, discount: number) {
+    this.couponApplied.emit({ couponCode, discount });
   }
 
   //^ Get All Coupons

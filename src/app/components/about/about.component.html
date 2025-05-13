@@ -1,1 +1,89 @@
-<p>about works!</p>
+<div class="">
+
+
+    <div class="relative border-2   h-[590px] mb-12">
+        <img class="scale-x-[-1] object-cover object-center h-full w-full overflow-hidden brightness-60 "
+            src="images/about2.jpg" />
+
+        <!-- Breadcrumb في منتصف الصفحة -->
+        <div class="absolute top-6 sm:top-10 left-1/2 transform -translate-x-1/2 z-50">
+            <app-breadcrumb class="bg-transparent text-white text-center"></app-breadcrumb>
+        </div>
+
+        <!-- Text Box - Responsive -->
+        <div class="absolute top-36 sm:top-1/3 md:top-[38%] lg:top-2/5 
+         left-1/2 lg:left-120 transform -translate-x-1/2
+         w-[90%] sm:w-4/5 md:w-2/3 lg:w-1/2 
+         bg-white/40 backdrop-blur-lg p-4 sm:p-6
+         text-white rounded-sm shadow-lg text-center">
+
+            <h2 class="text-base sm:text-lg md:text-xl lg:text-2xl font-bold header-txt primary-text-color">
+                Crafting Comfort, One Piece at a Time
+            </h2>
+
+            <p class="mt-2 text-sm sm:text-base sec-txt">
+                At VelVoria, we believe your home should tell your story. With timeless craftsmanship and modern
+                design, we’ve been furnishing dreams for over a decade.
+            </p>
+        </div>
+
+    </div>
+
+    <div class=" p-y-40   ">
+        <app-app-features></app-app-features>
+
+    </div>
+    <!-- Why Choose Us -->
+    <div class="relative h-[640px] mb-12">
+        <img class="scale-x-[-1] object-cover object-center h-full w-full overflow-hidden brightness-60 "
+            src="images/why.jpg" />
+        <div class="absolute bottom-4  md:bottom-8  lg:bottom-20 right-1/2 translate-x-1/2  text-white  ">
+
+            <h2 class=" text-center sm:text-4xl font-bold header-txt  ">Why Choose Us</h2>
+            <div>
+                @for (item of whyChooseUs; track $index) {
+                <div class=" bg-gray-500/50 text-white p-2 rounded my-2 md:my-5">
+                    <div class=" gap-2 flex items-center ">
+                        <div class="w-10 h-10 bg-gray-800  p-4 rounded-full flex items-center justify-center ">
+                            <i class="p-6 fa-solid {{item.icon}}  fa-xl text-center " style="color: #ddc25f;"></i>
+                        </div>
+                        <h4 class=" text-sm text-center  font-bold md:text-md ">
+                            {{ item.title }}
+                        </h4>
+                    </div>
+                    <p>{{item.description}}</p>
+                </div>
+
+                }
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <div class="flex flex-wrap   items-center justify-center">
+
+
+        <!-- collaps -->
+
+        <img class="sm:w-3xs md:w-md" src="images/faq.jpg" alt="">
+
+        <div class="flex-1 p-6 py-24  ">
+            <h3 class=" sm:text-3xl md:text-4xl header-txt ">POPULAR FAQS</h3>
+            <p class="sec-txt">
+                Get Answers to Common Questions About Our Furniture</p>
+            @for (i of FAQ; track $index) {
+
+            <div [tabindex]="i"
+                class="my-4 collapse  collapse-plus bg-base-100 border-base-300 border  focus:ring-1 focus:ring-teal-600 transition-all duration-400 ease-in-out ">
+                <div class="collapse-title  font-semibold   ">{{i.question}}</div>
+                <div class="collapse-content text-sm">
+                    {{i.answer}}
+                </div>
+            </div>
+            }
+        </div>
+ 
+    </div>
+</div>

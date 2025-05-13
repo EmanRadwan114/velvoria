@@ -42,7 +42,9 @@
       <hr class="w-full my-4" />
 
       <!-- Category & Rating -->
-      <div class="flex justify-between items-center w-full mb-6 flex-wrap gap-4">
+      <div
+        class="flex justify-between items-center w-full mb-6 flex-wrap gap-4"
+      >
         <p class="font-medium text-lg text-gray-900">
           Category:
           <span class="text-teal-800 font-normal">{{ categoryName }}</span>
@@ -55,7 +57,7 @@
           <i class="text-2xl fas fa-star text-yellow-400 my-2"></i>
           <p class="ml-2 text-lg text-gray-500 my-2">
             {{ detailsProduct.avgRating }}/5 ({{
-            detailsProduct.numberOfReviews
+              detailsProduct.numberOfReviews
             }}
             reviews)
           </p>
@@ -90,8 +92,11 @@
           (click)="addToWishList()"
           class="text-gray-900 border hover:border-none bg-gray-50 w-12 h-12 flex items-center justify-center hover:text-white hover:bg-teal-700 rounded cursor-pointer"
           [ngClass]="{
-    'text-white bg-teal-700 border-none': isInWishlist,
-    'text-gray-500 bg-gray-50 hover:text-white hover:bg-teal-700': !isInWishlist}"
+
+            'text-white bg-teal-700 border-none': isInWishlist,
+            'text-gray-500 bg-gray-50 hover:text-white hover:bg-teal-700':
+              !isInWishlist
+          }"
         >
           <i class="fas fa-heart text-xl"></i>
         </div>
@@ -102,6 +107,7 @@
       <button
         class="text-xl h-15 btn flex items-center gap-2 w-full black-btn transition duration-200 my-4"
         (click)="addToCart()"
+
       >
         <i class="fas fa-shopping-cart"></i>
         Add To Cart
@@ -109,7 +115,12 @@
     </div>
   </section>
 
-
   <!-- * reviews section -->
   <app-reviews class="mt-12"></app-reviews>
+
+  <app-related-prod
+    *ngIf="categoryName"
+    [categoryName]="categoryName"
+    [productID]="productID"
+  ></app-related-prod>
 </section>

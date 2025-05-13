@@ -23,12 +23,15 @@ export class ProductCardComponent {
   @Input() description: any;
   @Input() thumbnail: any;
   @Input() price: any;
-  private readonly _activRoutes = inject(ActivatedRoute);
-  private readonly _WishlistService = inject(WishlistService);
-  private readonly _ToastService = inject(ToastService);
-  isInWishlist = false;
+  private readonly _activRoutes=inject(ActivatedRoute)
+  private readonly  _WishlistService=inject(WishlistService)
+  private readonly  _ToastService=inject(ToastService)
+  isInWishlist=false;
+
   constructor(private cartService: CartService) {}
-  addToWishList(id: string): void {
+  addToWishList(id:string): void {
+    console.log("id",id);
+    console.log("isInWishlist",this.isInWishlist);
     this._WishlistService.addToWishlist(id).subscribe({
       next: (res: any) => {
         console.log('Product added to wishlist!', res);
