@@ -15,7 +15,7 @@ export class ToastComponent {
   toasts$;
 
   constructor(private toastService: ToastService) {
-   this.toasts$= this.toastService.Toast$; // ✅ حل المشكلة هنا
+   this.toasts$= this.toastService.Toast$; 
   }
 
   dismiss(id: number) {

@@ -1,19 +1,32 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-
+import { environment } from '../../../../environments/environment';
+import { AuthService } from '../../../../services/auth.service';
 @Component({
   selector: 'app-navbar',
   imports: [RouterLink, RouterLinkActive, CommonModule, FormsModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
   menuOpen = false;
-
+  isLoggedIn: boolean = false;
+  user: any;
   searchQuery = '';
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private http: HttpClient,
+    private authService: AuthService
+  ) {}
+  ngOnInit() {
+    this.authService.isLoggedIn.subscribe((status) => {
+      this.isLoggedIn = status;
+    });
+    this.user = JSON.parse(localStorage.getItem('user') || 'null');
+  }
   search() {
     if (this.searchQuery.trim()) {
       this.router.navigate(['/search'], {
@@ -23,6 +36,16 @@ export class NavbarComponent {
   }
 
   signOut() {
-    localStorage.removeItem('user');
+    this.http
+      .post(`${environment.backUrl}/auth/logout`, null, {
+        withCredentials: true,
+      })
+      .subscribe({
+        next: (res: any) => {
+          localStorage.removeItem('user');
+          this.authService.notifyLogout();
+          this.router.navigate(['/login/user']);
+        },
+      });
   }
 }

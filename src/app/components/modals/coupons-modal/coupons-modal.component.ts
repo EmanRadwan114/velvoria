@@ -13,16 +13,17 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { CouponsService } from '../../../services/coupons.service';
+import { CouponsService } from '../../../../services/coupons.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-modal',
+  selector: 'app-coupons-modal',
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
-  templateUrl: './modal.component.html',
+  templateUrl: './coupons-modal.component.html',
+  styleUrl: './coupons-modal.component.css',
 })
-export class ModalComponent implements OnChanges {
+export class CouponsModalComponent implements OnChanges {
   @Input() activeModal: 'getById' | 'update' | 'add' | null = null;
   @Input() couponId: string | null = null;
   @Output() close = new EventEmitter<void>();
@@ -31,6 +32,7 @@ export class ModalComponent implements OnChanges {
   couponForm!: FormGroup;
   couponData: any;
   loading = false;
+  isClosing = false;
 
   constructor(private fb: FormBuilder, private service: CouponsService) {}
 
@@ -127,9 +129,11 @@ export class ModalComponent implements OnChanges {
   }
 
   closeModal() {
+    this.isClosing = true;
     this.close.emit();
     this.couponForm?.reset();
     this.couponData = null;
     this.loading = false;
+    this.isClosing = false;
   }
 }

@@ -126,11 +126,16 @@
           <div class="text-red-600 ml-3 text-sm">Passwords must match</div>
           }
         </div>
-        <div class="mt-7 ml-2">
+        <div class="mt-5 ml-2 mb-2">
           <button
-            class="main-btn p-2 rounded-xl w-6/12"
+            class="main-btn p-2 rounded-xl w-6/12 mb-2 block"
             (click)="addUser()"
           >Sign up</button>
+          <a
+            [routerLink]="router.url.includes('user')?'/login/user':'/login/admin'"
+            class="text-teal-700 underline cursor-pointer pl-1"
+          >
+            Already user? Sign in.</a>
         </div>
         <!-- component -->
         <div
@@ -148,12 +153,6 @@
             </div>
           </div>
         </div>
-
-        <a
-          [routerLink]="router.url.includes('user')?'/login/user':'/login/admin'"
-          class="text-teal-700 underline ml-4 mt-3 cursor-pointer block"
-        >
-          Already user? Sign in.</a>
       </div>
     </form>
     <img

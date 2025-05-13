@@ -1,10 +1,14 @@
 <!-- Overlay -->
 <div
   *ngIf="activeModal"
-  class="fixed inset-0 z-50 bg-[rgba(0,0,0,0.6)] flex items-center justify-center p-4"
+  class="fixed inset-0 z-50 bg-[rgba(0,0,0,0.6)] flex items-center justify-center p-4 transition-opacity duration-300 ease-in-out"
+  (click)="closeModal()"
 >
   <!-- Modal Container -->
-  <div class="bg-white w-full max-w-md rounded-xl p-6 space-y-4 relative">
+  <div
+    class="bg-white w-full max-w-md rounded-xl p-6 space-y-4 relative"
+    (click)="$event.stopPropagation()"
+  >
     <!-- Close Button -->
     <button
       (click)="closeModal()"
