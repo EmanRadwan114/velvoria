@@ -4,7 +4,7 @@ import { ToastService } from '../../../../services/toast.service';
 
 @Component({
   selector: 'app-toast',
-  imports: [CommonModule,CommonModule, AsyncPipe, NgIf, NgFor, NgClass],
+  imports: [CommonModule,CommonModule, AsyncPipe, NgFor, NgClass],
   standalone: true,
   templateUrl: './toast.component.html',
   styleUrl: './toast.component.css',
