@@ -28,6 +28,8 @@ export class ProductCardComponent {
 
     
   addToWishList(id:string): void {
+    console.log("id",id);
+    console.log("isInWishlist",this.isInWishlist);
     this._WishlistService.addToWishlist(id).subscribe({
       next: (res: any) => {
         console.log('Product added to wishlist!', res);
