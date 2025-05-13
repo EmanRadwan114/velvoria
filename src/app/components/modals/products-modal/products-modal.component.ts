@@ -39,38 +39,25 @@ export class ProductsModalComponent implements OnChanges {
     this.productForm = this.fb.group({}); // temporary empty form
   }
 
-  // ngOnChanges(changes: SimpleChanges): void {
-  //   if (this.activeModal === 'add') {
-  //     this.initForm(); // new product
-  //   }
-
-  //   if (this.activeModal === 'update' && this.productId) {
-  //     this.fetchProduct(this.productId, true); // edit
-  //   }
-
-  //   if (this.activeModal === 'getById' && this.productId) {
-  //     this.fetchProduct(this.productId, false); // read-only
-  //   }
-  // }
+ 
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('Changes detected:', changes); // Check the changes object
     if (this.activeModal === 'add') {
       this.initForm(); // Initialize form for new product
     }
 
+    // update 
     if (this.activeModal === 'update' && this.productId) {
-      console.log('Fetching product data for ID:', this.productId); // Verify productId
-      this.fetchProduct(this.productId, true); // Initialize form with fetched data for editing
+      // console.log('Fetching product data for ID:', this.productId); // Verify productId
+      this.fetchProduct(this.productId, true); 
     }
-
+    // prodyct details
     if (this.activeModal === 'getById' && this.productId) {
-      this.fetchProduct(this.productId, false); // Initialize form with fetched data for viewing
+      this.fetchProduct(this.productId, false);
     }
   }
 
   private initForm(data: any = null) {
-    console.log('Initializing form with data:', data);
     this.productForm = this.fb.group({
       title: [
         data?.title || '',

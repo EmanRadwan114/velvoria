@@ -1,5 +1,5 @@
 <form>
-  <div class="relative w-full px-4">
+  <div class="relative w-full mb-6">
     <input
       type="text"
       id="coupon"
@@ -13,7 +13,7 @@
     <button
       (click)="applyCoupon()"
       [disabled]="isLoading"
-      class="absolute top-0 end-4 p-2.5 h-full text-sm font-medium text-white bg-teal-700 border border-teal-700 hover:bg-teal-800 focus:ring-4 focus:outline-none focus:ring-teal-300 transition duration-300"
+      class="absolute top-0 end-0 p-2.5 h-full text-sm font-medium text-white bg-teal-700 border border-teal-700 hover:bg-teal-800 focus:ring-4 focus:outline-none focus:ring-teal-300 transition duration-300"
     >
       {{ isLoading ? "Applying..." : "Apply Coupon" }}
     </button>

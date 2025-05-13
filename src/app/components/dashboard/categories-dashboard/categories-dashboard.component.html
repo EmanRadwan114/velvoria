@@ -1,8 +1,8 @@
 <div class="px-4">
   <!-- Add Button -->
-  <div class="flex justify-end mb-4">
+  <div class="flex justify-end mb-4 ">
     <button (click)="openModal('add')" class="btn-teal">
-      Add New Category
+     + Add New Category
     </button>
   </div>
 
@@ -67,9 +67,12 @@
 
   <!-- Loading Placeholder -->
   <ng-template #loading>
-    <p class="text-center text-gray-500 mt-4">Loading coupons...</p>
-  </ng-template>
+    <span  class="flex items-center justify-center">
+      <app-loading-button></app-loading-button>
+    </span>  </ng-template>
 
+
+  
   <!-- Reusable Modal Component -->
   <app-categories-modal
     [activeModal]="activeModal"

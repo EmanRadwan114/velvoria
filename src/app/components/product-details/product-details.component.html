@@ -49,18 +49,26 @@
           Category:
           <span class="text-teal-800 font-normal">{{ categoryName }}</span>
         </p>
-        <div class="flex flex-wrap items-center group">
-          <i class="text-2xl fas fa-star text-yellow-400 my-2"></i>
-          <i class="text-2xl fas fa-star text-yellow-400 my-2"></i>
-          <i class="text-2xl fas fa-star text-yellow-400 my-2"></i>
-          <i class="text-2xl fas fa-star text-yellow-400 my-2"></i>
-          <i class="text-2xl fas fa-star text-yellow-400 my-2"></i>
-          <p class="ml-2 text-lg text-gray-500 my-2">
-            {{ detailsProduct.avgRating }}/5 ({{
-              detailsProduct.numberOfReviews
-            }}
-            reviews)
-          </p>
+
+        <!-- Overall Average Rating -->
+        <div
+          *ngIf="detailsProduct.avgRating && detailsProduct.numberOfReviews"
+          class="mb-4"
+        >
+          <div class="flex items-center gap-2 text-yellow-500 text-lg">
+            <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
+              <i
+                class="fa-star"
+                [ngClass]="star <= detailsProduct.avgRating ? 'fas' : 'far'"
+              ></i>
+            </ng-container>
+            <span class="text-gray-700 text-base">
+              {{ detailsProduct.avgRating }}/5 ({{
+                detailsProduct.numberOfReviews
+              }}
+              reviews)
+            </span>
+          </div>
         </div>
       </div>
 
@@ -105,6 +113,7 @@
       <!-- Add To Cart -->
       <button
         class="text-xl h-15 btn flex items-center gap-2 w-full black-btn transition duration-200 my-4"
+        (click)="addToCart()"
       >
         <i class="fas fa-shopping-cart"></i>
         Add To Cart

@@ -37,15 +37,15 @@ export class CategoriesModalComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.activeModal === 'update' && this.categoryId) {
-      this.fetchCategoryData(this.categoryId, true); // edit mode
+      this.fetchCategoryData(this.categoryId, true);
     }
 
     if (this.activeModal === 'getById' && this.categoryId) {
-      this.fetchCategoryData(this.categoryId, false); // read-only view
+      this.fetchCategoryData(this.categoryId, false);
     }
 
     if (this.activeModal === 'add') {
-      this.initForm(); // empty form for new category
+      this.initForm();
     }
   }
 
@@ -54,7 +54,12 @@ export class CategoriesModalComponent implements OnChanges {
     this.categoryForm = this.fb.group({
       categoryName: [
         '',
-        [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)],
+        
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.pattern(/^[a-zA-Z\s]+$/),
+        ],
       ],
       categoryThumbnail: [
         '',
@@ -100,18 +105,14 @@ export class CategoriesModalComponent implements OnChanges {
           this.refresh.emit(); // Refresh parent component
           this.closeModal();
         },
-        error: (err) =>  {
+        error: (err) => {
           console.error('Add failed', err);
           alert(err.error?.message || 'Something went wrong');
         },
-        
       });
       console.log('Submitting payload:', payload);
-
     }
 
-  
-  
     if (this.activeModal === 'update' && this.categoryId) {
       this.service.updateCategory(this.categoryId, payload).subscribe({
         next: () => {

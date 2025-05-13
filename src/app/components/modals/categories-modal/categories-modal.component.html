@@ -28,53 +28,54 @@
       </h2>
 
       <div class="space-y-2.5">
-        <!-- Category Name -->
-        <div>
-          <label class="block mb-1 text-teal-900 font-medium">Category Name</label>
-          <input
-            class="input"
-            type="text"
-            placeholder="Enter category name"
-            formControlName="categoryName"
-          />
-          <div
-            *ngIf="categoryForm.get('categoryName')?.invalid && categoryForm.get('categoryName')?.touched"
-            class="text-red-500 text-sm mt-1"
-          >
-            <ng-container
-              *ngIf="categoryForm.get('categoryName')?.errors?.['required']; else patternError"
-            >
-              Category Name is required.
-            </ng-container>
-            <ng-template #patternError>
-              Category Name must include letters.
-            </ng-template>
-          </div>
-        </div>
+      <!-- Category Name -->
+<div>
+  <label class="block mb-1 text-teal-900 font-medium">Category Name</label>
+  <input
+    class="input"
+    type="text"
+    placeholder="Enter category name"
+    formControlName="categoryName"
+  />
+  <div
+    *ngIf="categoryForm.get('categoryName')?.touched && categoryForm.get('categoryName')?.invalid"
+    class="text-red-500 text-sm mt-1"
+  >
+    <ng-container *ngIf="categoryForm.get('categoryName')?.errors?.['required']">
+      Category name is required.
+    </ng-container>
+    <ng-container *ngIf="categoryForm.get('categoryName')?.errors?.['pattern']">
+      Only letters and spaces are allowed.
+    </ng-container>
+    <ng-container *ngIf="categoryForm.get('categoryName')?.errors?.['minlength']">
+      Name must be at least 3 characters.
+    </ng-container>
+  </div>
+</div>
+
 
         <!-- Thumbnail -->
-        <div>
-          <label class="block mb-1 text-teal-900 font-medium">Category Thumbnail</label>
-          <input
-            class="input"
-            type="text"
-            placeholder="Enter thumbnail URL"
-            formControlName="categoryThumbnail"
-          />
-          <div
-            *ngIf="categoryForm.get('categoryThumbnail')?.invalid && categoryForm.get('categoryThumbnail')?.touched"
-            class="text-red-500 text-sm mt-1"
-          >
-            <ng-container
-              *ngIf="categoryForm.get('categoryThumbnail')?.errors?.['required']; else patternError"
-            >
-              Thumbnail is required.
-            </ng-container>
-            <ng-template #patternError>
-              Please provide a valid thumbnail URL.
-            </ng-template>
-          </div>
-        </div>
+<div>
+  <label class="block mb-1 text-teal-900 font-medium">Category Thumbnail</label>
+  <input
+    class="input"
+    type="text"
+    placeholder="Enter thumbnail URL"
+    formControlName="categoryThumbnail"
+  />
+  <div
+    *ngIf="categoryForm.get('categoryThumbnail')?.touched && categoryForm.get('categoryThumbnail')?.invalid"
+    class="text-red-500 text-sm mt-1"
+  >
+    <ng-container *ngIf="categoryForm.get('categoryThumbnail')?.errors?.['required']">
+      Thumbnail URL is required.
+    </ng-container>
+    <ng-container *ngIf="categoryForm.get('categoryThumbnail')?.errors?.['pattern']">
+      Must be a valid HTTPS URL (starts with https://).
+    </ng-container>
+  </div>
+</div>
+
 
         <!-- Submit Button -->
         <button

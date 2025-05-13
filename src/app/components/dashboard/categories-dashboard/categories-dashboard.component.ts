@@ -9,10 +9,15 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CategoriesModalComponent } from '../../modals/categories-modal/categories-modal.component';
-
+import { LoadingButtonComponent } from '../../sharedComponents/loading-button/loading-button.component';
 @Component({
   selector: 'app-categories-dashboard',
-  imports: [FormsModule, CommonModule, CategoriesModalComponent],
+  imports: [
+    FormsModule,
+    CommonModule,
+    CategoriesModalComponent,
+    LoadingButtonComponent,
+  ],
   templateUrl: './categories-dashboard.component.html',
   styleUrl: './categories-dashboard.component.css',
 })
@@ -81,7 +86,6 @@ export class CategoriesDashboardComponent implements OnInit {
     this.selectedCategory = null;
   }
 
-
   submitForm() {
     if (this.categoryForm.invalid) return;
 
@@ -123,7 +127,7 @@ export class CategoriesDashboardComponent implements OnInit {
           this.fetchCategories();
           this.cancelDelete();
         },
-        error: (err:any) => {
+        error: (err: any) => {
           console.error('Failed to delete coupon', err);
           this.cancelDelete();
         },
