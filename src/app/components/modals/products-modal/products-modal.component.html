@@ -6,7 +6,7 @@
 >
   <!-- Modal Container -->
   <div
-    class="bg-white w-full max-w-lg rounded-xl p-6 space-y-4 relative"
+    class="bg-white w-full max-w-4xl max-h-[90dvh] overflow-y-auto rounded-xl p-6 space-y-4 relative"
     (click)="$event.stopPropagation()"
   >
     <!-- Close Button -->
@@ -28,25 +28,60 @@
       </h2>
 
       <div class="space-y-3">
-        <input
-          formControlName="title"
-          class="input w-full"
-          placeholder="Title"
-        />
-        <div
-          *ngIf="
-            productForm.get('title')?.touched &&
-            productForm.get('title')?.invalid
-          "
-          class="text-red-500 text-sm"
-        >
-          Title is required and must be at least 3 characters.
+        <!-- Title, Material, and Color in the same row -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <input
+            formControlName="title"
+            class="input w-full"
+            placeholder="Title"
+          />
+          <input
+            formControlName="material"
+            class="input w-full"
+            placeholder="Material"
+          />
+          <input
+            formControlName="color"
+            class="input w-full"
+            placeholder="Color"
+          />
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div
+            *ngIf="
+              productForm.get('title')?.touched &&
+              productForm.get('title')?.invalid
+            "
+            class="text-red-500 text-sm"
+          >
+            Title is required and must be at least 3 characters.
+          </div>
+
+          <div
+            *ngIf="
+              productForm.get('material')?.touched &&
+              productForm.get('material')?.invalid
+            "
+            class="text-red-500 text-sm"
+          >
+            Enter Valid Material Name
+          </div>
+
+          <div
+            *ngIf="
+              productForm.get('color')?.touched &&
+              productForm.get('color')?.invalid
+            "
+            class="text-red-500 text-sm"
+          >
+            Enter Valid Color Name
+          </div>
         </div>
 
         <textarea
           formControlName="description"
           placeholder="Description"
-          class="input w-full"
+          class="input w-full h-auto"
         ></textarea>
         <div
           *ngIf="
@@ -59,9 +94,10 @@
         </div>
 
         <input
+          type="text"
           formControlName="thumbnail"
           placeholder="Thumbnail URL"
-          class="input w-full"
+          class="input h-10 w-full"
         />
         <div
           *ngIf="
@@ -73,7 +109,7 @@
           Enter Valid URL
         </div>
 
-        <div class="grid grid-cols-2 gap-2">
+        <div class="grid grid-cols-3 gap-2">
           <!-- Price -->
           <input
             formControlName="price"
@@ -106,58 +142,82 @@
           >
             Enter Valid Stock Number
           </div>
+          <select formControlName="categoryID" class="input w-full">
+            <option value="" disabled>Select Category</option>
+            <!-- Category -->
+            <option *ngFor="let c of categories" [value]="c._id">
+              {{ c.name }}
+            </option>
+            <div
+              *ngIf="
+                productForm.get('categoryID')?.touched &&
+                productForm.get('categoryID')?.invalid
+              "
+              class="text-red-500 text-sm"
+            >
+              Select Category
+            </div>
+          </select>
         </div>
 
-        <select formControlName="categoryID" class="input w-full">
-          <option value="" disabled>Select Category</option>
-          <!-- Category -->
-          <option *ngFor="let c of categories" [value]="c._id">
-            {{ c.name }}
-          </option>
+        <!-- Labels -->
+        <div>
+          <label class="block mb-1 text-teal-900 font-medium">Labels</label>
+          <div class="flex gap-4">
+            <label
+              *ngFor="let label of ['new arrival', 'hot', 'trendy']"
+              class="flex items-center gap-2"
+            >
+              <input
+                type="checkbox"
+                [value]="label"
+                (change)="onLabelChange($event)"
+                [checked]="productForm.get('label')?.value?.includes(label)"
+              />
+              {{ label }}
+            </label>
+          </div>
           <div
             *ngIf="
-              productForm.get('categoryID')?.touched &&
-              productForm.get('categoryID')?.invalid
+              productForm.get('labels')?.invalid &&
+              productForm.get('labels')?.touched
             "
-            class="text-red-500 text-sm"
+            class="text-red-500 text-sm mt-1"
           >
-            Select Category
+            Please select at least one label.
           </div>
-        </select>
-        <!-- Material -->
-        <input
-          formControlName="material"
-          placeholder="Material"
-          class="input w-full"
-        />
-        <div
-          *ngIf="
-            productForm.get('material')?.touched &&
-            productForm.get('material')?.invalid
-          "
-          class="text-red-500 text-sm"
-        >
-          Enter Valid Material Name
         </div>
-        <!-- Coloe -->
-        <input
-          formControlName="color"
-          placeholder="Color"
-          class="input w-full"
-        />
-        <div
-          *ngIf="
-            productForm.get('color')?.touched &&
-            productForm.get('color')?.invalid
-          "
-          class="text-red-500 text-sm"
-        >
-          Enter Valid Color Name
+
+        <!-- Image URLs Section -->
+        <div class="space-y-2">
+          <div
+            *ngFor="let img of productForm.get('images')?.value; let i = index"
+            class="flex gap-2 items-center"
+          >
+            <input
+              class="input w-full h-10"
+              type="text"
+              [value]="img"
+              (input)="onImageChange($event, i)"
+              placeholder="Enter image URL"
+              (click)="openLightbox(i)"
+            />
+            <button type="button" (click)="removeImage(i)" class="text-red-500">
+              🗑️
+            </button>
+          </div>
+          <button type="button" (click)="addImage()" class="btn-teal">
+            + Add Image
+          </button>
         </div>
-        <button type="submit" class="btn-teal w-full" [disabled]="productForm.invalid || loading">
+
+        <button
+          type="submit"
+          class="btn-teal w-full"
+          [disabled]="productForm.invalid"
+        >
           {{ activeModal === "add" ? "Add Product" : "Update Product" }}
         </button>
-        
       </div>
     </form>
 
@@ -166,13 +226,16 @@
       <h2 class="text-2xl font-bold text-teal-600 border-b pb-2">
         Product Details
       </h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-800">
+      <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 text-gray-800">
+        <!-- Title -->
         <div
           class="p-3 border-2 border-teal-500 rounded-lg bg-gray-50 shadow-sm"
         >
           <strong class="text-teal-800">Title:</strong>
           <div class="mt-1 text-base text-black">{{ productData.title }}</div>
         </div>
+
+        <!-- Price -->
         <div
           class="p-3 border-2 border-teal-500 rounded-lg bg-gray-50 shadow-sm"
         >
@@ -181,12 +244,16 @@
             {{ productData.price | currency : "EGP" : "symbol" }}
           </div>
         </div>
+
+        <!-- Stock -->
         <div
           class="p-3 border-2 border-teal-500 rounded-lg bg-gray-50 shadow-sm"
         >
           <strong class="text-teal-800">Stock:</strong>
           <div class="mt-1 text-base text-black">{{ productData.stock }}</div>
         </div>
+
+        <!-- Category -->
         <div
           class="p-3 border-2 border-teal-500 rounded-lg bg-gray-50 shadow-sm"
         >
@@ -195,28 +262,65 @@
             {{ productData.categoryName }}
           </div>
         </div>
-        <div
-          class="col-span-full p-3 border-2 border-teal-500 rounded-lg bg-gray-50 shadow-sm"
-        >
-          <strong class="text-teal-800">Thumbnail:</strong>
-          <div class="mt-2">
+        <!-- Thumbnail + Description Row -->
+        <div class="col-span-full grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Thumbnail -->
+          <div
+            class="p-3 border-2 border-teal-500 rounded-lg bg-gray-50 shadow-sm"
+          >
+            <strong class="text-teal-800">Thumbnail:</strong>
+            <div class="mt-2">
+              <img
+                [src]="productData.thumbnail"
+                alt="Product Thumbnail"
+                class="w-full h-48 object-cover rounded cursor-pointer"
+                (click)="openLightbox(0)"
+              />
+            </div>
+          </div>
+          <!-- Description -->
+          <div
+            class="p-3 border-2 border-teal-500 rounded-lg bg-gray-50 shadow-sm"
+          >
+            <strong class="text-teal-800">Description:</strong>
+            <p class="mt-1 text-black">{{ productData.description }}</p>
+          </div>
+        </div>
+
+        <!-- Images Gallery -->
+        <div class="col-span-full">
+          <strong class="text-teal-800">Images:</strong>
+          <div
+            class="mt-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2"
+          >
             <img
-              [src]="productData.thumbnail"
-              alt="Product Thumbnail"
-              class="w-full h-48 object-cover rounded"
+              *ngFor="let img of productData.images; let i = index"
+              [src]="img"
+              alt="Product image"
+              class="w-full h-32 object-cover rounded cursor-pointer"
+              (click)="openLightbox(i + 1)"
             />
           </div>
         </div>
+
+        <!-- Lightbox Overlay -->
         <div
-          class="col-span-full p-3 border-2 border-teal-500 rounded-lg bg-gray-50 shadow-sm"
+          *ngIf="lightboxOpen"
+          class="fixed inset-0 z-[999] bg-black bg-opacity-75 flex items-center justify-center"
+          (click)="closeLightbox()"
         >
-          <strong class="text-teal-800">Description:</strong>
-          <p class="mt-1 text-black">{{ productData.description }}</p>
+          <img
+            [src]="
+              lightboxIndex === 0
+                ? productData.thumbnail
+                : productData.images[lightboxIndex - 1]
+            "
+            alt="Full screen image"
+            class="max-w-[90vw] max-h-[90vh] object-contain rounded"
+            (click)="$event.stopPropagation()"
+          />
         </div>
       </div>
     </div>
-
-    <!-- LOADING -->
-    <div *ngIf="loading" class="text-center text-gray-500">Loading...</div>
   </div>
 </div>

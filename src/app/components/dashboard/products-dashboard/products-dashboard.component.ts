@@ -127,11 +127,15 @@ export class ProductsDashboardComponent implements OnInit {
   selectedId: string | null = null;
   loading = false;
 
+  // for delete confirmation
+  showDeleteConfirm = false;
+  deleteId: string | null = null;
+
   constructor(private fb: FormBuilder) {}
 
   ngOnInit() {
     this.catsSvc.getAllCategories().subscribe({
-      next: (res:any) => {
+      next: (res: any) => {
         this.categories = res.data;
         this.loadProducts();
       },
@@ -141,7 +145,7 @@ export class ProductsDashboardComponent implements OnInit {
 
   loadProducts() {
     this.productsSvc.getAllProducts().subscribe({
-      next: (res:any) => {
+      next: (res: any) => {
         this.productsList = res.data.map((p: any) => ({
           ...p,
           categoryName:
@@ -166,5 +170,34 @@ export class ProductsDashboardComponent implements OnInit {
   onRefresh() {
     this.closeModal();
     this.loadProducts();
+  }
+
+  // 1) user clicks trash icon
+  triggerDelete(id: string) {
+    this.deleteId = id;
+    this.showDeleteConfirm = true;
+  }
+
+  // 2) user confirms
+  confirmDelete() {
+    if (!this.deleteId) return;
+    this.productsSvc.deleteProduct(this.deleteId).subscribe({
+      next: () => {
+        this.showDeleteConfirm = false;
+        this.deleteId = null;
+        this.loadProducts();
+      },
+      error: (err) => {
+        console.error('Delete failed', err);
+        this.showDeleteConfirm = false;
+        this.deleteId = null;
+      },
+    });
+  }
+
+  // 3) user cancels
+  cancelDelete() {
+    this.showDeleteConfirm = false;
+    this.deleteId = null;
   }
 }
