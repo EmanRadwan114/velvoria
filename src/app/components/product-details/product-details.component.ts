@@ -10,7 +10,6 @@ import { ToastService } from '../../../services/toast.service';
 import { CartService } from '../../../services/cart.service';
 import { RelatedProdComponent } from '../related-prod/related-prod.component';
 
-
 @Component({
   selector: 'app-product-details',
   imports: [
@@ -120,15 +119,20 @@ export class ProductDetailsComponent implements OnInit {
     });
   }
   addToCart() {
-    const fullUrl = this.router.url;
-    let id = fullUrl.split('/')[2];
-    this.cartService.addToCart({ productId: id }).subscribe({
-      next: (res: any) => {
-        this.cartService.setCartItems(res.data);
-      },
-      error: (err) => {
-        console.log(err.error.message);
-      },
-    });
+    if (localStorage.getItem('user')) {
+      const fullUrl = this.router.url;
+      let id = fullUrl.split('/')[2];
+      this.cartService.addToCart({ productId: id }).subscribe({
+        next: (res: any) => {
+          this.cartService.setCartItems(res.data);
+          this._ToastService.show('success', 'Product added to cart!');
+        },
+        error: (err) => {
+          console.log(err.error.message);
+        },
+      });
+    } else {
+      this._ToastService.show('error', 'Login to add items to cart!');
+    }
   }
 }

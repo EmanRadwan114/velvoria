@@ -17,7 +17,7 @@ export class NavbarComponent implements OnInit {
   isLoggedIn: boolean = false;
   user: any;
   searchQuery = '';
-  totalItems = -1;
+  totalItems = 0;
   constructor(
     protected router: Router,
     private http: HttpClient,

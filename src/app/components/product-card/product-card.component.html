@@ -66,9 +66,10 @@
 
   <app-toast [showToast]="showToast" (close)="showToast =false"></app-toast>
 
-  
+
   <!-- Add to Cart -->
   <div
+    (click)="addToCart(product?._id)"
     class="absolute text-gray-500 border-1 top-48 right-0 transform translate-x-full hover:border-none group-hover:translate-x-[-10px] transition-transform duration-500 bg-gray-50 w-10 h-10 flex items-center justify-center hover:text-white hover:bg-teal-700 rounded">
 
     <i class="fas fa-shopping-cart text-lg"></i>
