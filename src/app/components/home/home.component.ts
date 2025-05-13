@@ -6,6 +6,7 @@ import { GoodVibesComponent } from '../good-vibes/good-vibes.component';
 import { CategoriesService } from '../../../services/categories.service';
 import { HomeProductsComponent } from '../home-products/home-products.component';
 import { CouponAdminComponent } from '../coupon-admin/coupon-admin.component';
+import { AppFeaturesComponent } from '../app-features/app-features.component';
 
 @Component({
   selector: 'app-home',
@@ -16,6 +17,7 @@ import { CouponAdminComponent } from '../coupon-admin/coupon-admin.component';
     ShopByCategoriesComponent,
     HomeProductsComponent,
     CouponAdminComponent,
+    AppFeaturesComponent,
   ],
   templateUrl: './home.component.html',
   styles: ``,
