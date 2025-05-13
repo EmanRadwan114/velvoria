@@ -59,4 +59,6 @@ export class DOTDComponent implements OnInit ,OnDestroy {
       clearInterval(this.IntervalForupdateCountdown);
     }
   }
+
+  
 }
