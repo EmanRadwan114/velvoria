@@ -17,21 +17,21 @@ import { CartService } from '../../../services/cart.service';
 export class ProductCardComponent {
   hovered = 0;
   showToast: any;
-  message = '';
+  showToastCart: any;
   toastarray: boolean[] = [];
   @Input() product: any;
   @Input() description: any;
   @Input() thumbnail: any;
   @Input() price: any;
-  private readonly _activRoutes=inject(ActivatedRoute)
-  private readonly  _WishlistService=inject(WishlistService)
-  private readonly  _ToastService=inject(ToastService)
-  isInWishlist=false;
+  private readonly _activRoutes = inject(ActivatedRoute);
+  private readonly _WishlistService = inject(WishlistService);
+  private readonly _ToastService = inject(ToastService);
+  isInWishlist = false;
 
   constructor(private cartService: CartService) {}
-  addToWishList(id:string): void {
-    console.log("id",id);
-    console.log("isInWishlist",this.isInWishlist);
+  addToWishList(id: string): void {
+    console.log('id', id);
+    console.log('isInWishlist', this.isInWishlist);
     this._WishlistService.addToWishlist(id).subscribe({
       next: (res: any) => {
         console.log('Product added to wishlist!', res);
@@ -55,13 +55,18 @@ export class ProductCardComponent {
     });
   }
   addToCart(id: string) {
-    this.cartService.addToCart({ productId: id }).subscribe({
-      next: (res: any) => {
-        this.cartService.setCartItems(res.data);
-      },
-      error: (err) => {
-        console.log(err.error.message);
-      },
-    });
+    if (localStorage.getItem('user')) {
+      this.cartService.addToCart({ productId: id }).subscribe({
+        next: (res: any) => {
+          this.cartService.setCartItems(res.data);
+          this._ToastService.show('success', 'Product added to cart!');
+        },
+        error: (err) => {
+          console.log(err.error.message);
+        },
+      });
+    } else {
+      this._ToastService.show('error', 'Login to add items to cart!');
+    }
   }
 }
