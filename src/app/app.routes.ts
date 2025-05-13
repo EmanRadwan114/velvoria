@@ -14,6 +14,9 @@ import { OrdersDashboardComponent } from './components/dashboard/orders-dashboar
 import { CouponsDashboardComponent } from './components/dashboard/coupons-dashboard/coupons-dashboard.component';
 import { AdminsDashboardComponent } from './components/dashboard/admins-dashboard/admins-dashboard.component';
 
+import { CheckoutComponent } from './components/checkout/checkout.component';
+import { OrderConfirmationComponent } from './components/order-confirmation/order-confirmation.component';
+
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent, title: 'Home' },
@@ -118,6 +121,12 @@ export const routes: Routes = [
         (c) => c.ContactsComponent
       ),
     title: 'Contact Us',
+  },
+  { path: 'checkout', component: CheckoutComponent, title: 'Checkout' },
+  {
+    path: 'orders/:orderId',
+    component: OrderConfirmationComponent,
+    title: 'Order Confirmation',
   },
   {
     path: '**',

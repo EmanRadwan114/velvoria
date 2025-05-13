@@ -5,18 +5,20 @@ import { ProductsService } from '../../../services/products.service';
 import { WishlistService } from '../../../services/wishlist.service';
 import { ToastComponent } from '../sharedComponents/toast/toast.component';
 import { ToastService } from '../../../services/toast.service';
+import { CartService } from '../../../services/cart.service';
 
 @Component({
   selector: 'app-product-card',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, CommonModule,ToastComponent],
+  imports: [RouterLink, RouterLinkActive, CommonModule, ToastComponent],
   templateUrl: './product-card.component.html',
   styleUrl: './product-card.component.css',
 })
 export class ProductCardComponent {
   hovered = 0;
-  showToast:any;
-  toastarray :boolean[]=[];
+  showToast: any;
+  message = '';
+  toastarray: boolean[] = [];
   @Input() product: any;
   @Input() description: any;
   @Input() thumbnail: any;
@@ -26,14 +28,14 @@ export class ProductCardComponent {
   private readonly  _ToastService=inject(ToastService)
   isInWishlist=false;
 
-    
+  constructor(private cartService: CartService) {}
   addToWishList(id:string): void {
     console.log("id",id);
     console.log("isInWishlist",this.isInWishlist);
     this._WishlistService.addToWishlist(id).subscribe({
       next: (res: any) => {
         console.log('Product added to wishlist!', res);
-        this.isInWishlist=true;
+        this.isInWishlist = true;
         this._ToastService.show('success', 'Product added to wishlist!');
       },
       error: (err) => {
@@ -45,14 +47,21 @@ export class ProductCardComponent {
                 'error',
                 'Product removed from wishlist!'
               );
-               this.isInWishlist=false;
+              this.isInWishlist = false;
             },
           });
-        }
-         else this._ToastService.show('success', err.error.message);
+        } else this._ToastService.show('success', err.error.message);
       },
     });
   }
-  
-
+  addToCart(id: string) {
+    this.cartService.addToCart({ productId: id }).subscribe({
+      next: (res: any) => {
+        this.cartService.setCartItems(res.data);
+      },
+      error: (err) => {
+        console.log(err.error.message);
+      },
+    });
+  }
 }

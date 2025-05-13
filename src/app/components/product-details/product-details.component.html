@@ -92,6 +92,7 @@
           (click)="addToWishList()"
           class="text-gray-900 border hover:border-none bg-gray-50 w-12 h-12 flex items-center justify-center hover:text-white hover:bg-teal-700 rounded cursor-pointer"
           [ngClass]="{
+
             'text-white bg-teal-700 border-none': isInWishlist,
             'text-gray-500 bg-gray-50 hover:text-white hover:bg-teal-700':
               !isInWishlist
@@ -105,6 +106,8 @@
       <!-- Add To Cart -->
       <button
         class="text-xl h-15 btn flex items-center gap-2 w-full black-btn transition duration-200 my-4"
+        (click)="addToCart()"
+
       >
         <i class="fas fa-shopping-cart"></i>
         Add To Cart
