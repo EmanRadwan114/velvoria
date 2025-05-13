@@ -10,6 +10,7 @@ import { SidebarComponent } from './components/dashboard/sidebar/sidebar.compone
 import { NavbarComponent } from './components/sharedComponents/navbar/navbar.component';
 import { FooterComponent } from './components/sharedComponents/footer/footer.component';
 import { ToastComponent } from './components/sharedComponents/toast/toast.component';
+import { CartService } from '../services/cart.service';
 @Component({
   selector: 'app-root',
   imports: [
@@ -27,13 +28,17 @@ export class AppComponent implements OnInit {
   title = 'velvoria';
   showNavAndFoot = true;
   showSideBar = false;
-  constructor(private router: Router) {}
+  constructor(private router: Router, private cartService: CartService) {}
   ngOnInit(): void {
     this.router.events.subscribe((event) => {
        if (event instanceof NavigationEnd) {
       const url = event.url;
       this.showSideBar = url.includes('/dashboard');
       this.showNavAndFoot = !url.includes('/login') && !url.includes('/register');
+      if(this.showNavAndFoot)
+      {
+         this.cartService.loadCartFromBackend();
+      }
     }
       // if (event instanceof NavigationEnd) {
       //   if (event.url.includes('/dashboard')) {

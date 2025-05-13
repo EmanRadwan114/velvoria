@@ -19,14 +19,15 @@ export class CouponComponent {
 
   applyCoupon() {
     this.isLoading = true;
-    this.discount = null;
+    this.discount = 0;
     this.message = '';
 
     this.coupServices.applyCoupon(this.couponCode).subscribe({
       next: (res: any) => {
-        this.discount = res.discount;
+        this.discount = +res.discount;
         this.message = res.message;
         this.isLoading = false;
+        this.coupServices.setCouponCode(this.couponCode, this.discount);
       },
       error: (err) => {
         this.message = err.error?.message || 'Error applying coupon';

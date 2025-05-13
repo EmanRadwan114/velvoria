@@ -4,9 +4,8 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  private loggedIn = new BehaviorSubject<boolean>(this.hasUser());
-
   constructor() {}
+  private loggedIn = new BehaviorSubject<boolean>(this.hasUser());
 
   private hasUser(): boolean {
     return !!localStorage.getItem('user');
