@@ -37,6 +37,7 @@ export class OrdersService {
   private defaultShippingPrice = 50;
 
   constructor(private http: HttpClient) {}
+
   getShippingPrice(): number {
     return this.defaultShippingPrice;
   }
