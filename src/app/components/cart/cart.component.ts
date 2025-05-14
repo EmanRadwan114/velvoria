@@ -4,10 +4,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CartService } from '../../../services/cart.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { LoadingSPinnerComponent } from '../sharedComponents/loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'app-cart',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,LoadingSPinnerComponent],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css',
 })

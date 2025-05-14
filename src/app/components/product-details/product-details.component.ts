@@ -9,7 +9,7 @@ import { ToastComponent } from '../sharedComponents/toast/toast.component';
 import { ToastService } from '../../../services/toast.service';
 import { CartService } from '../../../services/cart.service';
 import { RelatedProdComponent } from '../related-prod/related-prod.component';
-
+import { ReviewsService } from '../../../services/reviews.service';
 
 @Component({
   selector: 'app-product-details',
@@ -28,6 +28,7 @@ export class ProductDetailsComponent implements OnInit {
   private readonly _ProductsService = inject(ProductsService);
   private readonly _CategoriesService = inject(CategoriesService);
   private readonly _WishlistService = inject(WishlistService);
+  private readonly _reviewService = inject(ReviewsService);
   private _ToastService = inject(ToastService);
 
   constructor(private cartService: CartService, private router: Router) {}
@@ -38,6 +39,7 @@ export class ProductDetailsComponent implements OnInit {
   categoryName: string = '';
   category: any = {};
   productID: any = '';
+  reviews: any = '';
 
   ngOnInit(): void {
     this._ActivatedRoute.paramMap.subscribe((p) => {
@@ -49,7 +51,7 @@ export class ProductDetailsComponent implements OnInit {
           this.categoryID = this.detailsProduct.categoryID;
           this.mainImage = this.detailsProduct.thumbnail;
 
-          // 2) now that categoryID is set, fetch category
+          // 2) fetch category
           this._CategoriesService
             .getSpecificCategry(this.categoryID)
             .subscribe({
@@ -62,40 +64,11 @@ export class ProductDetailsComponent implements OnInit {
         },
         error: (err) => console.error('Product API Error:', err),
       });
+ 
     });
   }
 
-  // this._ActivatedRoute.paramMap.subscribe({
-  //       next: (p) => {
-  //         this.productID = p.get('id');
-
-  //         // Call API For Specific Product
-  //         this._ProductsService.getSpecificProduct(this.productID).subscribe({
-  //           next: (res: any) => {
-  //             console.log(res.data);
-  //             this.detailsProduct = res.data[0];
-  //             this.mainImage = this.detailsProduct.thumbnail;
-  //             this.categoryID = this.detailsProduct.categoryID;
-  //           },
-  //           error: (err) => {
-  //             console.log(err);
-  //           },
-  //         });
-  //         // get category name
-  //         this._CategoriesService.getSpecificCategry(this.categoryID).subscribe({
-  //           next: (res: any) => {
-  //             this.category = res.data[0];
-  //             this.categoryName = this.category.name;
-  //           },
-  //           error: (err) => {
-  //             console.log(err);
-  //           },
-  //         });
-  //       },
-  //     });
-
   //add to wishlist
-
   addToWishList(): void {
     this._WishlistService.addToWishlist(this.productID).subscribe({
       next: (res: any) => {
@@ -119,16 +92,23 @@ export class ProductDetailsComponent implements OnInit {
       },
     });
   }
+  // add to cart
   addToCart() {
-    const fullUrl = this.router.url;
-    let id = fullUrl.split('/')[2];
-    this.cartService.addToCart({ productId: id }).subscribe({
-      next: (res: any) => {
-        this.cartService.setCartItems(res.data);
-      },
-      error: (err) => {
-        console.log(err.error.message);
-      },
-    });
+    if (localStorage.getItem('user')) {
+      const fullUrl = this.router.url;
+      let id = fullUrl.split('/')[2];
+      this.cartService.addToCart({ productId: id }).subscribe({
+        next: (res: any) => {
+          this.cartService.setCartItems(res.data);
+          this._ToastService.show('success', 'Product added to cart!');
+        },
+        error: (err) => {
+          console.log(err.error.message);
+        },
+      });
+    } else {
+      this._ToastService.show('error', 'Login to add items to cart!');
+    }
   }
+
 }
