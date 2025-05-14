@@ -68,7 +68,11 @@ export class LoginComponent {
         .subscribe({
           next: (res: any) => {
             if (res) {
-              localStorage.setItem('user', JSON.stringify(res.user));
+              let { email, name, image, role, address } = res.user;
+              localStorage.setItem(
+                'user',
+                JSON.stringify({ email, name, image, role, address })
+              );
               this.authService.notifyLogin();
               this.router.navigate(['/home']);
             }

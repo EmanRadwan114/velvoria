@@ -116,7 +116,7 @@
     <!-- Login, Cart, Fav -->
     <div class="flex items-center space-x-4 md:me-2">
       <!-- Login Icon -->
-      @if(isLoggedIn){
+      @if(isLoggedIn|| user){
       <!-- profile icon start -->
       <div class="relative group inline-block md:me-6">
         <a class="hover:text-teal-700 flex items-center gap-1 cursor-pointer">
@@ -201,6 +201,7 @@
         <div
           role="button"
           class="btn btn-ghost btn-circle"
+          (click)="router.navigate(['/cart'])"
         >
           <div class="indicator">
             <i class="fas fa-shopping-cart text-lg"></i>
