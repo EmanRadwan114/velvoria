@@ -1,4 +1,4 @@
-<section class="bg-[#F5F5F5]">
+<section *ngIf="DealOfTheDayProduct" class="bg-[#F5F5F5]">
   <div class="container mx-auto py-24">
     <h2 class="header-txt font-semibold text-center mb-3 primary-text-color">
       Deal Of The Day
@@ -31,15 +31,17 @@
           {{ DealOfTheDayProduct.title }}
         </h3>
         <p class="text-gray-400 text-base 2xl:text-lg">
-          {{ DealOfTheDayProduct.des }}
+          {{ DealOfTheDayProduct.description }}
         </p>
 
         <div class="flex justify-center md:justify-start gap-x-5 my-4">
           <p class="text-amber-600 text-xl 2xl:text-2xl">
-            ${{ DealOfTheDayProduct.afterDiscount }}
+            <!-- ${{ DealOfTheDayProduct.afterDiscount }} -->
+             2333
           </p>
           <p class="line-through text-black text-2xs 2xl:text-sm">
-            ${{ DealOfTheDayProduct.beforeDiscount }}
+            <!-- ${{ DealOfTheDayProduct.beforeDiscount }} -->
+             333
           </p>
         </div>
 
