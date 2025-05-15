@@ -34,7 +34,16 @@ export class ProductsService {
 
   //^ Get Best Selling Product
   getBestSelling() {
-    return this._HttpClient.get(`${this.URL}/products/best-selling-products`);
+    return this._HttpClient.get(`${this.URL}/products/best-selling-products`, {
+      withCredentials: true,
+    });
+  }
+
+  //^ Get least ordered Product
+  getLeastOrderedProducts() {
+    return this._HttpClient.get(`${this.URL}/products/least-ordered-products`, {
+      withCredentials: true,
+    });
   }
 
   // ^ Add New Product
@@ -58,7 +67,6 @@ export class ProductsService {
     });
   }
 
-  
   filterProducts(filters: Record<string, any>) {
     // build up HttpParams
     let params = new HttpParams();
