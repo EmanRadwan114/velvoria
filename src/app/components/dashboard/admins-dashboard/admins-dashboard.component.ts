@@ -1,11 +1,96 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AdminsService } from '../../../../services/admins.service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { AdminsModalComponent } from '../../modals/admins-modal/admins-modal.component';
 
 @Component({
   selector: 'app-admins-dashboard',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule, FormsModule, AdminsModalComponent],
   templateUrl: './admins-dashboard.component.html',
-  styleUrl: './admins-dashboard.component.css'
 })
-export class AdminsDashboardComponent {
+export class AdminsDashboardComponent implements OnInit {
+  admins: any[] = [];
+  isLoading = false;
 
+  // Modal state control
+  showModal = false;
+  modalType: 'add' | 'edit' | 'view' | null = null;
+  selectedAdmin: any = null;
+
+  // Delete confirmation
+  showDeleteConfirm = false;
+  adminToDelete: any = null;
+
+  constructor(private adminsService: AdminsService) {}
+
+  ngOnInit(): void {
+    this.loadAdmins();
+  }
+
+  // Load admin list
+  loadAdmins() {
+    this.isLoading = true;
+    this.adminsService.getAdmins().subscribe({
+      next: (res: any) => {
+        this.admins = (res.data || res).filter((user: any) => user.role === 'admin');
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Error loading admins', err);
+        this.isLoading = false;
+      }
+    });
+  }
+
+  // Open modal with type (add, edit, view)
+  openModal(type: 'add' | 'edit' | 'view', admin?: any) {
+    this.modalType = type;
+    this.selectedAdmin = admin || null;
+    this.showModal = true;
+  }
+
+  // Close modal
+  closeModal() {
+    this.showModal = false;
+    this.modalType = null;
+    this.selectedAdmin = null;
+  }
+
+  // Refresh admins list after save
+  onAdminUpdated() {
+    this.loadAdmins();
+    this.closeModal();
+  }
+
+  // Show delete confirmation modal
+  confirmDelete(admin: any) {
+    this.adminToDelete = admin;
+    this.showDeleteConfirm = true;
+  }
+
+  // Cancel delete action
+  cancelDelete() {
+    this.adminToDelete = null;
+    this.showDeleteConfirm = false;
+  }
+
+  // Perform delete
+  deleteAdmin() {
+    if (!this.adminToDelete?._id) return;
+
+    this.isLoading = true;
+    this.adminsService.deleteAdmin(this.adminToDelete._id).subscribe({
+      next: () => {
+        this.loadAdmins();
+        this.showDeleteConfirm = false;
+        this.adminToDelete = null;
+      },
+      error: (err) => {
+        console.error('Failed to delete admin', err);
+        this.isLoading = false;
+      }
+    });
+  }
 }
