@@ -78,7 +78,6 @@ export class ProductsCategoryComponent implements OnInit {
       fullQuery.category = this.currentCategoryId;
     }
 
-    // ✅ Remove invalid values like null, undefined, or 'all'
     Object.keys(fullQuery).forEach((key) => {
       if (
         fullQuery[key] === null ||

@@ -6,6 +6,7 @@ import {
   Output,
   OnChanges,
   SimpleChanges,
+  inject,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -16,6 +17,7 @@ import {
 import { ProductsService } from '../../../../services/products.service';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { ToastService } from '../../../../services/toast.service';
 
 @Component({
   selector: 'app-products-modal',
@@ -39,7 +41,7 @@ export class ProductsModalComponent implements OnChanges {
   lightboxIndex = 0;
 
   private lettersOnlyPattern = /^[a-zA-Z\s]*$/;
-  private lettersWithBasicPunctuation = /^[a-zA-Z\s.,!?']*$/;
+  private readonly _ToastService = inject(ToastService);
 
   constructor(private fb: FormBuilder, private service: ProductsService) {
     this.productForm = this.fb.group({
@@ -63,6 +65,34 @@ export class ProductsModalComponent implements OnChanges {
       label: [[]],
       images: [[], [Validators.required]],
     });
+  }
+
+  get title() {
+    return this.productForm.get('title');
+  }
+  get material() {
+    return this.productForm.get('material');
+  }
+  get color() {
+    return this.productForm.get('color');
+  }
+  get description() {
+    return this.productForm.get('description');
+  }
+  get thumbnail() {
+    return this.productForm.get('thumbnail');
+  }
+  get price() {
+    return this.productForm.get('price');
+  }
+  get stock() {
+    return this.productForm.get('stock');
+  }
+  get categoryID() {
+    return this.productForm.get('categoryID');
+  }
+  get images() {
+    return this.productForm.get('images');
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -115,15 +145,27 @@ export class ProductsModalComponent implements OnChanges {
     });
   }
 
+  isSubmitting = false;
+
   submitForm() {
-    if (this.productForm.invalid) return;
+    
+
+    if (this.productForm.invalid) {
+      this.productForm.markAllAsTouched();
+      return;
+    }
+    this.isSubmitting = true;
 
     const payload = {
       ...this.productForm.value,
       price: this.safeParseFloat(this.productForm.value.price),
       stock: this.safeParseInt(this.productForm.value.stock),
     };
+    this._ToastService.show('success', 'New Product Added Successfully');
 
+    if (this.activeModal === 'add'){    this._ToastService.show('success', 'New Product Added Successfully');
+}
+    
     console.log('Submitting payload:', payload);
 
     const observable =
@@ -135,7 +177,10 @@ export class ProductsModalComponent implements OnChanges {
       .pipe(
         catchError((err) => {
           console.error('Error submitting form', err);
-          alert(`Error: ${err.error?.message || 'Server error occurred'}`);
+          this._ToastService.show(
+            'error',
+            err.error?.message || 'Server error occurred'
+          );
           return throwError(() => err);
         })
       )

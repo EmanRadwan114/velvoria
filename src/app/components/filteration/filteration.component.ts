@@ -62,13 +62,4 @@ export class FilterationComponent {
     this.filterChanged.emit(filterQuery);
   }
 
-  // onFilterChange() {
-  //   const filterQuery = {
-  //     material: this.material !== 'all' ? this.material.toLowerCase() : null,
-  //     color: this.color !== 'all' ? this.color.toLowerCase() : null,
-  //     price: this.price,
-  //   };
-  //   console.log('Filteration emits:', filterQuery);
-  //   this.filterChanged.emit(filterQuery);
-  // }
 }
