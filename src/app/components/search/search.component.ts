@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ProductsComponent } from '../products/products.component';
 import { environment } from '../../../environments/environment';
 import { PaginationComponent } from '../sharedComponents/pagination/pagination.component';
+import { ProductsService } from '../../../services/products.service';
 @Component({
   selector: 'app-search',
   imports: [CommonModule, ProductsComponent, PaginationComponent],
@@ -17,8 +18,15 @@ export class SearchComponent implements OnInit {
   currentPage: number = 1;
   totalPages: number = 1;
   message = 'loading';
-  constructor(private route: ActivatedRoute, private http: HttpClient) {}
+  isFiltered = false;
+  lastFilterQuery: any = {};
+  constructor(
+    private route: ActivatedRoute,
+    private http: HttpClient,
+    private prdServices: ProductsService
+  ) {}
   fetchProducts(): void {
+    this.isFiltered = false;
     this.http
       .get(
         `${environment.backUrl}/products/search?q=${this.query}&page=${this.currentPage}`
@@ -44,7 +52,45 @@ export class SearchComponent implements OnInit {
   }
   changePage(page: number): void {
     this.currentPage = page;
-    this.fetchProducts();
+    if (this.isFiltered) {
+      this.handleFilterChange(this.lastFilterQuery, false);
+    } else {
+      this.fetchProducts();
+    }
+  }
+  handleFilterChange(filterQuery: any, resetPage = true): void {
+    const fullQuery: any = { ...filterQuery };
+    this.isFiltered = true;
+    if (this.query) {
+      fullQuery.search = this.query;
+    }
+    if (resetPage) this.currentPage = 1;
+
+    Object.keys(fullQuery).forEach((key) => {
+      if (
+        fullQuery[key] === null ||
+        fullQuery[key] === undefined ||
+        fullQuery[key] === 'all'
+      ) {
+        delete fullQuery[key];
+      }
+    });
+
+    console.log('Full filter query:', fullQuery);
+    console.log(this.currentPage);
+    this.lastFilterQuery = fullQuery;
+    this.prdServices.filterProducts(fullQuery, this.currentPage).subscribe({
+      next: (res: any) => {
+        this.products = res.data;
+        console.log(res.data);
+        this.totalPages = res.totalPages;
+      },
+      error: (err) => {
+        console.error('Filter Error status =', err.status);
+        console.error('Filter Error body =', err.error);
+        this.message = 'No products were found matching your selection';
+      },
+    });
   }
   // ngOnInit(): void {
   //   this.route.queryParams.subscribe((params) => {
