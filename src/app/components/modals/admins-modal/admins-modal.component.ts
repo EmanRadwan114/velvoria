@@ -36,8 +36,13 @@ export class AdminsModalComponent implements OnInit {
     // Initialize form
     this.form = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.minLength(6)]],
+      email: ['', [Validators.required, Validators.email, ]],
+      password: ['', [Validators.minLength(6), Validators.required ,
+        Validators.pattern(/^(?!\d+$)[a-zA-Z0-9_]+$/),
+      ]],
+      image: [
+        'https://img.freepik.com/free-vector/illustration-user-avatar-icon_53876-5907.jpg?uid=R194767243&ga=GA1.1.1957810835.1742649565&semt=ais_hybrid&w=740',
+      ],
     });
 
     if (this.type === 'edit' && this.admin) {
@@ -109,7 +114,7 @@ export class AdminsModalComponent implements OnInit {
     this.isLoading = false;
   }
 
-  // Handle error
+
   handleError(err: any) {
     console.error('Operation failed', err);
     this.isLoading = false;

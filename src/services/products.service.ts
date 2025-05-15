@@ -83,4 +83,10 @@ export class ProductsService {
       }
     );
   }
+
+  discountProducts() {
+    return this._HttpClient.get(`${this.URL}/products/least-ordered-products`, {
+      withCredentials: true,
+    });
+  }
 }
