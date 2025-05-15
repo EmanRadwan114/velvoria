@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { AdminsService } from '../../../../services/admins.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AdminsModalComponent } from '../../modals/admins-modal/admins-modal.component';
+import { ToastService } from '../../../../services/toast.service';
 
 @Component({
   selector: 'app-admins-dashboard',
@@ -23,6 +24,8 @@ export class AdminsDashboardComponent implements OnInit {
   showDeleteConfirm = false;
   adminToDelete: any = null;
 
+  private readonly _ToastService = inject(ToastService);
+
   constructor(private adminsService: AdminsService) {}
 
   ngOnInit(): void {
@@ -34,13 +37,15 @@ export class AdminsDashboardComponent implements OnInit {
     this.isLoading = true;
     this.adminsService.getAdmins().subscribe({
       next: (res: any) => {
-        this.admins = (res.data || res).filter((user: any) => user.role === 'admin');
+        this.admins = (res.data || res).filter(
+          (user: any) => user.role === 'admin'
+        );
         this.isLoading = false;
       },
       error: (err) => {
         console.error('Error loading admins', err);
         this.isLoading = false;
-      }
+      },
     });
   }
 
@@ -83,14 +88,16 @@ export class AdminsDashboardComponent implements OnInit {
     this.isLoading = true;
     this.adminsService.deleteAdmin(this.adminToDelete._id).subscribe({
       next: () => {
+        this._ToastService.show('success', 'admin deleted successfully');
         this.loadAdmins();
         this.showDeleteConfirm = false;
         this.adminToDelete = null;
       },
       error: (err) => {
+        this._ToastService.show('error', 'Failed to delete admin');
         console.error('Failed to delete admin', err);
         this.isLoading = false;
-      }
+      },
     });
   }
 }
