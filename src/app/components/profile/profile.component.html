@@ -104,6 +104,17 @@
                     formControlName="name"
                     class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-700 placeholder-gray-400"
                   />
+
+                  <div
+                    *ngIf="
+                      personalInfoForm.get('name')?.invalid &&
+                      personalInfoForm.get('name')?.touched
+                    "
+                  >
+                    <p class="text-sm text-red-600 mt-1">
+                      Full Name should be at least 3 letters
+                    </p>
+                  </div>
                 </div>
 
                 <div>
@@ -115,6 +126,19 @@
                     formControlName="email"
                     class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-700 placeholder-gray-400"
                   />
+                  <!-- Email -->
+                  <div
+                    *ngIf="personalInfoForm.get('email')?.errors?.['required'] && personalInfoForm.get('email')?.touched"
+                  >
+                    <p class="text-sm text-red-600 mt-1">Email is required</p>
+                  </div>
+                  <div
+                    *ngIf="personalInfoForm.get('email')?.errors?.['required'] && personalInfoForm.get('email')?.touched"
+                  >
+                    <p class="text-sm text-red-600 mt-1">
+                      Invalid email format
+                    </p>
+                  </div>
                 </div>
 
                 <div *ngIf="role === 'user'" class="md:col-span-2">
@@ -126,6 +150,16 @@
                     formControlName="address"
                     class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-700 placeholder-gray-400"
                   />
+
+                  <!-- Address -->
+                  <div
+                    *ngIf="
+                      personalInfoForm.get('address')?.invalid &&
+                      personalInfoForm.get('address')?.touched
+                    "
+                  >
+                    <p class="text-sm text-red-600 mt-1">Address is required</p>
+                  </div>
                 </div>
 
                 <div class="md:col-span-2 text-center mt-4">
@@ -161,13 +195,6 @@
               </ng-template>
             </div>
           </form>
-
-          <div *ngIf="successMessage" class="text-green-600 font-medium mb-4">
-            {{ successMessage }}
-          </div>
-          <div *ngIf="errorMessage" class="text-red-600 font-medium mb-4">
-            {{ errorMessage }}
-          </div>
 
           <!-- CHANGE PASSWORD -->
           <form
@@ -210,6 +237,17 @@
                     formControlName="newPassword"
                     class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-700 placeholder-gray-400"
                   />
+                  <!-- New Password -->
+                  <div
+                    *ngIf="
+                      passwordForm.get('newPassword')?.invalid &&
+                      passwordForm.get('newPassword')?.touched
+                    "
+                  >
+                    <p class="text-sm text-red-600 mt-1">
+                      New password is required
+                    </p>
+                  </div>
                 </div>
 
                 <div>
@@ -221,6 +259,19 @@
                     formControlName="confirmPassword"
                     class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-700 placeholder-gray-400"
                   />
+
+                  <!-- Confirm Password Match -->
+                  <div
+                    *ngIf="
+                      passwordForm.get('confirmPassword')?.touched &&
+                      passwordForm.value.newPassword !==
+                        passwordForm.value.confirmPassword
+                    "
+                  >
+                    <p class="text-sm text-red-600 mt-1">
+                      Passwords do not match
+                    </p>
+                  </div>
                 </div>
 
                 <div class="md:col-span-2 text-center mt-4">
@@ -260,19 +311,6 @@
               </ng-template>
             </div>
           </form>
-
-          <div
-            *ngIf="passwordSuccessMessage"
-            class="text-green-600 font-medium mb-4"
-          >
-            {{ passwordSuccessMessage }}
-          </div>
-          <div
-            *ngIf="passwordErrorMessage"
-            class="text-red-600 font-medium mb-4"
-          >
-            {{ passwordErrorMessage }}
-          </div>
 
           <a
             (click)="signOut()"
