@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
 
@@ -36,6 +36,6 @@ export class UsersService {
       .get<{ message: string; data: any }>(`${this.URL}/orders/me`, {
         withCredentials: true,
       })
-      .pipe(map((res) => res.data));
+      .pipe(map((res:any) => res.data));
   }
 }

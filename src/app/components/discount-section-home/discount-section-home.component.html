@@ -16,10 +16,10 @@
  <div class="p-6 bg-zinc-100 relative">
   <div class="absolute inset-0 opacity-10 pointer-events-none"></div>
 
-  <div class="relative grid gap-12">
+  <div class="relative grid gap-10">
    <div class="grid md:grid-cols-2 gap-6 items-center bg-white bg-opacity-90 rounded-sm p-6">
   <!-- Image -->
-  <div class="w-full h-[300px] overflow-hidden rounded-xl">
+  <div class="w-full h-[50dvh] md:h-[70dvh] overflow-hidden rounded-xl">
     <img
       [src]="discountProducts[0]?.thumbnail"
       alt="{{ discountProducts[0]?.title }}"
@@ -29,13 +29,13 @@
 
   <!-- Text Centered -->
   <div class="flex flex-col justify-center items-center text-center h-full">
-    <p class="uppercase text-sm tracking-widest text-gray-500 mb-2">Online Store</p>
-    <h2 class="text-2xl font-bold text-gray-900 mb-4">
+    <p class="uppercase text-sm tracking-widest text-gray-500 mb-2">Big Sale & Top Quality</p>
+    <h2 class="text-5xl font-bold text-gray-900 mb-4">
       {{ discountProducts[0]?.title }}
     </h2>
     <div class="text-gray-800 text-lg mb-4">
-      <span class="line-through text-red-400 mr-2">EGP{{ discountProducts[0]?.price }}</span>
-      <span class="text-teal-700 font-bold">{{ getDiscountPercentage(discountProducts[0]?.price) }}</span>
+      <span class="line-through text-red-400 mr-4">EGP{{ discountProducts[0]?.price }}</span>
+      <span class="text-2xl text-teal-700 font-bold">{{ getDiscountPercentage(discountProducts[0]?.price) }}</span>
     </div>
     <button   [routerLink]="['/furnitures', discountProducts[0]?._id]" class="flex items-center gap-2 text-teal-700 hover:text-teal-900 font-medium transition-all duration-200">
       View More
@@ -47,15 +47,15 @@
 </div>
 
     <!-- Card 2: Text Left, Image Right -->
-   <div class="grid md:grid-cols-2 gap-6 items-center bg-white bg-opacity-90 rounded-sm p-6">
+   <div class="grid md:grid-cols-2  gap-6 items-center bg-white bg-opacity-90 rounded-sm p-6">
   <!-- Text Centered -->
   <div class="flex flex-col justify-center items-center text-center h-full">
-    <p class="uppercase text-sm tracking-widest text-gray-500 mb-2">Handmade & New</p>
-    <h2 class="text-2xl font-bold text-gray-900 mb-4">
+    <p class="uppercase text-sm tracking-widest text-gray-500 mb-2">Big Sale & Top Quality</p>
+    <h2 class="text-5xl font-bold text-gray-900 mb-4">
       {{ discountProducts[1]?.title }}
     </h2>
     <div class="text-gray-800 text-lg mb-4">
-      <span class="line-through text-red-400 mr-2">EGP{{ discountProducts[1]?.price }}</span>
+      <span class="text-2xl line-through text-red-400 mr-4">EGP{{ discountProducts[1]?.price }}</span>
       <span class="text-teal-700 font-bold">{{ getDiscountPercentage(discountProducts[1]?.price) }}</span>
     </div>
     <button  [routerLink]="['/furnitures', discountProducts[1]?._id]" class="flex items-center gap-2 text-teal-700 hover:text-teal-900 font-medium transition-all duration-200">
@@ -67,7 +67,7 @@
   </div>
 
   <!-- Image -->
-  <div  class="w-full h-[300px] overflow-hidden rounded-xl">
+  <div  class="w-full h-[50dvh] md:h-[70dvh] overflow-hidden rounded-xl">
     <img
       [src]="discountProducts[1]?.thumbnail"
       alt="{{ discountProducts[1]?.title }}"
