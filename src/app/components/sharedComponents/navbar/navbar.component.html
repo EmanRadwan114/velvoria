@@ -1,4 +1,4 @@
-<nav class="navbar bg-base-100 shadow-sm">
+<nav class="navbar bg-base-100 shadow-sm sticky left-0 end-0 top-0 w-full z-50">
   <div class="container mx-auto flex justify-between items-center w-full">
     <div>
       <!-- LOGO -->
@@ -128,15 +128,20 @@
           <div class="flex items-center">
             <img
               class="w-10 h-10 rounded-full"
-              [src]=user.image
+              [src]="user.image"
               alt="Profile"
             />
             <div class="px-4 py-3 text-gray-900 dark:text-white mb-2">
               <div class="font-medium text-lg text-black truncate">
-                {{user.name}}
+                {{ user.name }}
               </div>
-              <div class="text-gray-500 font-semibold">{{ user.email.length > 15 ? (user.email.substring(0,15) + '...')
-                : user.email }}</div>
+              <div class="text-gray-500 font-semibold">
+                {{
+                user.email.length > 15
+                ? user.email.substring(0, 15) + "..."
+                : user.email
+                }}
+              </div>
             </div>
           </div>
           <div class="grid grid-cols-1 gap-3 text-sm font-semibold text-gray-600 px-4 py-4">
@@ -149,6 +154,7 @@
             </a>
 
             <a
+              *ngIf="user.role === 'user'"
               [routerLink]="['/profile']"
               [queryParams]="{ tab: 'orders' }"
               class="hover:text-teal-700"
@@ -181,8 +187,6 @@
       </a>
       }
 
-
-
       <!-- profile icon end -->
 
       <!-- Favorite Icon -->
@@ -202,17 +206,19 @@
         >
           <div class="indicator">
             <i class="fas fa-shopping-cart text-lg"></i>
-            <span class="badge badge-sm indicator-item bg-teal-700 text-gray-100">{{totalItems}}</span>
+            <span class="badge badge-sm indicator-item bg-teal-700 text-gray-100">{{ totalItems }}</span>
           </div>
         </div>
         <div class="card card-compact dropdown-content bg-base-100 z-10 mt-3 w-52 shadow">
           <div class="card-body">
-            <span class="text-lg font-bold">{{totalItems}} Items</span>
+            <span class="text-lg font-bold">{{ totalItems }} Items</span>
             <div class="card-actions">
               <button
                 class="btn btn-primary btn-block"
                 (click)="router.navigate(['/cart'])"
-              >View cart</button>
+              >
+                View cart
+              </button>
             </div>
           </div>
         </div>

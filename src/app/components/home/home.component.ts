@@ -6,8 +6,7 @@ import { GoodVibesComponent } from '../good-vibes/good-vibes.component';
 import { CategoriesService } from '../../../services/categories.service';
 import { HomeProductsComponent } from '../home-products/home-products.component';
 import { AppFeaturesComponent } from '../app-features/app-features.component';
-import { CouponComponent } from '../coupon/coupon.component';
-import { CouponsDashboardComponent } from '../dashboard/coupons-dashboard/coupons-dashboard.component';
+import { DiscountSectionHomeComponent } from "../discount-section-home/discount-section-home.component";
 
 @Component({
   selector: 'app-home',
@@ -18,9 +17,8 @@ import { CouponsDashboardComponent } from '../dashboard/coupons-dashboard/coupon
     ShopByCategoriesComponent,
     HomeProductsComponent,
     AppFeaturesComponent,
-    CouponsDashboardComponent
-    ,
-  ],
+    DiscountSectionHomeComponent
+],
   templateUrl: './home.component.html',
   styles: ``,
 })

@@ -64,7 +64,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loadCartItems();
 
-    this.shippingPrice = this.couponsService.getShippingPrice();
+    this.shippingPrice = this.ordersService.getShippingPrice();
 
     // Subscribe to the couponApplied EventEmitter
     this.couponSubscription = this.couponsService.couponApplied.subscribe(

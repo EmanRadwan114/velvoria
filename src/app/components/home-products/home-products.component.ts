@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
-import { ProductCardComponent } from '../product-card/product-card.component';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProductsService } from '../../../services/products.service';
+import { HomeProductCardComponent } from '../home-product-card/home-product-card.component';
 
 @Component({
   selector: 'app-home-products',
-  imports: [CommonModule, ProductCardComponent, FormsModule],
+  imports: [CommonModule, FormsModule, HomeProductCardComponent],
   templateUrl: './home-products.component.html',
   styleUrl: './home-products.component.css',
 })

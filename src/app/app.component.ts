@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, ViewportScroller } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
   NavigationEnd,
@@ -11,6 +11,7 @@ import { NavbarComponent } from './components/sharedComponents/navbar/navbar.com
 import { FooterComponent } from './components/sharedComponents/footer/footer.component';
 import { ToastComponent } from './components/sharedComponents/toast/toast.component';
 import { CartService } from '../services/cart.service';
+import { ScrollTopComponent } from './components/sharedComponents/scroll-top/scroll-top.component';
 @Component({
   selector: 'app-root',
   imports: [
@@ -20,6 +21,8 @@ import { CartService } from '../services/cart.service';
     FooterComponent,
     ToastComponent,
     SidebarComponent,
+    CommonModule,
+    ScrollTopComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
@@ -33,6 +36,10 @@ export class AppComponent implements OnInit {
   constructor(private router: Router, private cartService: CartService) {}
   ngOnInit(): void {
     this.router.events.subscribe((event) => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
       if (event instanceof NavigationEnd) {
         const url = event.url;
         this.showSideBar = url.includes('/dashboard');

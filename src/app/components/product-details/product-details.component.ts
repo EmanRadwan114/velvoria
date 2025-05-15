@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 import { CategoriesService } from '../../../services/categories.service';
 import { ReviewsComponent } from '../reviews/reviews.component';
 import { WishlistService } from '../../../services/wishlist.service';
-import { ToastComponent } from '../sharedComponents/toast/toast.component';
 import { ToastService } from '../../../services/toast.service';
 import { CartService } from '../../../services/cart.service';
 import { RelatedProdComponent } from '../related-prod/related-prod.component';
@@ -13,12 +12,7 @@ import { ReviewsService } from '../../../services/reviews.service';
 
 @Component({
   selector: 'app-product-details',
-  imports: [
-    CommonModule,
-    ReviewsComponent,
-    ToastComponent,
-    RelatedProdComponent,
-  ],
+  imports: [CommonModule, ReviewsComponent, RelatedProdComponent],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.css',
 })

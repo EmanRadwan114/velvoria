@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
 import { environment } from '../environments/environment';
 
 @Injectable({
@@ -9,19 +8,32 @@ import { environment } from '../environments/environment';
 })
 export class UsersService {
   private apiUrl = `${environment.backUrl}/users`;
+ private URL = environment.backUrl;
 
   constructor(private httpClient: HttpClient) {}
   getUserProfile(): Observable<any> {
-    return this.httpClient
-      .get<{ message: string; data: any }>(`${this.apiUrl}/me`, {
+    return this.httpClient.get<{ message: string; data: any }>(
+      `${this.apiUrl}/me`,
+      {
         withCredentials: true,
-      })
-      .pipe(map((res) => res.data));
+      }
+    );
   }
 
   updateUserProfile(data: any): Observable<any> {
+    return this.httpClient.put<{ message: string; data: any }>(
+      `${this.apiUrl}/me`,
+      data,
+      {
+        withCredentials: true,
+      }
+    );
+  }
+
+
+  getUserOrders(): Observable<any> {
     return this.httpClient
-      .put<{ message: string; data: any }>(`${this.apiUrl}/me`, data, {
+      .get<{ message: string; data: any }>(`${this.URL}/orders/me`, {
         withCredentials: true,
       })
       .pipe(map((res) => res.data));

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -12,6 +12,7 @@ import {
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../../services/auth.service';
+import { ToastService } from '../../../services/toast.service';
 
 @Component({
   selector: 'app-profile',
@@ -34,11 +35,11 @@ export class ProfileComponent implements OnInit {
   originalEmail: string = '';
   role: string = '';
 
-  successMessage: string | null = null;
-  errorMessage: string | null = null;
-
-  passwordSuccessMessage: string | null = null;
+  emailErrorMessage: string | null = null;
   passwordErrorMessage: string | null = null;
+
+  userOrders:any[]=[];
+  private readonly _ToastService = inject(ToastService);
 
   constructor(
     private route: ActivatedRoute,
@@ -49,32 +50,57 @@ export class ProfileComponent implements OnInit {
     private authService: AuthService
   ) {}
 
+  getOrders() {
+    this.usersService.getUserOrders().subscribe({
+      next: (res) => {
+        this.userOrders=res;
+        console.log(' 🟢User orders:',   this.userOrders);
+      },
+      error: (err) => {
+        console.error('Error fetching user orders!!!!', err);
+      },
+    });
+  }
+
+  getDateTimeOrder(date: string): string {
+    const dateTime = new Date(date);
+    const options: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+    };
+    return dateTime.toLocaleString('en-US', options);
+  
+  }
   ngOnInit(): void {
     this.route.queryParams.subscribe((params: { [key: string]: string }) => {
       const tab: string = params['tab'];
       this.isOrder = tab === 'orders';
       this.isPersonalInfo = !this.isOrder;
     });
-
+    this.getOrders();
     this.usersService.getUserProfile().subscribe((user) => {
-      this.originalEmail = user.email;
-      this.role = user.role;
+      this.originalEmail = user.data.email;
+      this.role = user.data.role;
+      this.image = user.data.image;
 
       const formConfig: any = {
-        name: [user.name, [Validators.required, Validators.minLength(3)]],
+        name: [user.data.name, [Validators.required, Validators.minLength(3)]],
         email: [
-          user.email,
+          user.data.email,
           [
             Validators.required,
             Validators.pattern(/^[\w.-]+@([\w-]+\.)+[a-zA-Z]{2,}$/),
           ],
         ],
-        image: [user.image || '', [Validators.required]],
+        image: [user.data.image || '', [Validators.required]],
       };
 
-      if (user.role === 'user') {
+      if (user.data.role === 'user') {
         formConfig.address = [
-          user.address?.[user.address.length - 1] || '',
+          user.data.address?.[user.data.address.length - 1] || '',
           [Validators.required],
         ];
       }
@@ -95,6 +121,8 @@ export class ProfileComponent implements OnInit {
         confirmPassword: ['', [Validators.required]],
       });
     });
+
+
   }
 
   showPersonalInfo(): void {
@@ -115,12 +143,12 @@ export class ProfileComponent implements OnInit {
     if (!this.isEditingPersonalInfo) {
       this.usersService.getUserProfile().subscribe((user) => {
         this.personalInfoForm.patchValue({
-          name: user.name,
-          email: user.email,
-          address: user.address?.[user.address.length - 1] || '',
-          image: user.image || '',
+          name: user.data.name,
+          email: user.data.email,
+          address: user.data.address?.[user.address.length - 1] || '',
+          image: user.data.image || '',
         });
-        this.originalEmail = user.email;
+        this.originalEmail = user.data.email;
       });
     }
   }
@@ -145,13 +173,20 @@ export class ProfileComponent implements OnInit {
 
     this.usersService.updateUserProfile(updatedData).subscribe({
       next: () => {
-        this.successMessage = 'Profile updated successfully.';
-        this.errorMessage = null;
+        this._ToastService.show('success', 'Profile updated successfully');
         this.isEditingPersonalInfo = false;
+
+        // Fetch the updated profile and store it in localStorage
+        this.usersService.getUserProfile().subscribe((user) => {
+          localStorage.setItem('user', JSON.stringify(user.data));
+        });
       },
       error: (err) => {
-        this.errorMessage = err.error?.message || 'Failed to update profile.';
-        this.successMessage = null;
+        const msg = err.error?.message || 'Failed to update profile.';
+        this.emailErrorMessage = msg;
+        this._ToastService.show('error', msg);
+        this.isEditingPersonalInfo = false;
+        this.emailErrorMessage = null;
       },
     });
   }
@@ -160,22 +195,30 @@ export class ProfileComponent implements OnInit {
     if (this.passwordForm.invalid) return;
 
     const { currentPassword, newPassword } = this.passwordForm.value;
+
     this.usersService
       .updateUserProfile({ oldPassword: currentPassword, newPassword })
       .subscribe({
         next: () => {
-          this.passwordSuccessMessage = 'Password updated successfully.';
-          this.passwordErrorMessage = null;
+          this._ToastService.show('success', 'Password updated successfully.');
           this.isEditingPassword = false;
           this.passwordForm.reset();
+
+          // Fetch the updated profile and store it in localStorage
+          this.usersService.getUserProfile().subscribe((user) => {
+            localStorage.setItem('user', JSON.stringify(user.data));
+          });
         },
         error: (err) => {
-          this.passwordErrorMessage =
-            err.error?.message || 'Failed to update password.';
-          this.passwordSuccessMessage = null;
+          const msg = err.error?.message || 'Failed to update password.';
+          this.passwordErrorMessage = msg;
+          this._ToastService.show('error', msg);
+          this.isEditingPassword = false;
+          this.passwordErrorMessage = null;
         },
       });
   }
+
   signOut() {
     this.http
       .post(`${environment.backUrl}/auth/logout`, null, {
@@ -189,4 +232,5 @@ export class ProfileComponent implements OnInit {
         },
       });
   }
+  
 }

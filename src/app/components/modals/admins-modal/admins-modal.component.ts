@@ -1,8 +1,16 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnInit,
+  inject,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AdminsService } from '../../../../services/admins.service';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ToastService } from '../../../../services/toast.service';
 
 @Component({
   selector: 'app-admins-modal',
@@ -20,14 +28,21 @@ export class AdminsModalComponent implements OnInit {
   form!: FormGroup;
   isLoading = false;
 
+  private readonly _ToastService = inject(ToastService);
+
   constructor(private fb: FormBuilder, private adminsService: AdminsService) {}
 
   ngOnInit(): void {
     // Initialize form
     this.form = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.minLength(6)]],
+      email: ['', [Validators.required, Validators.email, ]],
+      password: ['', [Validators.minLength(6), Validators.required ,
+        Validators.pattern(/^(?!\d+$)[a-zA-Z0-9_]+$/),
+      ]],
+      image: [
+        'https://img.freepik.com/free-vector/illustration-user-avatar-icon_53876-5907.jpg?uid=R194767243&ga=GA1.1.1957810835.1742649565&semt=ais_hybrid&w=740',
+      ],
     });
 
     if (this.type === 'edit' && this.admin) {
@@ -48,15 +63,24 @@ export class AdminsModalComponent implements OnInit {
 
   // Submit form
   onSubmit() {
-    if (this.form.invalid) return;
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
 
     this.isLoading = true;
     const formData = this.form.value;
 
     if (this.type === 'add') {
       this.adminsService.addAdmin(formData).subscribe({
-        next: () => this.handleSuccess(),
-        error: (err) => this.handleError(err),
+        next: () => {
+          this._ToastService.show('success', 'Admin added successfully');
+          this.handleSuccess();
+        },
+        error: (err) => {
+          this.handleError(err);
+          this._ToastService.show('error', 'Failed to add coupon');
+        },
       });
     } else if (this.type === 'edit' && this.admin?._id) {
       // If password is empty, remove it from request
@@ -72,8 +96,14 @@ export class AdminsModalComponent implements OnInit {
             'https://img.freepik.com/free-vector/illustration-user-avatar-icon_53876-5907.jpg?uid=R194767243&ga=GA1.1.1957810835.1742649565&semt=ais_hybrid&w=740',
         })
         .subscribe({
-          next: () => this.handleSuccess(),
-          error: (err) => this.handleError(err),
+          next: () => {
+            this._ToastService.show('success', 'Admin updated successfully');
+            this.handleSuccess();
+          },
+          error: (err) => {
+            this.handleError(err);
+            this._ToastService.show('error', 'Failed to update coupon');
+          },
         });
     }
   }
@@ -84,7 +114,7 @@ export class AdminsModalComponent implements OnInit {
     this.isLoading = false;
   }
 
-  // Handle error
+
   handleError(err: any) {
     console.error('Operation failed', err);
     this.isLoading = false;
