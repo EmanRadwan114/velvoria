@@ -38,6 +38,7 @@ export class ProfileComponent implements OnInit {
   emailErrorMessage: string | null = null;
   passwordErrorMessage: string | null = null;
 
+  userOrders:any[]=[];
   private readonly _ToastService = inject(ToastService);
 
   constructor(
@@ -49,13 +50,37 @@ export class ProfileComponent implements OnInit {
     private authService: AuthService
   ) {}
 
+  getOrders() {
+    this.usersService.getUserOrders().subscribe({
+      next: (res) => {
+        this.userOrders=res;
+        console.log(' 🟢User orders:',   this.userOrders);
+      },
+      error: (err) => {
+        console.error('Error fetching user orders!!!!', err);
+      },
+    });
+  }
+
+  getDateTimeOrder(date: string): string {
+    const dateTime = new Date(date);
+    const options: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+    };
+    return dateTime.toLocaleString('en-US', options);
+  
+  }
   ngOnInit(): void {
     this.route.queryParams.subscribe((params: { [key: string]: string }) => {
       const tab: string = params['tab'];
       this.isOrder = tab === 'orders';
       this.isPersonalInfo = !this.isOrder;
     });
-
+    this.getOrders();
     this.usersService.getUserProfile().subscribe((user) => {
       this.originalEmail = user.data.email;
       this.role = user.data.role;
@@ -96,6 +121,8 @@ export class ProfileComponent implements OnInit {
         confirmPassword: ['', [Validators.required]],
       });
     });
+
+
   }
 
   showPersonalInfo(): void {
@@ -205,4 +232,5 @@ export class ProfileComponent implements OnInit {
         },
       });
   }
+  
 }

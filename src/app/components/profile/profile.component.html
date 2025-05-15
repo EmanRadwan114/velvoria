@@ -320,44 +320,36 @@
           </a>
         </div>
 
-        <!-- Option My Orders -->
-        <div *ngIf="isOrder" class="m-8 grid grid-cols-1 gap-8">
+
+        <!-- 🟢🟢🟢 Option My Orders 🟢🟢🟢 -->
+        <div  *ngFor="let order of userOrders" 
+       
+          class="m-8 grid grid-cols-1 gap-8"
+        >
           <div class="border-2 border-gray-300 p-5 rounded-3xl">
-            <div
-              class="p-3 flex justify-between md:items-center md:flex-row flex-col gap-5"
-            >
-              <p><strong>Order Summary:</strong> 3 products</p>
-              <p><strong>Order Number:</strong> 264633</p>
+            <div class="p-3 flex justify-between md:items-center md:flex-row flex-col gap-5">
+              <p><strong>Order Summary:</strong> {{order.orderItems.length}} products</p>
+              <p><strong>Order Code:</strong> {{order._id.slice(0,5)}}</p>
             </div>
-            <div
-              class="p-3 flex justify-between md:items-center md:flex-row flex-col gap-5"
-            >
-              <p><strong>Order Date:</strong> 04.05.2025</p>
-              <p><strong>Total Amount:</strong> 1050 EGP</p>
+            <div class="p-3 flex justify-between md:items-center md:flex-row flex-col gap-5">
+              <p><strong>Order Date: </strong>{{ getDateTimeOrder(order.createdAt)}}</p>
+              <p><strong>Total Amount: </strong> {{order.totalPrice}}</p>
             </div>
             <!-- order photos and see full order link -->
-            <div
-              class="p-3 mt-5 flex justify-between items-center md:flex-row flex-col gap-5"
-            >
-              <div class="flex space-x-2">
+            <div class="p-3 mt-5 flex justify-between items-center md:flex-row flex-col gap-5">
+            <div class="flex flex-row gap-2">
+                <div *ngFor="let imge of order.orderItems.slice(0, 4 ); let i = index">
                 <img
-                  src="https://picsum.photos/25"
+                    [src]="imge.product.thumbnail"
                   alt="Product 1"
                   class="w-24 h-24 rounded-full"
                 />
-                <img
-                  src="https://picsum.photos/30"
-                  alt="Product 2"
-                  class="w-24 h-24 rounded-full"
-                />
-                <img
-                  src="https://picsum.photos/35"
-                  alt="Product 3"
-                  class="w-24 h-24 rounded-full"
-                />
+             
+             
               </div>
+            </div>
               <a
-                routerLink="/order-details"
+                routerLink="/orders/{{order._id}}"
                 class="text-gray-500 hover:underline cursor-pointer flex flex-row items-center justify-center gap-1"
                 >Show order details<svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -376,61 +368,10 @@
               </a>
             </div>
           </div>
-          <div class="border-2 border-gray-300 p-5 rounded-3xl">
-            <div
-              class="p-3 flex justify-between md:items-center md:flex-row flex-col gap-5"
-            >
-              <p><strong>Order Summary:</strong> 5 products</p>
-              <p><strong>Order Number:</strong> 274663</p>
-            </div>
-            <div
-              class="p-3 flex justify-between md:items-center md:flex-row flex-col gap-5"
-            >
-              <p><strong>Order Date:</strong> 03.05.2025</p>
-              <p><strong>Total Amount:</strong> 1290 EGP</p>
-            </div>
-            <!-- order photos and see full order link -->
-            <div
-              class="p-3 mt-5 flex justify-between items-center md:flex-row flex-col gap-5"
-            >
-              <div class="flex space-x-2">
-                <img
-                  src="https://picsum.photos/40"
-                  alt="Product 1"
-                  class="w-24 h-24 rounded-full"
-                />
-                <img
-                  src="https://picsum.photos/45"
-                  alt="Product 2"
-                  class="w-24 h-24 rounded-full"
-                />
-                <img
-                  src="https://picsum.photos/50"
-                  alt="Product 3"
-                  class="w-24 h-24 rounded-full"
-                />
-              </div>
-              <a
-                routerLink="/order-details"
-                class="text-gray-500 hover:underline cursor-pointer flex flex-row justify-center gap-1"
-                >Show order details
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-6 w-6 text-gray-500 cursor-pointer"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M13 7l5 5m0 0l-5 5m5-5H6"
-                  />
-                </svg>
-              </a>
-            </div>
-          </div>
+
+
+
+   
         </div>
       </div>
     </div>
