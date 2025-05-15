@@ -16,6 +16,7 @@ import { AdminsDashboardComponent } from './components/dashboard/admins-dashboar
 
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { OrderConfirmationComponent } from './components/order-confirmation/order-confirmation.component';
+import { DashboardHomeComponent } from './components/dashboard/dashboard-home/dashboard-home.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -39,34 +40,39 @@ export const routes: Routes = [
 
   // DASHBOARD
   {
+    path: 'dashboard',
+    component: DashboardHomeComponent,
+    title: 'Dashboard',
+  },
+  {
     path: 'dashboard/categories',
     component: CategoriesDashboardComponent,
-    title: 'categories dashboard',
+    title: 'Categories Dashboard',
   },
   {
     path: 'dashboard/products',
     component: ProductsDashboardComponent,
-    title: 'products dashboard',
+    title: 'Products Dashboard',
   },
   {
     path: 'dashboard/users',
     component: UsersDashboardComponent,
-    title: 'users dashboard',
+    title: 'Users Dashboard',
   },
   {
     path: 'dashboard/admins',
     component: AdminsDashboardComponent,
-    title: 'admins dashboard',
+    title: 'Admins Dashboard',
   },
   {
     path: 'dashboard/coupons',
     component: CouponsDashboardComponent,
-    title: 'coupons dashboard',
+    title: 'Coupons Dashboard',
   },
   {
     path: 'dashboard/orders',
     component: OrdersDashboardComponent,
-    title: 'orders dashboard',
+    title: 'Orders Dashboard',
   },
 
   /////

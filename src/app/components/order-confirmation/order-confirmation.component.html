@@ -21,7 +21,8 @@
         Your Order is placed successfully
       </h2>
       <p class="mb-2">
-        <span class="font-semibold">Status: </span> {{ order.orderStatus }}
+        <span class="font-semibold">Payment Status: </span>
+        {{ order.orderStatus }}
       </p>
       <p class="mb-2">
         <span class="font-semibold">Date:</span> {{ order.createdAt | date }}
@@ -94,12 +95,12 @@
     <div class="bg-zinc-50 rounded-lg shadow p-6">
       <div class="space-y-2">
         <div class="flex justify-between pt-2 mt-2 border-t border-gray-200">
-          <span>Price Before Discount:</span>
+          <span>Subtotal:</span>
           <span>{{ subtotal | currency : "EGP" }}</span>
         </div>
         <div *ngIf="50 > 0" class="flex justify-between">
           <span>Shipping:</span>
-          <span>{{ 50 | currency : "EGP" }}</span>
+          <span>{{ shippingPrice | currency : "EGP" }}</span>
         </div>
 
         <div
