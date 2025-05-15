@@ -13,7 +13,6 @@ export class FilterationComponent {
     'All',
     'Wood',
     'Leather',
-    'Rattan',
     'Metal',
     'Fabric',
     'Glass',
@@ -33,8 +32,7 @@ export class FilterationComponent {
     'Orange',
     'Red',
     'Pink',
-    'Teal',
-    'Gold'
+    'Gold',
   ];
 
   material = 'all';

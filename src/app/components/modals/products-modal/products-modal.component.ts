@@ -6,7 +6,6 @@ import {
   Output,
   OnChanges,
   SimpleChanges,
-  OnInit,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -15,6 +14,8 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { ProductsService } from '../../../../services/products.service';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-products-modal',
@@ -31,61 +32,66 @@ export class ProductsModalComponent implements OnChanges {
   @Output() close = new EventEmitter<void>();
   @Output() refresh = new EventEmitter<void>();
 
-  productForm!: FormGroup;
+  productForm: FormGroup;
   productData: any = null;
   loading = false;
+  lightboxOpen = false;
+  lightboxIndex = 0;
 
-  
   private lettersOnlyPattern = /^[a-zA-Z\s]*$/;
   private lettersWithBasicPunctuation = /^[a-zA-Z\s.,!?']*$/;
 
   constructor(private fb: FormBuilder, private service: ProductsService) {
-    this.productForm = this.fb.group({}); 
+    this.productForm = this.fb.group({
+      title: ['', [Validators.required, Validators.minLength(3)]],
+      description: ['', [Validators.required, Validators.minLength(10)]],
+      price: [null, [Validators.required, Validators.min(0.01)]],
+      stock: [null, [Validators.required, Validators.min(0)]],
+      categoryID: ['', Validators.required],
+      thumbnail: [
+        '',
+        [Validators.required, Validators.pattern(/^https?:\/\//)],
+      ],
+      material: [
+        '',
+        [Validators.required, Validators.pattern(this.lettersOnlyPattern)],
+      ],
+      color: [
+        '',
+        [Validators.required, Validators.pattern(this.lettersOnlyPattern)],
+      ],
+      label: [[]],
+      images: [[], [Validators.required]],
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.activeModal === 'add') {
-      this.initForm(); 
+      this.initForm();
     }
 
-    // update
     if (this.activeModal === 'update' && this.productId) {
       this.fetchProduct(this.productId, true);
     }
-    // prodyct details
+
     if (this.activeModal === 'getById' && this.productId) {
       this.fetchProduct(this.productId, false);
     }
   }
 
   private initForm(data: any = null) {
-    this.productForm = this.fb.group({
-      title: [
-        data?.title || '',
-        [Validators.required, Validators.minLength(3)],
-      ],
-      description: [
-        data?.description || '',
-        [Validators.required, Validators.minLength(10)],
-      ],
-      price: [data?.price || null, [Validators.required, Validators.min(0.01)]],
-      stock: [data?.stock || null, [Validators.required, Validators.min(0)]],
-      categoryID: [data?.categoryID || '', Validators.required],
-      thumbnail: [
-        data?.thumbnail || '',
-        [Validators.required, Validators.pattern(/^https?:\/\//)],
-      ],
-      material: [data?.material || '',  [Validators.required, Validators.pattern(this.lettersOnlyPattern)]],
-      color: [data?.color || '',         
-        [Validators.required, Validators.pattern(this.lettersOnlyPattern)]], 
-      
-      label: [
-        data?.label || [],        
-        ], 
-      
-      images: [data?.images || [], [Validators.required]],
+    this.productForm.patchValue({
+      title: data?.title || '',
+      description: data?.description || '',
+      price: data?.price || null,
+      stock: data?.stock || null,
+      categoryID: data?.categoryID || '',
+      thumbnail: data?.thumbnail || '',
+      material: data?.material || '',
+      color: data?.color || '',
+      label: data?.label || [],
+      images: data?.images || [],
     });
-    console.log('Form initialized:', this.productForm.value);
   }
 
   private fetchProduct(id: string, forEdit: boolean) {
@@ -97,7 +103,6 @@ export class ProductsModalComponent implements OnChanges {
         raw.categoryName = cat?.name ?? '–';
         this.productData = raw;
 
-        // initialize the form only if we're editing
         if (forEdit) {
           this.initForm(raw);
         }
@@ -113,27 +118,48 @@ export class ProductsModalComponent implements OnChanges {
   submitForm() {
     if (this.productForm.invalid) return;
 
-    const data = this.productForm.value;
-    const payload = this.productForm.value;
-    console.log('Submitting payload:', payload); 
-    console.log('Submitting payload:', this.productForm.value);
+    const payload = {
+      ...this.productForm.value,
+      price: this.safeParseFloat(this.productForm.value.price),
+      stock: this.safeParseInt(this.productForm.value.stock),
+    };
 
-    if (this.activeModal === 'add') {
-      this.service.addProduct(data).subscribe(() => {
-        this.refresh.emit();
-        this.closeModal();
+    console.log('Submitting payload:', payload);
+
+    const observable =
+      this.activeModal === 'add'
+        ? this.service.addProduct(payload)
+        : this.service.updateProduct(this.productId!, payload);
+
+    observable
+      .pipe(
+        catchError((err) => {
+          console.error('Error submitting form', err);
+          alert(`Error: ${err.error?.message || 'Server error occurred'}`);
+          return throwError(() => err);
+        })
+      )
+      .subscribe({
+        next: () => {
+          this.refresh.emit();
+          this.closeModal();
+        },
       });
-    } else if (this.activeModal === 'update' && this.productId) {
-      this.service.updateProduct(this.productId, data).subscribe(() => {
-        this.refresh.emit();
-        this.closeModal();
-      });
-    }
+  }
+
+  private safeParseFloat(value: any): number {
+    const num = parseFloat(value);
+    return isNaN(num) ? 0 : num;
+  }
+
+  private safeParseInt(value: any): number {
+    const num = parseInt(value, 10);
+    return isNaN(num) ? 0 : num;
   }
 
   closeModal() {
     this.close.emit();
-    this.productForm?.reset();
+    this.productForm.reset();
     this.productData = null;
     this.loading = false;
   }
@@ -141,20 +167,19 @@ export class ProductsModalComponent implements OnChanges {
   onLabelChange(event: any) {
     const control = this.productForm.get('label');
     const value = control?.value || [];
+    const labelValue = event.target.value;
 
     if (event.target.checked) {
-      control?.setValue([...value, event.target.value]);
+      control?.setValue([...value, labelValue]);
     } else {
-      control?.setValue(value.filter((v: string) => v !== event.target.value));
+      control?.setValue(value.filter((v: string) => v !== labelValue));
     }
-
     control?.markAsTouched();
   }
 
   addImage() {
     const images = this.productForm.get('images')?.value || [];
-    images.push('');
-    this.productForm.get('images')?.setValue(images);
+    this.productForm.get('images')?.setValue([...images, '']);
     this.productForm.get('images')?.markAsTouched();
   }
 
@@ -172,20 +197,15 @@ export class ProductsModalComponent implements OnChanges {
     this.productForm.get('images')?.markAsTouched();
   }
 
-
- 
-  lightboxOpen = false;
-  lightboxIndex = 0;
-
   openLightbox(index: number) {
     this.lightboxIndex = index;
     this.lightboxOpen = true;
-    document.body.style.overflow = 'hidden'; 
+    document.body.style.overflow = 'hidden';
   }
 
   closeLightbox() {
     this.lightboxOpen = false;
-    document.body.style.overflow = ''; 
+    document.body.style.overflow = '';
   }
 
   prevImage(event: MouseEvent) {
