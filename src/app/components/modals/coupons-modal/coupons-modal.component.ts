@@ -5,6 +5,7 @@ import {
   Output,
   OnChanges,
   SimpleChanges,
+  inject,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -15,6 +16,7 @@ import {
 } from '@angular/forms';
 import { CouponsService } from '../../../../services/coupons.service';
 import { CommonModule } from '@angular/common';
+import { ToastService } from '../../../../services/toast.service';
 
 @Component({
   selector: 'app-coupons-modal',
@@ -33,6 +35,7 @@ export class CouponsModalComponent implements OnChanges {
   couponData: any;
   loading = false;
   isClosing = false;
+  private readonly _ToastService = inject(ToastService);
 
   constructor(private fb: FormBuilder, private service: CouponsService) {}
 
@@ -92,15 +95,24 @@ export class CouponsModalComponent implements OnChanges {
   }
 
   submitForm() {
+    if (this.couponForm.invalid) {
+      this.couponForm.markAllAsTouched();
+      return;
+    }
     const formValues = this.couponForm.value;
 
     if (this.activeModal === 'add') {
       this.service.addCoupon(formValues).subscribe({
         next: () => {
+          this._ToastService.show('success', 'Coupon added successfully');
+
           this.refresh.emit();
           this.closeModal();
         },
-        error: (err) => console.error('Add failed', err),
+        error: (err) => {
+          console.error('Add failed', err);
+          this._ToastService.show('error', 'Failed to add coupon');
+        },
       });
     }
 
@@ -120,10 +132,14 @@ export class CouponsModalComponent implements OnChanges {
 
       this.service.updateCoupon(this.couponId, updatedFields).subscribe({
         next: () => {
+          this._ToastService.show('success', 'Coupon updated successfully');
           this.refresh.emit();
           this.closeModal();
         },
-        error: (err) => console.error('Update failed', err),
+        error: (err) => {
+          console.error('Update failed', err);
+          this._ToastService.show('error', 'Failed to update coupon');
+        },
       });
     }
   }

@@ -10,6 +10,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { CategoriesModalComponent } from '../../modals/categories-modal/categories-modal.component';
 import { LoadingButtonComponent } from '../../sharedComponents/loading-button/loading-button.component';
+import { ToastService } from '../../../../services/toast.service';
 @Component({
   selector: 'app-categories-dashboard',
   imports: [
@@ -23,13 +24,14 @@ import { LoadingButtonComponent } from '../../sharedComponents/loading-button/lo
 export class CategoriesDashboardComponent implements OnInit {
   private readonly _CategoryServices = inject(CategoriesService);
   categoriesList: any[] = [];
-  // editingCategory: any = null;
 
   activeModal: 'getById' | 'update' | 'add' | null = null;
   selectedId: string | null = null;
   selectedCategory: any = null;
   categoryForm: FormGroup;
   loading = false;
+
+  private readonly _ToastService = inject(ToastService);
 
   constructor(
     private fb: FormBuilder,
@@ -85,31 +87,43 @@ export class CategoriesDashboardComponent implements OnInit {
     this.selectedCategory = null;
   }
 
-  submitForm() {
-    if (this.categoryForm.invalid) return;
+  // submitForm() {
 
-    const formData = this.categoryForm.value;
+  //   if (this.categoryForm.invalid) {
+  //     this.categoryForm.markAllAsTouched();
+  //     return
+  //   };
 
-    if (this.activeModal === 'add') {
-      this.categoriesService.addCategory(formData).subscribe({
-        next: () => {
-          this.fetchCategories();
-          this.closeModal();
-        },
-        error: (err) => console.log(err),
-      });
-    } else if (this.activeModal === 'update' && this.selectedId) {
-      this.categoriesService
-        .updateCategory(this.selectedId, formData)
-        .subscribe({
-          next: () => {
-            this.fetchCategories();
-            this.closeModal();
-          },
-          error: (err) => console.log(err),
-        });
-    }
-  }
+  //   const formData = this.categoryForm.value;
+
+  //   if (this.activeModal === 'add') {
+  //     this.categoriesService.addCategory(formData).subscribe({
+  //       next: () => {
+  //         this._ToastService.show('success', 'category added successfully');
+  //         this.fetchCategories();
+  //         this.closeModal();
+  //       },
+  //       error: (err) => {
+  //         console.log(err);
+  //         this._ToastService.show('error', 'Failed to add category');
+  //       },
+  //     });
+  //   } else if (this.activeModal === 'update' && this.selectedId) {
+  //     this.categoriesService
+  //       .updateCategory(this.selectedId, formData)
+  //       .subscribe({
+  //         next: () => {
+  //           this._ToastService.show('success', 'category updated successfully');
+  //           this.fetchCategories();
+  //           this.closeModal();
+  //         },
+  //         error: (err) => {
+  //           console.log(err);
+  //           this._ToastService.show('error', 'Failed to update category');
+  //         },
+  //       });
+  //   }
+  // }
 
   deleteId: string | null = null;
   showDeleteConfirm = false;
@@ -123,11 +137,14 @@ export class CategoriesDashboardComponent implements OnInit {
     if (this.deleteId) {
       this.categoriesService.deleteCategory(this.deleteId).subscribe({
         next: () => {
+          this._ToastService.show('success', 'category deleted successfully');
           this.fetchCategories();
           this.cancelDelete();
         },
         error: (err: any) => {
-          console.error('Failed to delete coupon', err);
+          this._ToastService.show('error', 'Failed to delete category');
+
+          console.error('Failed to delete category', err);
           this.cancelDelete();
         },
       });

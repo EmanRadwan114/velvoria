@@ -1,21 +1,26 @@
 <div class="h-full w-full font-poppins antialiased overflow-y-auto px-3">
 
           <!-- Profile -->
-          <div id="profile" class="space-y-3 mt-10">
+          @if(isLoggedIn|| user){
+
+          <div  id="profile" class="space-y-3 mt-10">
             <img
-              src="https://images.unsplash.com/photo-1628157588553-5eeea00af15c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
-              alt="Avatar user"
+            [src]=user.image
+            alt="Avatar user"
               class="w-10 md:w-16 rounded-full mx-auto"
             />
             <div>
               <h2
                 class="font-medium text-xs md:text-sm text-center text-teal-500"
               >
-                Eduard Pantazi
-              </h2>
-              <p class="text-xs text-gray-500 text-center">Administrator</p>
+              {{user.name}}
+            </h2>
+            
+              <p class="text-xs text-gray-800 text-center">{{user.email}}</p>
+              <p class="text-xs text-gray-500 text-center mt-2">Administrator</p>
             </div>
-          </div>
+            
+          </div>}
 
           <!-- Dashboard Menu -->
           <!-- Categories -->

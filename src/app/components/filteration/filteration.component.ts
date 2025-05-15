@@ -13,11 +13,11 @@ export class FilterationComponent {
     'All',
     'Wood',
     'Leather',
-    'Rattan',
     'Metal',
     'Fabric',
     'Glass',
     'Plastic',
+    'Ceramic',
   ];
   colors: string[] = [
     'White',
@@ -26,10 +26,13 @@ export class FilterationComponent {
     'Gray',
     'Black',
     'Blue',
+    'Navy',
     'Green',
+    'Yellow',
+    'Orange',
     'Red',
     'Pink',
-    'Teal',
+    'Gold',
   ];
 
   material = 'all';
@@ -37,18 +40,26 @@ export class FilterationComponent {
   minPrice: number = 200;
   maxPrice: number = 20000;
 
-
   price: number = this.maxPrice;
 
   @Output() filterChanged = new EventEmitter<any>();
-
   onFilterChange() {
-    const filterQuery = {
-      material: this.material !== 'all' ? this.material.toLowerCase() : null,
-      color: this.color !== 'all' ? this.color.toLowerCase() : null,
-      price: this.price,
-    };
+    const filterQuery: any = {};
+
+    if (this.material !== 'all') {
+      filterQuery.material = this.material.toLowerCase();
+    }
+
+    if (this.color !== 'all') {
+      filterQuery.color = this.color.toLowerCase();
+    }
+
+    if (this.price) {
+      filterQuery.price = this.price;
+    }
+
     console.log('Filteration emits:', filterQuery);
     this.filterChanged.emit(filterQuery);
   }
+
 }
