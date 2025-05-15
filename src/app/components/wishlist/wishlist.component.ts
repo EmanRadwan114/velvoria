@@ -2,11 +2,13 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { WishlistService } from '../../../services/wishlist.service';
 import { ToastService } from '../../../services/toast.service';
+
 import { PaginationComponent } from '../sharedComponents/pagination/pagination.component';
+import { BreadcrumbComponent } from '../sharedComponents/breadcrumb/breadcrumb.component';
 
 @Component({
   selector: 'app-wishlist',
-  imports: [CommonModule, PaginationComponent],
+  imports: [CommonModule, PaginationComponent,BreadcrumbComponent],
   templateUrl: './wishlist.component.html',
   styles: ``,
 })
