@@ -162,6 +162,7 @@
             </a>
 
             <a
+              *ngIf="user.role === 'user'"
               [routerLink]="['/profile']"
               [queryParams]="{ tab: 'orders' }"
               class="hover:text-teal-700"

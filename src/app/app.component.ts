@@ -11,6 +11,7 @@ import { NavbarComponent } from './components/sharedComponents/navbar/navbar.com
 import { FooterComponent } from './components/sharedComponents/footer/footer.component';
 import { ToastComponent } from './components/sharedComponents/toast/toast.component';
 import { CartService } from '../services/cart.service';
+import { ScrollTopComponent } from './components/sharedComponents/scroll-top/scroll-top.component';
 @Component({
   selector: 'app-root',
   imports: [
@@ -20,6 +21,7 @@ import { CartService } from '../services/cart.service';
     FooterComponent,
     ToastComponent,
     SidebarComponent,
+    ScrollTopComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
