@@ -1,1 +1,81 @@
-<p>admins-dashboard works!</p>
+<div class="p-4">
+  <!-- Add New Admin Button -->
+  <div class="flex justify-end mb-4">
+    <button (click)="openModal('add')" class="btn-teal">Add New Admin</button>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="text-center py-8">
+    <span class="loading loading-spinner loading-lg"></span>
+    <p>Loading admins...</p>
+  </div>
+
+  <!-- Admins Table -->
+  <div *ngIf="!isLoading" class="w-full overflow-auto">
+    <div class="rounded-lg border border-gray-200 shadow-md">
+      <table class="w-full table-auto">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-4 font-medium text-gray-900 text-left">Name</th>
+            <th class="px-6 py-4 font-medium text-gray-900 text-left">Email</th>
+            <th class="px-6 py-4 font-medium text-gray-900 text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100 border-t border-gray-100">
+          <tr *ngFor="let admin of admins" class="hover:bg-gray-50">
+            <td class="px-6 py-4 text-gray-900">{{ admin.name }}</td>
+            <td class="px-6 py-4 text-gray-600">{{ admin.email }}</td>
+            <td class="px-6 py-4 text-right">
+              <div class="flex justify-end gap-5">
+                <button (click)="openModal('view', admin)">
+                  <i class="fa-solid fa-eye text-lg text-gray-900"></i>
+                </button>
+                <button (click)="openModal('edit', admin)">
+                  <i class="fa-solid fa-pencil text-lg text-blue-900"></i>
+                </button>
+                <button (click)="confirmDelete(admin)">
+                  <i class="fa-regular fa-trash-can text-lg text-red-800"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          <!-- Empty State -->
+          <tr *ngIf="admins.length === 0">
+            <td colspan="3" class="py-4 text-center text-gray-500">No admins found</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Admin Modal Component -->
+  <app-admins-modal 
+    *ngIf="showModal"
+    [admin]="selectedAdmin"
+    [type]="modalType"
+    (close)="closeModal()"
+    (saved)="onAdminUpdated()">
+  </app-admins-modal>
+
+  <!-- Delete Confirmation Modal -->
+  <div *ngIf="showDeleteConfirm" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-lg shadow-xl w-full max-w-md p-6">
+      <h2 class="text-xl font-semibold mb-4">Delete Admin</h2>
+      <p class="mb-6">Are you sure you want to delete admin <strong>{{ adminToDelete?.name }}</strong>?</p>
+      <div class="flex justify-end space-x-3">
+        <button 
+          (click)="cancelDelete()"
+          class="px-4 py-2 border rounded text-gray-700 hover:bg-gray-100"
+        >
+          Cancel
+        </button>
+        <button 
+          (click)="deleteAdmin()"
+          class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -20,6 +20,7 @@ export class CouponsDashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchCoupons();
+    console.log('Coupons Dashboard Initialized');
   }
 
   fetchCoupons() {
