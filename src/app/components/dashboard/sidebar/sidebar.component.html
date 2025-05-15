@@ -1,108 +1,112 @@
 <div class="h-full w-full font-poppins antialiased overflow-y-auto px-3">
+  <!-- Profile -->
+  @if(isLoggedIn|| user){
 
-          <!-- Profile -->
-          @if(isLoggedIn|| user){
+  <div id="profile" class="space-y-3 mt-10">
+    <img
+      [src]="user.image"
+      alt="Avatar user"
+      class="w-10 md:w-16 rounded-full mx-auto"
+    />
+    <div>
+      <h2 class="font-medium text-xs md:text-sm text-center text-teal-500">
+        {{ user.name }}
+      </h2>
 
-          <div  id="profile" class="space-y-3 mt-10">
-            <img
-            [src]=user.image
-            alt="Avatar user"
-              class="w-10 md:w-16 rounded-full mx-auto"
-            />
-            <div>
-              <h2
-                class="font-medium text-xs md:text-sm text-center text-teal-500"
-              >
-              {{user.name}}
-            </h2>
-            
-              <p class="text-xs text-gray-800 text-center">{{user.email}}</p>
-              <p class="text-xs text-gray-500 text-center mt-2">Administrator</p>
-            </div>
-            
-          </div>}
+      <p class="text-xs text-gray-800 text-center">{{ user.email }}</p>
+      <p class="text-xs text-gray-500 text-center mt-2">Administrator</p>
+    </div>
+  </div>
+  }
 
-          <!-- Dashboard Menu -->
-          <!-- Categories -->
-          <div id="menu" class="flex flex-col space-y-2 mt-10">
-            <a
-              routerLink="/dashboard/categories"
-              routerLinkActive="bg-teal-500 text-white"
-              [routerLinkActiveOptions]="{ exact: true }"
-              class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out"
-            >
-              <svg
-                class="fill-current inline-block w-7 h-7 text-xl mr-2"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
-                ></path>
-              </svg>
-              <span class="">Categories</span>
-            </a>
-            <!-- Products -->
-            <a
-              routerLink="/dashboard/products"
-              routerLinkActive="bg-teal-500 text-white"
-              [routerLinkActiveOptions]="{ exact: true }"
-              class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
-            >
-              <i class="fa-solid fa-cubes w-7 h-7 text-xl mr-2"></i>
-              <span class="">Products</span>
-            </a>
-            <!-- Users -->
-            <a
-              routerLink="/dashboard/users"
-              routerLinkActive="bg-teal-500 text-white"
-              [routerLinkActiveOptions]="{ exact: true }"
-              class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
-            >
-              <i class="fa-solid fa-users w-7 h-7 text-xl mr-1"></i>`
-              <span class="">Users</span>
-            </a>
-            <!-- Admins -->
-            <a
-              routerLink="/dashboard/admins"
-              routerLinkActive="bg-teal-500 text-white"
-              [routerLinkActiveOptions]="{ exact: true }"
-              class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
-            >
-              <i class="fa-solid fa-lock w-7 h-7 text-xl mr-2"></i>
-              <span class="">Admins</span>
-            </a>
-            <!-- Orders -->
-            <a
-              routerLink="/dashboard/orders"
-              routerLinkActive="bg-teal-500 text-white"
-              [routerLinkActiveOptions]="{ exact: true }"
-              class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
-            >
-              <i class="fa-solid fa-clipboard-check w-7 h-7 text-xl mr-2"></i>
-              <span class="">Orders</span>
-            </a>
-            <!-- Coupons -->
-            <a
-              routerLink="/dashboard/coupons"
-              routerLinkActive="bg-teal-500 text-white"
-              [routerLinkActiveOptions]="{ exact: true }"
-              class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
-            >
-              <i class="fa-solid fa-ticket w-7 h-7 text-xl mr-2"></i>
-              <span class="">Coupons</span>
-            </a>
-            <!-- Logout -->
-            <a
-              routerLink="/login"
-              class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
-            >
-              <i
-                class="fa-solid fa-right-from-bracket w-7 h-7 text-xl mr-2"
-              ></i>
-              <span class="">Logout</span>
-            </a>
-          </div>
-        </div>
-      
+  <!-- Dashboard Menu -->
+  <div id="menu" class="flex flex-col space-y-2 mt-10">
+    <!-- Home -->
+    <a
+      routerLink="/dashboard"
+      routerLinkActive="bg-teal-500 text-white"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
+    >
+      <i class="fa-solid fa-cubes w-7 h-7 text-xl mr-2"></i>
+      <span class="">Home</span>
+    </a>
+    <!-- Categories -->
+    <a
+      routerLink="/dashboard/categories"
+      routerLinkActive="bg-teal-500 text-white"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out"
+    >
+      <svg
+        class="fill-current inline-block w-7 h-7 text-xl mr-2"
+        fill="currentColor"
+        viewBox="0 0 20 20"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
+        ></path>
+      </svg>
+      <span class="">Categories</span>
+    </a>
+    <!-- Products -->
+    <a
+      routerLink="/dashboard/products"
+      routerLinkActive="bg-teal-500 text-white"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
+    >
+      <i class="fa-solid fa-cubes w-7 h-7 text-xl mr-2"></i>
+      <span class="">Products</span>
+    </a>
+    <!-- Users -->
+    <a
+      routerLink="/dashboard/users"
+      routerLinkActive="bg-teal-500 text-white"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
+    >
+      <i class="fa-solid fa-users w-7 h-7 text-xl mr-1"></i>`
+      <span class="">Users</span>
+    </a>
+    <!-- Admins -->
+    <a
+      routerLink="/dashboard/admins"
+      routerLinkActive="bg-teal-500 text-white"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
+    >
+      <i class="fa-solid fa-lock w-7 h-7 text-xl mr-2"></i>
+      <span class="">Admins</span>
+    </a>
+    <!-- Orders -->
+    <a
+      routerLink="/dashboard/orders"
+      routerLinkActive="bg-teal-500 text-white"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
+    >
+      <i class="fa-solid fa-clipboard-check w-7 h-7 text-xl mr-2"></i>
+      <span class="">Orders</span>
+    </a>
+    <!-- Coupons -->
+    <a
+      routerLink="/dashboard/coupons"
+      routerLinkActive="bg-teal-500 text-white"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
+    >
+      <i class="fa-solid fa-ticket w-7 h-7 text-xl mr-2"></i>
+      <span class="">Coupons</span>
+    </a>
+    <!-- Logout -->
+    <a
+      routerLink="/login"
+      class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
+    >
+      <i class="fa-solid fa-right-from-bracket w-7 h-7 text-xl mr-2"></i>
+      <span class="">Logout</span>
+    </a>
+  </div>
+</div>

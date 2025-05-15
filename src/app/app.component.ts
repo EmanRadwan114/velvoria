@@ -20,6 +20,7 @@ import { CartService } from '../services/cart.service';
     FooterComponent,
     ToastComponent,
     SidebarComponent,
+    CommonModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
