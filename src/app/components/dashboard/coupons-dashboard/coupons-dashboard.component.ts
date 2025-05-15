@@ -58,7 +58,7 @@ export class CouponsDashboardComponent implements OnInit {
     if (this.deleteId) {
       this.couponsService.deleteCoupon(this.deleteId).subscribe({
         next: () => {
-          this._ToastService.show('success', 'product deleted successfully');
+          this._ToastService.show('success', 'coupon deleted successfully');
           this.fetchCoupons();
           this.cancelDelete();
         },

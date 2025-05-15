@@ -5,6 +5,7 @@ import {
   Output,
   OnChanges,
   SimpleChanges,
+  inject,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -15,6 +16,7 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { OrdersService } from '../../../../services/orders.service';
+import { ToastService } from '../../../../services/toast.service';
 
 @Component({
   selector: 'app-orders-modal',
@@ -32,6 +34,8 @@ export class OrdersModalComponent implements OnChanges {
   orderForm!: FormGroup;
   orderData: any;
   loading = false;
+
+  private readonly _ToastService = inject(ToastService);
 
   constructor(private fb: FormBuilder, private service: OrdersService) {}
 
@@ -76,7 +80,10 @@ export class OrdersModalComponent implements OnChanges {
   }
 
   submitForm(): void {
-    if (this.orderForm.invalid || !this.orderId) return;
+    if (this.orderForm.invalid || !this.orderId) {
+      this.orderForm.markAllAsTouched();
+      return;
+    }
 
     const newStatus = this.orderForm.value.shippingStatus;
     const currentStatus = this.orderData?.shippingStatus;
@@ -87,10 +94,14 @@ export class OrdersModalComponent implements OnChanges {
       .updateOrderShippingStatus(this.orderId, { shippingStatus: newStatus })
       .subscribe({
         next: () => {
+          this._ToastService.show('success', 'order updated successfully');
           this.refresh.emit();
           this.closeModal();
         },
-        error: (err) => console.error('Update failed', err),
+        error: (err) => {
+          console.error('Update failed', err);
+          this._ToastService.show('error', 'Failed to update order');
+        },
       });
   }
 

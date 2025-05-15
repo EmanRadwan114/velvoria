@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
-import { ProductsService } from '../../../services/products.service';
+import { Component, inject, Input } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { WishlistService } from '../../../services/wishlist.service';
 import { ToastComponent } from '../sharedComponents/toast/toast.component';
 import { ToastService } from '../../../services/toast.service';
@@ -10,7 +9,7 @@ import { CartService } from '../../../services/cart.service';
 @Component({
   selector: 'app-product-card',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, CommonModule, ToastComponent],
+  imports: [RouterLink, CommonModule, ToastComponent],
   templateUrl: './product-card.component.html',
   styleUrl: './product-card.component.css',
 })

@@ -1,0 +1,208 @@
+<section
+  class="py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-teal-50 to-white text-center"
+>
+  <!-- ^charts -->
+  <!-- Header Section -->
+  <div class="text-center mb-12">
+    <h1 class="text-xl md:text-3xl font-bold text-teal-700 mb-4">
+      Track Your Financial Progress
+    </h1>
+    <p class="text-lg text-teal-600 max-w-3xl mx-auto">
+      Visualize your monthly orders and revenue growth to make data-driven
+      decisions
+    </p>
+  </div>
+
+  <!-- Charts Grid -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <!-- Orders Chart Card -->
+    <div
+      class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl"
+    >
+      <div class="p-5 border-b border-teal-100 bg-teal-50">
+        <h2 class="text-xl font-semibold text-teal-800">
+          Monthly Orders Overview
+        </h2>
+      </div>
+      <div class="p-4 h-[400px]">
+        <apx-chart
+          [series]="ordersChartOptions?.series"
+          [chart]="ordersChartOptions?.chart"
+          [xaxis]="ordersChartOptions?.xaxis"
+          [dataLabels]="ordersChartOptions?.dataLabels"
+          [title]="ordersChartOptions?.title"
+          class="w-full h-full"
+        ></apx-chart>
+      </div>
+    </div>
+
+    <!-- Revenue Chart Card -->
+    <div
+      class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl"
+    >
+      <div class="p-5 border-b border-teal-100 bg-teal-50">
+        <h2 class="text-xl font-semibold text-teal-800">Revenue Performance</h2>
+      </div>
+      <div class="p-4 h-[400px]">
+        <apx-chart
+          [series]="revenueChartOptions?.series"
+          [chart]="revenueChartOptions?.chart"
+          [xaxis]="revenueChartOptions?.xaxis"
+          [dataLabels]="revenueChartOptions?.dataLabels"
+          [title]="revenueChartOptions?.title"
+          class="w-full h-full"
+        ></apx-chart>
+      </div>
+    </div>
+  </div>
+
+  <!-- ^ Best selling products -->
+  <section class="mt-20 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <h2 class="text-2xl font-bold text-teal-700 mb-12">
+        Best Selling Products
+      </h2>
+
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-start"
+      >
+        <!-- Product Card -->
+        <div
+          *ngFor="let product of bestSellingProducts"
+          class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
+        >
+          <div class="relative">
+            <!-- Product Image -->
+            <img
+              [src]="product.thumbnail"
+              [alt]="product.title"
+              class="w-full h-48 object-cover"
+            />
+
+            <!-- Stock Badge -->
+            <div
+              class="absolute top-2 right-2 text-white text-xs font-bold px-2 py-1 rounded-full"
+              [ngClass]="{
+                'bg-green-500': product.stock > 10,
+                'bg-yellow-500': product.stock <= 10 && product.stock > 0,
+                'bg-red-500': product.stock === 0
+              }"
+            >
+              {{
+                product.stock > 0 ? product.stock + " in stock" : "Out of stock"
+              }}
+            </div>
+          </div>
+
+          <div class="p-4">
+            <!-- Product Name -->
+            <h3 class="text-lg font-semibold text-gray-800 mb-1 truncate">
+              {{ product.title }}
+            </h3>
+
+            <!-- Category -->
+            <p class="text-sm text-teal-600 mb-2 capitalize">
+              {{ product.category }}
+            </p>
+
+            <!-- Price and Rating -->
+            <div class="flex justify-between items-center">
+              <span class="text-lg font-bold text-teal-700">
+                {{ product.price | currency : "EGP" : "symbol" : "1.0-0" }}
+              </span>
+              <div class="flex items-center">
+                <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+                <span class="text-sm text-gray-600 ml-1">
+                  {{ product.avgRating || "No ratings" }}
+                </span>
+              </div>
+            </div>
+
+            <!-- Inventory Status -->
+            <div class="mt-3">
+              <div class="flex justify-between primary-text-color mb-1 text-md">
+                <span>Included in </span>
+                <span>{{ product.orderCount }} Orders</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ^ Least Ordered products -->
+  <section class="mt-20 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <h2 class="text-2xl font-bold text-teal-700 mb-12">
+        Least Ordered Products
+      </h2>
+
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-start"
+      >
+        <!-- Product Card -->
+        <div
+          *ngFor="let product of leastOrderedProducts"
+          class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
+        >
+          <div class="relative">
+            <!-- Product Image -->
+            <img
+              [src]="product.thumbnail"
+              [alt]="product.title"
+              class="w-full h-48 object-cover"
+            />
+
+            <!-- Stock Badge -->
+            <div
+              class="absolute top-2 right-2 text-white text-xs font-bold px-2 py-1 rounded-full"
+              [ngClass]="{
+                'bg-green-500': product.stock > 10,
+                'bg-yellow-500': product.stock <= 10 && product.stock > 0,
+                'bg-red-500': product.stock === 0
+              }"
+            >
+              {{
+                product.stock > 0 ? product.stock + " in stock" : "Out of stock"
+              }}
+            </div>
+          </div>
+
+          <div class="p-4">
+            <!-- Product Name -->
+            <h3 class="text-lg font-semibold text-gray-800 mb-1 truncate">
+              {{ product.title }}
+            </h3>
+
+            <!-- Category -->
+            <p class="text-sm text-teal-600 mb-2 capitalize">
+              {{ product.category }}
+            </p>
+
+            <!-- Price and Rating -->
+            <div class="flex justify-between items-center">
+              <span class="text-lg font-bold text-teal-700">
+                {{ product.price | currency : "EGP" : "symbol" : "1.0-0" }}
+              </span>
+              <div class="flex items-center">
+                <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+                <span class="text-sm text-gray-600 ml-1">
+                  {{ product.avgRating || "No ratings" }}
+                </span>
+              </div>
+            </div>
+
+            <!-- Inventory Status -->
+            <div class="mt-3">
+              <div class="flex justify-between primary-text-color mb-1 text-md">
+                <span>Included in </span>
+                <span>{{ product.orderCount }} Orders</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>

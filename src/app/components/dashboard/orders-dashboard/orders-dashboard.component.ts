@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { OrdersService } from '../../../../services/orders.service';
 import { OrdersModalComponent } from '../../modals/orders-modal/orders-modal.component';
+import { ToastService } from '../../../../services/toast.service';
 
 @Component({
   selector: 'app-orders-dashboard',
@@ -15,6 +16,8 @@ export class OrdersDashboardComponent implements OnInit {
   orders: any[] = [];
   activeModal: 'getById' | 'update' | null = null;
   selectedId: string | null = null;
+
+  private readonly _ToastService = inject(ToastService);
 
   constructor(private ordersService: OrdersService) {}
 
@@ -55,10 +58,12 @@ export class OrdersDashboardComponent implements OnInit {
     if (this.deleteId) {
       this.ordersService.deleteOrder(this.deleteId).subscribe({
         next: () => {
+          this._ToastService.show('success', 'order deleted successfully');
           this.fetchOrders();
           this.cancelDelete();
         },
         error: (err) => {
+          this._ToastService.show('error', 'Failed to delete order');
           console.error('Failed to delete order', err);
           this.cancelDelete();
         },
