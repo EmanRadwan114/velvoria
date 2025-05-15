@@ -36,12 +36,19 @@ export class DiscountSectionHomeComponent implements OnInit {
       maximumFractionDigits: 2
     });
   }
-  getDiscountPercentage(originalPrice: number): string {
-    if (originalPrice > 0) {
-      const discount = originalPrice*0.35;
-      return discount.toFixed(2);
-    }
-    return '0.00';
+getDiscountPercentage(price: number): string {
+  if (price > 0) {
+    const discountedPrice = price * (1 - 0.35); // apply 35% discount
+    return new Intl.NumberFormat('en-EG', {
+      style: 'currency',
+      currency: 'EGP',
+      minimumFractionDigits: 0,
+     
+    maximumFractionDigits: 0,
+    }).format(discountedPrice);
   }
+  return 'EGP 0';
+}
+
 
 }
