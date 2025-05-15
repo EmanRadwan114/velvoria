@@ -58,24 +58,7 @@ export class ProductsService {
     });
   }
 
-  // Filter Products based on the query
-  // filterProducts(filterQuery: any) {
-  //   const query = this.buildFilterQuery(filterQuery); // Convert the filter object to a query string
-  //   return this._HttpClient.get(`${this.URL}/products/filter${query}`);
-  // }
-
-  // // Build the query string from the filter object
-  // // private buildFilterQuery(filterQuery: any) {
-  // //   let query = '?';
-  // //   for (const key in filterQuery) {
-  // //     if (filterQuery[key]) {
-  // //       query += `${key}=${filterQuery[key]}&`;
-  // //     }
-  // //   }
-  // //   return query.endsWith('&') ? query.slice(0, -1) : query; // Remove trailing '&'
-  // // }
-
-  // // }
+  
   filterProducts(filters: Record<string, any>) {
     // build up HttpParams
     let params = new HttpParams();
@@ -85,7 +68,6 @@ export class ProductsService {
       }
     });
 
-    // <<< HERE: add the `/products` prefix before `/filter`
     return this._HttpClient.get<{ data: any[] }>(
       `${this.URL}/products/filter`,
       {

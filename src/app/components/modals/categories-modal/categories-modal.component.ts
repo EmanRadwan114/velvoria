@@ -6,6 +6,7 @@ import {
   Output,
   OnChanges,
   SimpleChanges,
+  inject,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -14,6 +15,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { CategoriesService } from '../../../../services/categories.service';
+import { ToastService } from '../../../../services/toast.service';
 
 @Component({
   selector: 'app-categories-modal',
@@ -32,6 +34,8 @@ export class CategoriesModalComponent implements OnChanges {
   categoryData: any;
   loading = false;
   isClosing = false;
+
+  private readonly _ToastService = inject(ToastService);
 
   constructor(private fb: FormBuilder, private service: CategoriesService) {}
 
@@ -54,7 +58,7 @@ export class CategoriesModalComponent implements OnChanges {
     this.categoryForm = this.fb.group({
       categoryName: [
         '',
-        
+
         [
           Validators.required,
           Validators.minLength(3),
@@ -76,7 +80,7 @@ export class CategoriesModalComponent implements OnChanges {
         this.categoryData = res.data || res;
 
         if (forEdit) {
-          this.initForm(true); // reinitialize form with validators
+          this.initForm(true);
           this.categoryForm.patchValue({
             categoryName: this.categoryData.name,
             categoryThumbnail: this.categoryData.thumbnail,
@@ -93,6 +97,10 @@ export class CategoriesModalComponent implements OnChanges {
   }
   // Handle form submission for adding or updating a category
   submitForm() {
+    if (this.categoryForm.invalid) {
+      this.categoryForm.markAllAsTouched();
+      return;
+    }
     const formValues = this.categoryForm.value;
     const payload = {
       name: formValues.categoryName,
@@ -102,12 +110,13 @@ export class CategoriesModalComponent implements OnChanges {
     if (this.activeModal === 'add') {
       this.service.addCategory(payload).subscribe({
         next: () => {
-          this.refresh.emit(); // Refresh parent component
+          this._ToastService.show('success', 'category added successfully');
+          this.refresh.emit();
           this.closeModal();
         },
         error: (err) => {
           console.error('Add failed', err);
-          alert(err.error?.message || 'Something went wrong');
+          this._ToastService.show('error', 'failed to add category');
         },
       });
       console.log('Submitting payload:', payload);
@@ -116,19 +125,22 @@ export class CategoriesModalComponent implements OnChanges {
     if (this.activeModal === 'update' && this.categoryId) {
       this.service.updateCategory(this.categoryId, payload).subscribe({
         next: () => {
+          this._ToastService.show('success', 'category updated successfully');
           this.refresh.emit();
           this.closeModal();
         },
-        error: (err) => console.error('Update failed', err),
+        error: (err) => {
+          console.error('Update failed', err);
+          this._ToastService.show('error', 'failed to update category');
+        },
       });
     }
   }
 
-  // Close the modal and reset the form
   closeModal() {
     this.isClosing = true;
-    this.close.emit(); // Emit close event to parent
-    this.categoryForm?.reset(); // Reset form
+    this.close.emit();
+    this.categoryForm?.reset();
     this.categoryData = null;
     this.loading = false;
     this.isClosing = false;
