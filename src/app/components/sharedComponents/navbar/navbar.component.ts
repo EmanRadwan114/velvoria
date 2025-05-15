@@ -30,8 +30,8 @@ export class NavbarComponent implements OnInit {
     });
     this.user = JSON.parse(localStorage.getItem('user') || 'null');
     if (this.user) {
-      this.cartService.cartItems$.subscribe((items) => {
-        this.totalItems = items.reduce((sum, i) => sum + i.quantity, 0);
+      this.cartService.totalItems.subscribe((total: any) => {
+        this.totalItems = total;
       });
     }
   }

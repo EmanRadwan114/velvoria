@@ -3,16 +3,21 @@ import { ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../../../services/products.service';
 import { ProductsComponent } from '../products/products.component';
 import { ToastService } from '../../../services/toast.service';
+import { PaginationComponent } from '../sharedComponents/pagination/pagination.component';
 
 @Component({
   selector: 'app-products-category',
-  imports: [ProductsComponent],
+  imports: [ProductsComponent, PaginationComponent],
   templateUrl: './products-category.component.html',
 })
 export class ProductsCategoryComponent implements OnInit {
   productsList: any[] = [];
   filteredProductsList: any[] = [];
+  currentPage: number = 1;
+  totalPages: number = 1;
   categoryName = '';
+  isFiltered = false;
+  lastFilterQuery: any = {};
   currentCategoryId: string | null = null;
 
   private readonly _ActivatedRoute = inject(ActivatedRoute);
@@ -32,14 +37,19 @@ export class ProductsCategoryComponent implements OnInit {
   }
 
   private fetchProducts(): void {
+    this.isFiltered = false;
     const obs =
       this.categoryName === 'all'
-        ? this.prdServices.getAllProducts()
-        : this.prdServices.getProductByCategory(this.categoryName);
+        ? this.prdServices.getAllProducts(this.currentPage)
+        : this.prdServices.getProductByCategory(
+            this.categoryName,
+            this.currentPage
+          );
 
     obs.subscribe({
       next: (res: any) => {
         this.productsList = res.data;
+        this.totalPages = res.totalPages;
         this.filteredProductsList = [...this.productsList];
 
         if (this.categoryName !== 'all' && this.productsList.length) {
@@ -50,6 +60,15 @@ export class ProductsCategoryComponent implements OnInit {
       },
       error: (err) => console.log(err),
     });
+  }
+  changePage(page: any): void {
+    if (page < 1 || page > this.totalPages) return;
+    this.currentPage = page;
+    if (this.isFiltered) {
+      this.handleFilterChange(this.lastFilterQuery, false);
+    } else {
+      this.fetchProducts();
+    }
   }
 
   // handleFilterChange(filterQuery: any): void {
@@ -70,9 +89,10 @@ export class ProductsCategoryComponent implements OnInit {
   //    },
   //   });
   // }
-  handleFilterChange(filterQuery: any): void {
+  handleFilterChange(filterQuery: any, resetPage = true): void {
     const fullQuery: any = { ...filterQuery };
-
+    this.isFiltered = true;
+    if (resetPage) this.currentPage = 1;
     // Add category to the query
     if (this.currentCategoryId) {
       fullQuery.category = this.currentCategoryId;
@@ -89,10 +109,13 @@ export class ProductsCategoryComponent implements OnInit {
     });
 
     console.log('Full filter query:', fullQuery);
-
-    this.prdServices.filterProducts(fullQuery).subscribe({
+    console.log(this.currentPage);
+    this.lastFilterQuery = fullQuery;
+    this.prdServices.filterProducts(fullQuery, this.currentPage).subscribe({
       next: (res: any) => {
         this.filteredProductsList = res.data;
+        console.log(res.data);
+        this.totalPages = res.totalPages;
       },
       error: (err) => {
         console.error('Filter Error status =', err.status);

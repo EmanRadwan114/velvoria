@@ -21,7 +21,8 @@ export class ReviewsComponent implements OnInit {
   reviewData!: FormGroup;
   newReview!: {};
   responseMsg!: string;
-
+  totalPages: number = 1;
+  currentPage: number = 1;
   rate: number = 0;
 
   constructor(
@@ -47,16 +48,20 @@ export class ReviewsComponent implements OnInit {
     });
 
     // *get all product reviews
-    this.reviewService.getAllReviews(this.productID).subscribe({
+    this.getAllReviews(this.currentPage);
+  }
+  getAllReviews(page: number) {
+    this.reviewService.getAllReviews(this.productID, page).subscribe({
       next: (res: any) => {
         this.reviews = [...res.data];
+        this.totalPages = res.totalPages;
+        console.log(res.data);
       },
       error: (err) => {
         console.log(err);
       },
     });
   }
-
   isFormValid(): boolean {
     return this.reviewData.valid;
   }
@@ -71,6 +76,10 @@ export class ReviewsComponent implements OnInit {
   handleRate(value: number) {
     this.rate = value;
     this.reviewData.get('rating')?.setValue(value);
+  }
+  changePage(page: number) {
+    this.currentPage = page;
+    this.getAllReviews(this.currentPage);
   }
 
   // *get review data and add a new review

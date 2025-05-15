@@ -38,8 +38,19 @@ export class AppComponent implements OnInit {
         this.showSideBar = url.includes('/dashboard');
         this.showNavAndFoot =
           !url.includes('/login') && !url.includes('/register');
-        if (this.showNavAndFoot) {
-          this.cartService.loadCartFromBackend();
+        if (
+          this.showNavAndFoot &&
+          JSON.parse(localStorage.getItem('user') || '').role === 'user'
+        ) {
+          this.cartService.loadCartFromBackend().subscribe((cart) => {
+            this.cartService.setCartItems(cart.data);
+            this.cartService.setTotal(cart.totalItems);
+            this.cartService.cartMetaSubject.next({
+              currentPage: cart.currentPage,
+              totalPages: cart.totalPages,
+            });
+            this.cartService.setSubtotal(cart.subtotal);
+          });
         }
       }
       // if (event instanceof NavigationEnd) {

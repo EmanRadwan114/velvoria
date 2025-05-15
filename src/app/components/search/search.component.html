@@ -24,6 +24,11 @@
 @else if (message==="success")
 {
 <app-products [productsList]="products"></app-products>
+<app-pagination
+  [currentPage]="currentPage"
+  [totalPages]="totalPages"
+  (pageChanged)="changePage($event)"
+></app-pagination>
 }
 @else
 {

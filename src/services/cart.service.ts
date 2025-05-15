@@ -19,69 +19,51 @@ interface CartItem {
 export class CartService {
   constructor(private http: HttpClient) {}
   private cartItemsSubject = new BehaviorSubject<CartItem[]>([]);
+  private itemsTotalSubject = new BehaviorSubject<number>(0);
+  private subtotalSubject = new BehaviorSubject<number>(0);
+  cartMetaSubject = new BehaviorSubject<any>({ currentPage: 1, totalPages: 1 });
+
   cartItems$ = this.cartItemsSubject.asObservable();
+  totalItems = this.itemsTotalSubject.asObservable();
+  subtotal = this.subtotalSubject.asObservable();
 
-  loadCartFromBackend() {
-    this.http
-      .get<any[]>(`${environment.backUrl}/cart`, { withCredentials: true })
-      .subscribe((cart: any) => {
-        this.cartItemsSubject.next(cart.data);
-      });
+  loadCartFromBackend(page: number = 1, limit: number = 3) {
+    return this.http.get<any>(
+      `${environment.backUrl}/cart?page=${page}&limit=${limit}`,
+      {
+        withCredentials: true,
+      }
+    );
   }
-  setCartItems(items: CartItem[]) {
-    const clonedItems = items.map((i) => ({
-      ...i,
-      product: { ...i.productId },
-    }));
-    this.cartItemsSubject.next(clonedItems);
+  setTotal(value: number) {
+    this.itemsTotalSubject.next(value);
   }
-  // getTotalItems(): number {
-  //   return this.cartItems$.reduce((sum, item) => sum + item.quantity, 0);
-  // }
-
-  // getSubtotal(): number {
-  //   return this.cartItems.reduce((sum, item) => {
-  //     const price = item.productId?.price;
-  //     const quantity = item.quantity;
-  //     return sum + (price && quantity ? price * quantity : 0);
-  //   }, 0);
-  // }
-
+  setSubtotal(value: number) {
+    this.subtotalSubject.next(value);
+  }
+  setCartItems(items: any) {
+    this.cartItemsSubject.next(items);
+  }
   addToCart(item: any) {
     return this.http.post<any[]>(`${environment.backUrl}/cart`, item, {
       withCredentials: true,
     });
   }
   updateCartItemQuantity(productId: string, quantity: number) {
-    if (quantity <= 0) {
-      this.removeFromCart(productId);
-    }
-    this.http
-      .put<any>(
-        `${environment.backUrl}/cart/${productId}`,
-        { quantity },
-        { withCredentials: true }
-      )
-      .subscribe((res: any) => {
-        this.cartItemsSubject.next([...res.data]);
-      });
+    return this.http.put<any>(
+      `${environment.backUrl}/cart/${productId}`,
+      { quantity },
+      { withCredentials: true }
+    );
   }
   removeFromCart(productId: string) {
-    this.http
-      .delete<any>(`${environment.backUrl}/cart/${productId}`, {
-        withCredentials: true,
-      })
-      .subscribe((res: any) => {
-        this.cartItemsSubject.next([...res.data]);
-      });
+    return this.http.delete<any>(`${environment.backUrl}/cart/${productId}`, {
+      withCredentials: true,
+    });
   }
   removeCart() {
-    this.http
-      .delete<any>(`${environment.backUrl}/cart`, {
-        withCredentials: true,
-      })
-      .subscribe((res: any) => {
-        this.cartItemsSubject.next([]);
-      });
+    return this.http.delete<any>(`${environment.backUrl}/cart`, {
+      withCredentials: true,
+    });
   }
 }

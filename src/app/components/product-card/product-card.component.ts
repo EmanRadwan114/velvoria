@@ -55,18 +55,24 @@ export class ProductCardComponent {
     });
   }
   addToCart(id: string) {
-    if (localStorage.getItem('user')) {
-      this.cartService.addToCart({ productId: id }).subscribe({
-        next: (res: any) => {
-          this.cartService.setCartItems(res.data);
-          this._ToastService.show('success', 'Product added to cart!');
-        },
-        error: (err) => {
-          console.log(err.error.message);
-        },
-      });
+    if (this.product.stock > 0) {
+      if (localStorage.getItem('user')) {
+        this.cartService.addToCart({ productId: id }).subscribe({
+          next: (res: any) => {
+            // this.cartService.setCartItems(res.data);
+            this.cartService.setTotal(res.totalItems);
+            this.cartService.setSubtotal(res.subtotal);
+            this._ToastService.show('success', 'Product added to cart!');
+          },
+          error: (err) => {
+            console.log(err.error.message);
+          },
+        });
+      } else {
+        this._ToastService.show('error', 'Login to add items to cart!');
+      }
     } else {
-      this._ToastService.show('error', 'Login to add items to cart!');
+      this._ToastService.show('error', 'Product is out of stock!');
     }
   }
 }
