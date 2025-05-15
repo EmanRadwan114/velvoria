@@ -9,6 +9,7 @@ import { environment } from '../environments/environment';
 })
 export class UsersService {
   private apiUrl = `${environment.backUrl}/users`;
+ private URL = environment.backUrl;
 
   constructor(private httpClient: HttpClient) {}
   getUserProfile(): Observable<any> {
@@ -22,6 +23,15 @@ export class UsersService {
   updateUserProfile(data: any): Observable<any> {
     return this.httpClient
       .put<{ message: string; data: any }>(`${this.apiUrl}/me`, data, {
+        withCredentials: true,
+      })
+      .pipe(map((res) => res.data));
+  }
+
+
+  getUserOrders(): Observable<any> {
+    return this.httpClient
+      .get<{ message: string; data: any }>(`${this.URL}/orders/me`, {
         withCredentials: true,
       })
       .pipe(map((res) => res.data));

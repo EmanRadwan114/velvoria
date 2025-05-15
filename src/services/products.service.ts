@@ -58,7 +58,6 @@ export class ProductsService {
     });
   }
 
-  
   filterProducts(filters: Record<string, any>) {
     // build up HttpParams
     let params = new HttpParams();
@@ -74,5 +73,11 @@ export class ProductsService {
         params,
       }
     );
+  }
+
+  discountProducts() {
+    return this._HttpClient.get(`${this.URL}/products/least-ordered-products`, {
+      withCredentials: true,
+    });
   }
 }
