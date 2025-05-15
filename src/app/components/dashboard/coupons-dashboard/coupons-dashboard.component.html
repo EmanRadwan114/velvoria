@@ -1,6 +1,6 @@
 <!-- Add Button -->
 <div class="flex justify-end mb-4">
-  <button (click)="openModal('add')" class="btn-teal">Add New Coupon</button>
+  <button (click)="openModal('add')" class="btn-teal">+ Add New Coupon</button>
 </div>
 
 <!-- Coupons Table -->
@@ -62,7 +62,7 @@
         <td class="px-6 py-4 text-right">
           <div class="flex justify-end gap-5">
             <button (click)="openModal('getById', c._id)">
-              <i class="fa-solid fa-eyetext-lg text-gray-900"></i>
+              <i class="fa-solid fa-eye text-lg text-gray-900"></i>
             </button>
             <button (click)="openModal('update', c._id)">
               <i class="fa-solid fa-pencil text-lg text-blue-900"></i>

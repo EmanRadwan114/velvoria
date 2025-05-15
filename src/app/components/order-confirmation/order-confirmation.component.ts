@@ -2,18 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { OrdersService } from '../../../services/orders.service';
-import { BreadcrumbComponent } from '../sharedComponents/breadcrumb/breadcrumb.component';
 import { LoadingSPinnerComponent } from '../sharedComponents/loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'app-order-confirmation',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterLink,
-    BreadcrumbComponent,
-    LoadingSPinnerComponent,
-  ],
+  imports: [CommonModule, RouterLink, LoadingSPinnerComponent],
   templateUrl: './order-confirmation.component.html',
 })
 export class OrderConfirmationComponent implements OnInit {
