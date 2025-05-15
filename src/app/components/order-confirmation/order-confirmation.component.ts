@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { OrdersService } from '../../../services/orders.service';
 import { BreadcrumbComponent } from '../sharedComponents/breadcrumb/breadcrumb.component';
-import { CouponsService } from './../../../services/coupons.service';
 import { LoadingSPinnerComponent } from '../sharedComponents/loading-spinner/loading-spinner.component';
 
 @Component({
@@ -21,7 +20,7 @@ export class OrderConfirmationComponent implements OnInit {
   order: any;
   loading = true;
   error: string | null = null;
-  shippingPrice = 50;
+  shippingPrice = 0;
   subtotal = 0;
   discountAmount = 0;
   discountPercentage = 0;
@@ -29,8 +28,7 @@ export class OrderConfirmationComponent implements OnInit {
 
   constructor(
     private orderService: OrdersService,
-    private route: ActivatedRoute,
-    private couponsService: CouponsService
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -64,7 +62,7 @@ export class OrderConfirmationComponent implements OnInit {
       0
     );
 
-    this.shippingPrice = this.couponsService.getShippingPrice();
+    this.shippingPrice = this.orderService.getShippingPrice();
 
     // Calculate total before discount
     const totalBeforeDiscount = this.subtotal + this.shippingPrice;

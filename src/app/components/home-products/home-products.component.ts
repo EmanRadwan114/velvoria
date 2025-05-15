@@ -4,10 +4,16 @@ import { ProductCardComponent } from '../product-card/product-card.component';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProductsService } from '../../../services/products.service';
+import { HomeProductCardComponent } from '../home-product-card/home-product-card.component';
 
 @Component({
   selector: 'app-home-products',
-  imports: [CommonModule, ProductCardComponent, FormsModule],
+  imports: [
+    CommonModule,
+    ProductCardComponent,
+    FormsModule,
+    HomeProductCardComponent,
+  ],
   templateUrl: './home-products.component.html',
   styleUrl: './home-products.component.css',
 })

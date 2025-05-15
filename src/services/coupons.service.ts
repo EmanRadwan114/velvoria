@@ -9,12 +9,6 @@ export class CouponsService {
   private URL = environment.backUrl;
   couponApplied = new EventEmitter<{ couponCode: string; discount: number }>();
 
-  private defaultShippingPrice = 50;
-
-  getShippingPrice(): number {
-    return this.defaultShippingPrice;
-  }
-
   constructor(private _HttpClient: HttpClient) {
     console.log(_HttpClient);
   }

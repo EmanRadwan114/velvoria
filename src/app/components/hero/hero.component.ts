@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-hero',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './hero.component.html',
   styles: ``,
 })
@@ -12,22 +13,25 @@ export class HeroComponent implements OnInit {
 
   slides = [
     {
-      image: 'assets/hero1.png',
-      header: 'Welcome to Velvoria',
+      image: 'images/hero5.jpg',
+      header: 'Welcome To VELVORIA',
       text: 'Discover modern furniture that brings comfort and style to your home.',
       buttonText: 'Shop Now',
+      link: '/furnitures',
     },
     {
-      image: 'assets/hero2.png',
+      image: 'images/hero4.jpg',
       header: 'Make Your Space Yours',
       text: 'Find unique pieces that match your style and elevate daily living.',
       buttonText: 'Explore Collection',
+      link: '/furnitures',
     },
     {
-      image: 'assets/hero3.png',
+      image: 'images/hero3.png',
       header: 'Limited Time Offer!',
       text: 'Get 25% off our best-selling Nordic armchair. Style meets comfort — don’t miss out!',
       buttonText: 'Grab the Deal',
+      link: '/about',
     },
   ];
 
