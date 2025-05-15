@@ -148,12 +148,11 @@ export class ProductsModalComponent implements OnChanges {
   isSubmitting = false;
 
   submitForm() {
-    
-
     if (this.productForm.invalid) {
       this.productForm.markAllAsTouched();
       return;
     }
+
     this.isSubmitting = true;
 
     const payload = {
@@ -161,35 +160,30 @@ export class ProductsModalComponent implements OnChanges {
       price: this.safeParseFloat(this.productForm.value.price),
       stock: this.safeParseInt(this.productForm.value.stock),
     };
-    this._ToastService.show('success', 'New Product Added Successfully');
 
-    if (this.activeModal === 'add'){    this._ToastService.show('success', 'New Product Added Successfully');
-}
-    
-    console.log('Submitting payload:', payload);
+    const isAddMode = this.activeModal === 'add';
+    const observable = isAddMode
+      ? this.service.addProduct(payload)
+      : this.service.updateProduct(this.productId!, payload);
 
-    const observable =
-      this.activeModal === 'add'
-        ? this.service.addProduct(payload)
-        : this.service.updateProduct(this.productId!, payload);
+    observable.subscribe({
+      next: () => {
+        const message = isAddMode
+          ? 'New Product Added Successfully'
+          : 'Product Updated Successfully';
+        this._ToastService.show('success', message);
 
-    observable
-      .pipe(
-        catchError((err) => {
-          console.error('Error submitting form', err);
-          this._ToastService.show(
-            'error',
-            err.error?.message || 'Server error occurred'
-          );
-          return throwError(() => err);
-        })
-      )
-      .subscribe({
-        next: () => {
-          this.refresh.emit();
-          this.closeModal();
-        },
-      });
+        this.refresh.emit();
+        this.closeModal();
+      },
+      error: (err) => {
+        console.error('Error submitting form', err);
+        this._ToastService.show(
+          'error',
+          err.error?.message || 'Server error occurred'
+        );
+      },
+    });
   }
 
   private safeParseFloat(value: any): number {

@@ -8,6 +8,7 @@ import { ProductsService } from '../../../../services/products.service';
 import { CategoriesService } from '../../../../services/categories.service';
 import { ProductsModalComponent } from '../../modals/products-modal/products-modal.component';
 import { LoadingButtonComponent } from '../../sharedComponents/loading-button/loading-button.component';
+import { ToastService } from '../../../../services/toast.service';
 @Component({
   selector: 'app-products-dashboard',
   standalone: true,
@@ -22,6 +23,8 @@ import { LoadingButtonComponent } from '../../sharedComponents/loading-button/lo
 export class ProductsDashboardComponent implements OnInit {
   private productsSvc = inject(ProductsService);
   private catsSvc = inject(CategoriesService);
+  private readonly _ToastService = inject(ToastService);
+  
 
   productsList: any[] = [];
   categories: any[] = [];
@@ -86,11 +89,14 @@ export class ProductsDashboardComponent implements OnInit {
     if (!this.deleteId) return;
     this.productsSvc.deleteProduct(this.deleteId).subscribe({
       next: () => {
+        this._ToastService.show('success', 'product deleted successfully');
+
         this.showDeleteConfirm = false;
         this.deleteId = null;
         this.loadProducts();
       },
       error: (err) => {
+        this._ToastService.show('error', 'Failed to delete product');
         console.error('Delete failed', err);
         this.showDeleteConfirm = false;
         this.deleteId = null;
