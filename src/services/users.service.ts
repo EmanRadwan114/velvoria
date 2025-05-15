@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
 import { environment } from '../environments/environment';
 
 @Injectable({
@@ -8,7 +9,7 @@ import { environment } from '../environments/environment';
 })
 export class UsersService {
   private apiUrl = `${environment.backUrl}/users`;
- private URL = environment.backUrl;
+  private URL = environment.backUrl;
 
   constructor(private httpClient: HttpClient) {}
   getUserProfile(): Observable<any> {
@@ -29,7 +30,6 @@ export class UsersService {
       }
     );
   }
-
 
   getUserOrders(): Observable<any> {
     return this.httpClient
