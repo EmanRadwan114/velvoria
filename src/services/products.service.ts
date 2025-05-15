@@ -32,6 +32,11 @@ export class ProductsService {
     return this._HttpClient.get(`${this.URL}/products/category/${category}`);
   }
 
+  //^ Get Best Selling Product
+  getBestSelling() {
+    return this._HttpClient.get(`${this.URL}/products/best-selling-products`);
+  }
+
   // ^ Add New Product
   addProduct(newPrd: {}) {
     return this._HttpClient.post(`${this.URL}/products`, newPrd, {

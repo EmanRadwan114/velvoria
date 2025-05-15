@@ -1,0 +1,77 @@
+<div
+  class="group relative bg-white shadow-lg rounded-2xl overflow-hidden h-full flex flex-col"
+>
+  <a [routerLink]="['/furnitures', product?._id]">
+    <!-- Image Container -->
+    <div
+      class="relative w-full overflow-hidden"
+      [ngClass]="isLargeCard ? `pb-[200px] md:pb-[550px]`:`pb-[200px]`"
+    >
+      <img
+        [src]="product.thumbnail"
+        [alt]="product.title"
+        class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+      />
+      <div
+        class="flex absolute end-3 bottom-7 space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+      >
+        <button
+          (click)="addToWishList(product._id)"
+          class="p-2 bg-gray-100 rounded-full h-[40px] w-[40px] hover:bg-teal-700 hover:text-white"
+        >
+          <i class="fas fa-heart"></i>
+        </button>
+        <button
+          (click)="addToCart(product._id)"
+          class="p-2 bg-gray-100 rounded-full h-[40px] w-[40px] hover:bg-teal-700 hover:text-white"
+        >
+          <i class="fas fa-shopping-cart"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Details -->
+    <div class="flex-1 p-4 flex flex-col justify-end">
+      <h2
+        class="text-lg font-semibold text-gray-900 truncate hover:text-teal-700 cursor-pointer"
+      >
+        {{ product.title }}
+      </h2>
+      <div class="mt-2 flex items-center">
+        <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
+          <i
+            class="fa-star text-yellow-500"
+            [ngClass]="star <= product.avgRating ? 'fas' : 'far'"
+          ></i>
+        </ng-container>
+        <span class="ml-2 text-sm text-gray-600"
+          >{{ product.avgRating || 0 }}/5</span
+        >
+      </div>
+
+      <div
+        *ngIf="product?.label?.includes('hot')"
+        class="absolute top-2 right-0 bg-red-500 text-gray-50 px-2 text-center transform translate-x-full hover:border-none group-hover:translate-x-[-10px] transition-transform duration-500"
+      >
+        Hot
+      </div>
+      <div
+        *ngIf="product?.label?.includes('trendy')"
+        class="absolute top-10 right-0 bg-orange-500 text-gray-50 px-2 text-center transform translate-x-full hover:border-none group-hover:translate-x-[-10px] transition-transform duration-500"
+      >
+        Trendy
+      </div>
+      <div
+        *ngIf="product?.label?.includes('new arrival')"
+        class="absolute top-2 left-0 transform -translate-x-full group-hover:translate-x-[10px] transition-transform duration-500 bg-green-500 text-gray-50 px-2 text-center"
+      >
+        New
+      </div>
+      <div class="mt-4 flex flex-col">
+        <span class="text-xl font-bold text-gray-800">{{
+          product.price | currency : "EGP"
+        }}</span>
+      </div>
+    </div>
+  </a>
+</div>

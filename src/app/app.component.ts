@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, ViewportScroller } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
   NavigationEnd,
@@ -33,6 +33,10 @@ export class AppComponent implements OnInit {
   constructor(private router: Router, private cartService: CartService) {}
   ngOnInit(): void {
     this.router.events.subscribe((event) => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
       if (event instanceof NavigationEnd) {
         const url = event.url;
         this.showSideBar = url.includes('/dashboard');

@@ -40,7 +40,7 @@
       </div>
 
       <h2
-        class="text-lg font-semibold text-gray-900 hover:text-teal-700 truncate"
+        class="text-lg font-semibold text-gray-900 hover:text-teal-700 truncate cursor-pointer"
       >
         {{ product?.title }}
       </h2>
@@ -71,7 +71,7 @@
 
   <div
     (click)="addToWishList(product?._id)"
-    class="absolute text-gray-500 border-1 top-[25%] right-0 transform translate-x-full hover:border-none group-hover:translate-x-[-10px] transition-transform duration-500 bg-gray-50 w-10 h-10 flex items-center justify-center hover:text-white hover:bg-teal-700 rounded"
+    class="absolute text-gray-500 border-1 top-[25%] right-0 transform translate-x-full hover:border-none group-hover:translate-x-[-10px] transition-transform duration-500 bg-gray-50 w-10 h-10 flex items-center justify-center hover:text-white hover:bg-teal-700 rounded cursor-pointer"
     [ngClass]="{
       'text-white bg-teal-700 border-none': isInWishlist,
       'text-gray-500 bg-gray-50 hover:text-white hover:bg-teal-700':
@@ -80,12 +80,12 @@
   >
     <i class="fas fa-heart"></i>
   </div>
-  
+
   <app-toast [showToast]="showToast" (close)="showToast = false"></app-toast>
   <!-- Add to Cart -->
   <div
     (click)="addToCart(product?._id)"
-    class="absolute text-gray-500 border-1 top-[40%] right-0 transform translate-x-full hover:border-none group-hover:translate-x-[-10px] transition-transform duration-500 bg-gray-50 w-10 h-10 flex items-center justify-center hover:text-white hover:bg-teal-700 rounded"
+    class="absolute text-gray-500 border-1 top-[40%] right-0 transform translate-x-full hover:border-none group-hover:translate-x-[-10px] transition-transform duration-500 bg-gray-50 w-10 h-10 flex items-center justify-center hover:text-white hover:bg-teal-700 rounded cursor-pointer"
   >
     <i class="fas fa-shopping-cart text-lg"></i>
   </div>
