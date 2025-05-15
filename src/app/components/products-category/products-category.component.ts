@@ -8,7 +8,6 @@ import { ToastService } from '../../../services/toast.service';
   selector: 'app-products-category',
   imports: [ProductsComponent],
   templateUrl: './products-category.component.html',
-  styleUrl: './products-category.component.css',
 })
 export class ProductsCategoryComponent implements OnInit {
   productsList: any[] = [];
@@ -17,7 +16,7 @@ export class ProductsCategoryComponent implements OnInit {
   currentCategoryId: string | null = null;
 
   private readonly _ActivatedRoute = inject(ActivatedRoute);
-  private readonly  _ToastService=inject(ToastService)
+  private readonly _ToastService = inject(ToastService);
 
   constructor(private prdServices: ProductsService) {}
 
@@ -53,11 +52,42 @@ export class ProductsCategoryComponent implements OnInit {
     });
   }
 
+  // handleFilterChange(filterQuery: any): void {
+  //   const fullQuery: any = { ...filterQuery };
+  //   if (this.currentCategoryId) {
+  //     fullQuery.category = this.currentCategoryId;
+  //   }
+
+  //   console.log('Full filter query:', fullQuery);
+
+  //   this.prdServices.filterProducts(fullQuery).subscribe({
+  //     next: (res: any) => {
+  //       this.filteredProductsList = res.data;
+  //     },
+  //     error: (err) => { console.error('Filter Error status =', err.status);
+  //     console.error('Filter Error body =', err.error);
+  //     this._ToastService.show('error', err.error.message);
+  //    },
+  //   });
+  // }
   handleFilterChange(filterQuery: any): void {
     const fullQuery: any = { ...filterQuery };
+
+    // Add category to the query
     if (this.currentCategoryId) {
       fullQuery.category = this.currentCategoryId;
     }
+
+    // ✅ Remove invalid values like null, undefined, or 'all'
+    Object.keys(fullQuery).forEach((key) => {
+      if (
+        fullQuery[key] === null ||
+        fullQuery[key] === undefined ||
+        fullQuery[key] === 'all'
+      ) {
+        delete fullQuery[key];
+      }
+    });
 
     console.log('Full filter query:', fullQuery);
 
@@ -65,10 +95,11 @@ export class ProductsCategoryComponent implements OnInit {
       next: (res: any) => {
         this.filteredProductsList = res.data;
       },
-      error: (err) => { console.error('Filter Error status =', err.status);
-      console.error('Filter Error body =', err.error);
-      this._ToastService.show('error', err.error.message);      
-     },
+      error: (err) => {
+        console.error('Filter Error status =', err.status);
+        console.error('Filter Error body =', err.error);
+        this._ToastService.show('error', err.error.message);
+      },
     });
   }
 }
