@@ -18,6 +18,7 @@ export class FilterationComponent {
     'Fabric',
     'Glass',
     'Plastic',
+    'Ceramic',
   ];
   colors: string[] = [
     'White',
@@ -26,10 +27,14 @@ export class FilterationComponent {
     'Gray',
     'Black',
     'Blue',
+    'Navy',
     'Green',
+    'Yellow',
+    'Orange',
     'Red',
     'Pink',
     'Teal',
+    'Gold'
   ];
 
   material = 'all';

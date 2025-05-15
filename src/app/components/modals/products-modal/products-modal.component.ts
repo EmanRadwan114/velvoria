@@ -35,21 +35,22 @@ export class ProductsModalComponent implements OnChanges {
   productData: any = null;
   loading = false;
 
-  constructor(private fb: FormBuilder, private service: ProductsService) {
-    this.productForm = this.fb.group({}); // temporary empty form
-  }
+  
+  private lettersOnlyPattern = /^[a-zA-Z\s]*$/;
+  private lettersWithBasicPunctuation = /^[a-zA-Z\s.,!?']*$/;
 
- 
+  constructor(private fb: FormBuilder, private service: ProductsService) {
+    this.productForm = this.fb.group({}); 
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.activeModal === 'add') {
-      this.initForm(); // Initialize form for new product
+      this.initForm(); 
     }
 
-    // update 
+    // update
     if (this.activeModal === 'update' && this.productId) {
-      // console.log('Fetching product data for ID:', this.productId); // Verify productId
-      this.fetchProduct(this.productId, true); 
+      this.fetchProduct(this.productId, true);
     }
     // prodyct details
     if (this.activeModal === 'getById' && this.productId) {
@@ -74,12 +75,14 @@ export class ProductsModalComponent implements OnChanges {
         data?.thumbnail || '',
         [Validators.required, Validators.pattern(/^https?:\/\//)],
       ],
-      material: [data?.material || '', Validators.required],
-      color: [data?.color || '', Validators.required],
+      material: [data?.material || '',  [Validators.required, Validators.pattern(this.lettersOnlyPattern)]],
+      color: [data?.color || '',         
+        [Validators.required, Validators.pattern(this.lettersOnlyPattern)]], 
+      
       label: [
-        data?.label || [],
-        [Validators.required, Validators.minLength(1)],
-      ],
+        data?.label || [],        
+        ], 
+      
       images: [data?.images || [], [Validators.required]],
     });
     console.log('Form initialized:', this.productForm.value);
@@ -89,9 +92,7 @@ export class ProductsModalComponent implements OnChanges {
     this.loading = true;
     this.service.getSpecificProduct(id).subscribe({
       next: (res: any) => {
-        // pick the product object out of the envelope
         const raw = Array.isArray(res.data) ? res.data[0] : res.data;
-        // map categoryID → categoryName
         const cat = this.categories.find((c) => c._id === raw.categoryID);
         raw.categoryName = cat?.name ?? '–';
         this.productData = raw;
@@ -114,7 +115,7 @@ export class ProductsModalComponent implements OnChanges {
 
     const data = this.productForm.value;
     const payload = this.productForm.value;
-    console.log('Submitting payload:', payload); // Check this in console
+    console.log('Submitting payload:', payload); 
     console.log('Submitting payload:', this.productForm.value);
 
     if (this.activeModal === 'add') {
@@ -170,15 +171,46 @@ export class ProductsModalComponent implements OnChanges {
     this.productForm.get('images')?.setValue(images);
     this.productForm.get('images')?.markAsTouched();
   }
+
+
+ 
   lightboxOpen = false;
   lightboxIndex = 0;
 
-  openLightbox(i: number) {
-    this.lightboxIndex = i;
+  openLightbox(index: number) {
+    this.lightboxIndex = index;
     this.lightboxOpen = true;
+    document.body.style.overflow = 'hidden'; 
   }
 
   closeLightbox() {
     this.lightboxOpen = false;
+    document.body.style.overflow = ''; 
+  }
+
+  prevImage(event: MouseEvent) {
+    event.stopPropagation();
+    const images =
+      this.activeModal === 'getById'
+        ? this.productData?.images
+        : this.productForm.get('images')?.value;
+
+    if (images?.length) {
+      this.lightboxIndex =
+        this.lightboxIndex === 0 ? images.length : this.lightboxIndex - 1;
+    }
+  }
+
+  nextImage(event: MouseEvent) {
+    event.stopPropagation();
+    const images =
+      this.activeModal === 'getById'
+        ? this.productData?.images
+        : this.productForm.get('images')?.value;
+
+    if (images?.length) {
+      this.lightboxIndex =
+        this.lightboxIndex === images.length ? 0 : this.lightboxIndex + 1;
+    }
   }
 }
