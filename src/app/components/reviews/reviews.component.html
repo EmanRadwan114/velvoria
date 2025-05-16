@@ -25,12 +25,21 @@
       <p>{{ review.description }}</p>
     </div>
     }
-    <app-pagination></app-pagination>
+    <app-pagination
+      [totalPages]="totalPages"
+      [currentPage]="currentPage"
+      (pageChanged)="changePage($event)"
+    ></app-pagination>
     }@else {
+<<<<<<< HEAD
     <p
       class="text-center bg-zinc-100 text-yellow-600 font-bold p-6 rounded-sm shadow-2xl text-lg capitalize"
     >
       {{ responseMsg }} 😔
+=======
+    <p class="text-center bg-zinc-100 text-yellow-600 font-bold p-6 rounded-sm shadow-2xl text-lg">
+      No reviews has been added for this product 😔
+>>>>>>> d6f11d1ed70f3233afb96fadf5f3417e65be58fc
     </p>
     }
   </section>
@@ -46,8 +55,7 @@
       <label
         for="review-desc"
         class="font-medium text-lg text-zinc-700 mb-3 block capitalize"
-        >Add Your Rating</label
-      >
+      >Add Your Rating</label>
       <div class="flex gap-x-1.5 group">
         @for (item of [1,2,3,4,5]; track $index) {
         <i
@@ -67,8 +75,7 @@
       <label
         for="review-desc"
         class="font-medium text-lg text-zinc-700 mb-4 block capitalize"
-        >Review Description</label
-      >
+      >Review Description</label>
       <textarea
         class="w-full rounded-sm p-2 border-2 border-zinc-600 placeholder-zinc-600"
         placeholder="Enter Your Review"

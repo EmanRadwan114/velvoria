@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { environment } from '../environments/environment';
@@ -31,11 +31,13 @@ export class UsersService {
     );
   }
 
-  getUserOrders(): Observable<any> {
-    return this.httpClient
-      .get<{ message: string; data: any }>(`${this.URL}/orders/me`, {
+
+  getUserOrders(page: number = 1): Observable<any> {
+    return this.httpClient.get<{ message: string; data: any }>(
+      `${this.URL}/orders/me?page=${page}`,
+      {
         withCredentials: true,
       })
-      .pipe(map((res) => res.data));
+      .pipe(map((res:any) => res.data));
   }
 }
