@@ -28,6 +28,23 @@ export class ProductCardComponent {
   isInWishlist = false;
 
   constructor(private cartService: CartService) {}
+
+   isInWishlistFunc(id: string) {
+    this._WishlistService.getWishList().subscribe({
+      next:(res:any)=>{
+        this.isInWishlist = res.wishlist.some(
+          (item: { productId: string }) => item.productId === id
+        );
+        console.log('isInWishlist', this.isInWishlist);
+
+      }
+      ,
+      error: (err) => {
+        console.error('Failed to get wishlist', err);
+      },
+    })
+   }
+
   addToWishList(id: string): void {
     this._WishlistService.addToWishlist(id).subscribe({
       next: (res: any) => {

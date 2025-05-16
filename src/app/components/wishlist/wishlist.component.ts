@@ -5,6 +5,7 @@ import { ToastService } from '../../../services/toast.service';
 import { BreadcrumbComponent } from '../sharedComponents/breadcrumb/breadcrumb.component';
 import { Router } from '@angular/router';
 import { CartService } from '../../../services/cart.service';
+
 @Component({
   selector: 'app-wishlist',
   imports: [CommonModule, BreadcrumbComponent],
@@ -19,9 +20,10 @@ export class WishlistComponent implements OnInit {
   constructor(
     private _WishlistService: WishlistService,
     private _ToastService: ToastService,
-    public router: Router,
+    private router: Router,
     private cartService: CartService
   ) {}
+
 
   ngOnInit(): void {
     this.getWishlist(this.currentPage);
@@ -51,29 +53,26 @@ export class WishlistComponent implements OnInit {
         console.log('deleted from wishlist!', res);
       },
       error: (e) => {
-        console.error('Failed to add to wishlist', e);
+        console.error('Failed to del from wishlist', e);
       },
     });
   }
-  addToCart(id: any, stock: any) {
-    if (stock > 0) {
-      if (localStorage.getItem('user')) {
-        this.cartService.addToCart({ productId: id }).subscribe({
-          next: (res: any) => {
-            // this.cartService.setCartItems(res.data);
-            this.cartService.setTotal(res.totalItems);
-            this.cartService.setSubtotal(res.subtotal);
-            this._ToastService.show('success', 'Product added to cart!');
-          },
-          error: (err) => {
-            console.log(err.error.message);
-          },
-        });
-      } else {
-        this._ToastService.show('error', 'Login to add items to cart!');
-      }
+
+
+  addToCart(id: string) {
+    if (localStorage.getItem('user')) {
+      
+      this.cartService.addToCart({ productId: id }).subscribe({
+        next: (res: any) => {
+          this.cartService.setCartItems(res.data);
+          this._ToastService.show('success', 'Product added to cart!');
+        },
+        error: (err) => {
+          console.log(err.error.message);
+        },
+      });
     } else {
-      this._ToastService.show('error', 'Product is out of stock!');
+      this._ToastService.show('error', 'Login to add items to cart!');
     }
   }
 }

@@ -10,7 +10,6 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./shop-by-categories.component.css'],
 })
 export class ShopByCategoriesComponent {
-  //@ViewChild() is a decorator that gives you direct access to a DOM element
   @ViewChild('slider', { static: false }) slider!: ElementRef;
 
   scrollLeft() {
