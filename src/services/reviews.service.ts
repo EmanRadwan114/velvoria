@@ -8,8 +8,8 @@ import { environment } from '../environments/environment';
 export class ReviewsService {
   constructor(private http: HttpClient) {}
 
-  getAllReviews = (id: string) => {
-    const url = `${environment.backUrl}/products/${id}/reviews`;
+  getAllReviews = (id: string, page: number = 1) => {
+    const url = `${environment.backUrl}/products/${id}/reviews?page=${page}`;
     return this.http.get(url, { withCredentials: true });
   };
 

@@ -13,16 +13,24 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../../services/auth.service';
 import { ToastService } from '../../../services/toast.service';
+import { PaginationComponent } from '../sharedComponents/pagination/pagination.component';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [FormsModule, CommonModule, RouterLink, ReactiveFormsModule],
+  imports: [
+    FormsModule,
+    CommonModule,
+    RouterLink,
+    ReactiveFormsModule,
+    PaginationComponent,
+  ],
   templateUrl: './profile.component.html',
 })
 export class ProfileComponent implements OnInit {
   image: string = 'https://picsum.photos/350';
-
+  totalPages = 1;
+  currentPage = 1;
   isEditingPersonalInfo: boolean = false;
   isEditingPassword: boolean = false;
 
@@ -50,11 +58,13 @@ export class ProfileComponent implements OnInit {
     private authService: AuthService
   ) {}
 
-  getOrders() {
-    this.usersService.getUserOrders().subscribe({
+  getOrders(page: number) {
+    this.usersService.getUserOrders(page).subscribe({
       next: (res) => {
-        this.userOrders = res;
-        console.log(' 🟢User orders:', this.userOrders);
+
+        this.userOrders = [...res.data];
+        this.totalPages = res.totalPages;
+        console.log(' 🟢User orders:', this.userOrders, this.totalPages);
       },
       error: (err) => {
         console.error('Error fetching user orders!!!!', err);
@@ -80,7 +90,7 @@ export class ProfileComponent implements OnInit {
       this.isOrder = tab === 'orders';
       this.isPersonalInfo = !this.isOrder;
     });
-    this.getOrders();
+    this.getOrders(this.currentPage);
     this.usersService.getUserProfile().subscribe((user) => {
       this.originalEmail = user.data.email;
       this.role = user.data.role;
@@ -122,7 +132,10 @@ export class ProfileComponent implements OnInit {
       });
     });
   }
-
+  changePage(page: any) {
+    this.currentPage = page;
+    this.getOrders(this.currentPage);
+  }
   showPersonalInfo(): void {
     this.isPersonalInfo = true;
     this.isOrder = false;

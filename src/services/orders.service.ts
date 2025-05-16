@@ -69,7 +69,7 @@ export class OrdersService {
   }
 
   getCartItems() {
-    return this.http.get<any[]>(`${environment.backUrl}/cart`, {
+    return this.http.get<any[]>(`${environment.backUrl}/cart/checkout`, {
       withCredentials: true,
     });
   }

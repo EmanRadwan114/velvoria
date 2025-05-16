@@ -28,6 +28,7 @@ export class ProductDetailsComponent implements OnInit {
   constructor(private cartService: CartService, private router: Router) {}
   isInWishlist = false;
   mainImage: string = '';
+  stock: number = 0;
   detailsProduct: any = {};
   categoryID: string = '';
   categoryName: string = '';
@@ -44,7 +45,7 @@ export class ProductDetailsComponent implements OnInit {
           this.detailsProduct = res.data[0];
           this.categoryID = this.detailsProduct.categoryID;
           this.mainImage = this.detailsProduct.thumbnail;
-
+          this.stock = this.detailsProduct.stock;
           // 2) fetch category
           this._CategoriesService
             .getSpecificCategry(this.categoryID)
@@ -90,15 +91,21 @@ export class ProductDetailsComponent implements OnInit {
     if (localStorage.getItem('user')) {
       const fullUrl = this.router.url;
       let id = fullUrl.split('/')[2];
-      this.cartService.addToCart({ productId: id }).subscribe({
-        next: (res: any) => {
-          this.cartService.setCartItems(res.data);
-          this._ToastService.show('success', 'Product added to cart!');
-        },
-        error: (err) => {
-          console.log(err.error.message);
-        },
-      });
+      if (this.stock > 0) {
+        this.cartService.addToCart({ productId: id }).subscribe({
+          next: (res: any) => {
+            // this.cartService.setCartItems(res.data);
+            this.cartService.setTotal(res.totalItems);
+            this.cartService.setSubtotal(res.subtotal);
+            this._ToastService.show('success', 'Product added to cart!');
+          },
+          error: (err) => {
+            console.log(err.error.message);
+          },
+        });
+      } else {
+        this._ToastService.show('error', 'Product is out of stock!');
+      }
     } else {
       this._ToastService.show('error', 'Login to add items to cart!');
     }
