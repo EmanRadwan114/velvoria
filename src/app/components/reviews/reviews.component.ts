@@ -9,10 +9,17 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { ToastService } from '../../../services/toast.service';
+import { LoadingButtonComponent } from '../sharedComponents/loading-button/loading-button.component';
 
 @Component({
   selector: 'app-reviews',
-  imports: [CommonModule, PaginationComponent, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    PaginationComponent,
+    ReactiveFormsModule,
+    LoadingButtonComponent,
+  ],
   templateUrl: './reviews.component.html',
 })
 export class ReviewsComponent implements OnInit {
@@ -21,12 +28,15 @@ export class ReviewsComponent implements OnInit {
   reviewData!: FormGroup;
   newReview!: {};
   responseMsg!: string;
-
+  isLoading = false;
+  totalPages: number = 1;
+  currentPage: number = 1;
   rate: number = 0;
 
   constructor(
     private reviewService: ReviewsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private toastService: ToastService
   ) {
     // *get productID
     this.productID = route.snapshot.params['id'];
@@ -47,16 +57,20 @@ export class ReviewsComponent implements OnInit {
     });
 
     // *get all product reviews
-    this.reviewService.getAllReviews(this.productID).subscribe({
+    this.getAllReviews(this.currentPage);
+  }
+  getAllReviews(page: number) {
+    this.reviewService.getAllReviews(this.productID, page).subscribe({
       next: (res: any) => {
         this.reviews = [...res.data];
+        this.responseMsg = res.message;
+        this.totalPages = res.totalPages;
       },
       error: (err) => {
-        console.log(err);
+        this.responseMsg = err.error.message;
       },
     });
   }
-
   isFormValid(): boolean {
     return this.reviewData.valid;
   }
@@ -72,11 +86,16 @@ export class ReviewsComponent implements OnInit {
     this.rate = value;
     this.reviewData.get('rating')?.setValue(value);
   }
+  changePage(page: number) {
+    this.currentPage = page;
+    this.getAllReviews(this.currentPage);
+  }
 
   // *get review data and add a new review
   addNewReview(event: any) {
     event.preventDefault();
     if (this.isFormValid()) {
+      this.isLoading = true;
       this.reviewService
         .addNewReview(this.productID, this.reviewData.value)
         .subscribe({
@@ -85,26 +104,43 @@ export class ReviewsComponent implements OnInit {
             this.responseMsg = res.message;
             this.rate = 0;
             this.reviewData.reset();
+            this.toastService.show(
+              'success',
+              'Your Review is Submitted Successfully'
+            );
+            this.isLoading = false;
             // *get all product reviews
             this.reviewService.getAllReviews(this.productID).subscribe({
               next: (res: any) => {
                 this.reviews = [...res.data];
               },
               error: (err) => {
-                console.log(err);
+                this.toastService.show('error', err.message);
               },
             });
           },
           error: (err) => {
-            console.log(err);
+            this.isLoading = true;
             const myErr = err.error.errors;
             if (myErr) {
-              this.responseMsg = myErr[0].message;
-            } else {
-              this.responseMsg = err.error.message;
+              this.toastService.show('error', myErr[0].message);
+            } else if (err.status === 401) {
+              this.toastService.show(
+                'error',
+                'Login First to Review a Product'
+              );
+            } else if (err.status === 400) {
+              this.toastService.show(
+                'error',
+                'You Can not Review a Product Before Ordering It or Being Shipped To You'
+              );
+            } else if (err.status === 409) {
+              this.toastService.show(
+                'error',
+                'You Have Already Reviewed This Product Before'
+              );
             }
-            this.reviewData.reset();
-            this.rate = 0;
+            this.isLoading = false;
           },
         });
     }

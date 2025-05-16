@@ -2,3 +2,8 @@
   [productsList]="filteredProductsList"
   (filterChanged)="handleFilterChange($event)"
 ></app-products>
+<app-pagination
+  [currentPage]="currentPage"
+  [totalPages]="totalPages"
+  (pageChanged)="changePage($event)"
+></app-pagination>

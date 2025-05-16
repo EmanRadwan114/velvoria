@@ -74,7 +74,9 @@ export class LoginComponent {
                 JSON.stringify({ email, name, image, role, address })
               );
               this.authService.notifyLogin();
-              this.router.navigate(['/home']);
+              this.router.navigate([
+                `${role === 'user' ? '/home' : '/dashboard'}`,
+              ]);
             }
           },
           error: (err) => {

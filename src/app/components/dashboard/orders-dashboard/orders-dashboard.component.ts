@@ -4,11 +4,17 @@ import { FormsModule } from '@angular/forms';
 import { OrdersService } from '../../../../services/orders.service';
 import { OrdersModalComponent } from '../../modals/orders-modal/orders-modal.component';
 import { ToastService } from '../../../../services/toast.service';
+import { DashboardPaginationComponent } from '../dashboard-pagination/dashboard-pagination.component';
 
 @Component({
   selector: 'app-orders-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule, OrdersModalComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    OrdersModalComponent,
+    DashboardPaginationComponent,
+  ],
   templateUrl: './orders-dashboard.component.html',
   styleUrl: './orders-dashboard.component.css',
 })
@@ -16,6 +22,10 @@ export class OrdersDashboardComponent implements OnInit {
   orders: any[] = [];
   activeModal: 'getById' | 'update' | null = null;
   selectedId: string | null = null;
+
+  currentPage = 1;
+  totalPages = 1;
+  limit = 8;
 
   private readonly _ToastService = inject(ToastService);
 
@@ -25,15 +35,23 @@ export class OrdersDashboardComponent implements OnInit {
     this.fetchOrders();
   }
 
-  fetchOrders() {
-    this.ordersService.getAllOrders().subscribe({
+  fetchOrders(page: number = 1) {
+    this.ordersService.getAllOrders(page, this.limit).subscribe({
       next: (res: any) => {
         this.orders = res.data || res;
+        this.totalPages = res.totalPages;
+        this.currentPage = res.currentPage;
       },
       error: (err) => {
         console.error('Failed to fetch orders', err);
+        this.orders = [];
+        this.totalPages = 1;
       },
     });
+  }
+
+  onPageChange(newPage: number) {
+    this.fetchOrders(newPage);
   }
 
   openModal(type: 'getById' | 'update', id: string | null = null) {

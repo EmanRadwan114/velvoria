@@ -106,3 +106,9 @@
   (close)="closeModal()"
   (refresh)="fetchCoupons()"
 />
+
+<app-dashboard-pagination
+  [currentPage]="currentPage"
+  [totalPages]="totalPages"
+  (pageChange)="onPageChange($event)"
+></app-dashboard-pagination>

@@ -89,3 +89,9 @@
     </div>
   </div>
 </div>
+
+<app-dashboard-pagination
+  [currentPage]="currentPage"
+  [totalPages]="totalPages"
+  (pageChange)="onPageChange($event)"
+></app-dashboard-pagination>

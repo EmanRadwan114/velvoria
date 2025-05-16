@@ -10,7 +10,10 @@ export class AuthService {
   // private hasUser(): boolean {
   //   return !!localStorage.getItem('user');
   // }
-  private loggedIn = new BehaviorSubject<boolean>(false);
+
+  private loggedIn = new BehaviorSubject<boolean>(
+    !!localStorage.getItem('user')
+  );
   get isLoggedIn() {
     return this.loggedIn.asObservable();
   }

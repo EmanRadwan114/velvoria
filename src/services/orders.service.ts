@@ -46,6 +46,7 @@ export class OrdersService {
     shippingAddress: string;
     paymentMethod: string;
     couponCode?: string;
+    totalPrice: number;
   }) {
     return this.http.post(`${environment.backUrl}/orders`, orderData, {
       withCredentials: true,
@@ -69,7 +70,7 @@ export class OrdersService {
   }
 
   getCartItems() {
-    return this.http.get<any[]>(`${environment.backUrl}/cart`, {
+    return this.http.get<any[]>(`${environment.backUrl}/cart/checkout`, {
       withCredentials: true,
     });
   }
@@ -77,10 +78,13 @@ export class OrdersService {
   ////////& orders dashboard //////
 
   //^ GET all orders (Admin only)
-  getAllOrders(): Observable<any> {
-    return this.http.get(`${environment.backUrl}/orders`, {
-      withCredentials: true,
-    });
+  getAllOrders(page: number = 1, limit: number = 6): Observable<any> {
+    return this.http.get(
+      `${environment.backUrl}/orders?page=${page}&limit=${limit}`,
+      {
+        withCredentials: true,
+      }
+    );
   }
 
   //^ GET current user's orders
