@@ -114,9 +114,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.cartLoading = true;
     this.ordersService.getCartItems().subscribe({
       next: (response: any) => {
+        console.log(response);
+
         this.cartItems = response.data;
         this.cartLoading = false;
-        console.log(response);
       },
       error: (err) => {
         this.error = 'Failed to load cart items';

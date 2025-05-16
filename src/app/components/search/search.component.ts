@@ -6,9 +6,15 @@ import { ProductsComponent } from '../products/products.component';
 import { environment } from '../../../environments/environment';
 import { PaginationComponent } from '../sharedComponents/pagination/pagination.component';
 import { ProductsService } from '../../../services/products.service';
+import { LoadingSPinnerComponent } from '../sharedComponents/loading-spinner/loading-spinner.component';
 @Component({
   selector: 'app-search',
-  imports: [CommonModule, ProductsComponent, PaginationComponent],
+  imports: [
+    CommonModule,
+    ProductsComponent,
+    PaginationComponent,
+    LoadingSPinnerComponent,
+  ],
   templateUrl: './search.component.html',
   styles: ``,
 })
