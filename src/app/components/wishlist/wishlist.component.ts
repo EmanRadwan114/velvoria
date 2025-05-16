@@ -22,6 +22,7 @@ export class WishlistComponent implements OnInit {
     private cartService: CartService
   ) {}
 
+
   ngOnInit(): void {
     this.getWishlist();
   }
@@ -51,10 +52,10 @@ export class WishlistComponent implements OnInit {
     });
   }
 
+
   addToCart(id: string) {
     if (localStorage.getItem('user')) {
-      // const fullUrl = this.router.url;
-      // let id = fullUrl.split('/')[2];
+      
       this.cartService.addToCart({ productId: id }).subscribe({
         next: (res: any) => {
           this.cartService.setCartItems(res.data);
