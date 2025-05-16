@@ -31,11 +31,13 @@ export class UsersService {
   }
 
   getUserOrders(page: number = 1): Observable<any> {
-    return this.httpClient.get<{ message: string; data: any }>(
-      `${this.URL}/orders/me?page=${page}`,
-      {
-        withCredentials: true,
-      }
-    );
+    return this.httpClient
+      .get<{ message: string; data: any }>(
+        `${this.URL}/orders/me?page=${page}`,
+        {
+          withCredentials: true,
+        }
+      )
+      .pipe(map((res: any) => res.data));
   }
 }

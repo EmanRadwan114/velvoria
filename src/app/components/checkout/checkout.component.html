@@ -66,29 +66,41 @@
       </div>
 
       <!-- Shipping Address -->
-      <div class="bg-zinc-50 rounded-lg shadow p-6 mb-6">
-        <h2 class="text-lg font-semibold mb-4">Shipping Details</h2>
-        <label class="block text-sm font-medium text-gray-700 mb-1"
-          >Shipping Address</label
-        >
-        <input
-          type="text"
-          [(ngModel)]="shippingAddress"
-          placeholder="Enter your complete shipping address"
-          class="w-full p-3 border rounded-md focus:ring-2 focus:ring-teal-700"
-        />
-      </div>
+      <div [formGroup]="checkoutForm">
+        <div class="bg-zinc-50 rounded-lg shadow p-6 mb-6">
+          <h2 class="text-lg font-semibold mb-4">Shipping Details</h2>
+          <label class="block text-sm font-medium text-gray-700 mb-1"
+            >Shipping Address</label
+          >
+          <input
+            type="text"
+            placeholder="Enter your complete shipping address"
+            class="w-full p-3 border rounded-md focus:ring-2 focus:ring-teal-700"
+            formControlName="shippingAddress"
+          />
 
-      <!-- Payment Method -->
-      <div class="bg-zinc-50 rounded-lg shadow p-6">
-        <h2 class="text-lg font-semibold mb-4">Payment Method</h2>
-        <select
-          [(ngModel)]="paymentMethod"
-          class="w-full p-3 border rounded-md focus:ring-2 focus:ring-teal-800 focus:border-teal-800"
-        >
-          <option value="cash">Cash on Delivery</option>
-          <option value="online">Online Payment</option>
-        </select>
+          @if (isAddressValid() && checkoutForm.dirty) {
+          <p class="text-green-800 font-medium text-md mt-5 capitalize">
+            Your Shiiping Address is valid ✔
+          </p>
+          } @else if(!isAddressValid() && checkoutForm.dirty){
+          <p class="text-red-800 font-medium text-md mt-5 capitalize">
+            Your Shiiping Address should be at least 3 characters
+          </p>
+          }
+        </div>
+
+        <!-- Payment Method -->
+        <div class="bg-zinc-50 rounded-lg shadow p-6">
+          <h2 class="text-lg font-semibold mb-4">Payment Method</h2>
+          <select
+            class="w-full p-3 border rounded-md focus:ring-2 focus:ring-teal-800 focus:border-teal-800"
+            formControlName="paymentMethod"
+          >
+            <option value="cash" selected>Cash on Delivery</option>
+            <option value="online">Online Payment</option>
+          </select>
+        </div>
       </div>
     </div>
 
@@ -133,8 +145,8 @@
         <!-- Checkout Button -->
         <button
           (click)="submitOrder()"
-          [disabled]="isLoading"
-          class="text-xl py-5 btn flex items-center gap-2 w-full main-btn transition duration-200 my-4"
+          [disabled]="!isFormValid() || isLoading"
+          class="submit-btn main-btn w-full p-3 mt-8 rounded-sm text-xl transition duration-200 disabled:cursor-not-allowed disabled:opacity-75 cursor-pointer"
         >
           <span *ngIf="!isLoading">Place Order</span>
           <span *ngIf="isLoading" class="flex items-center justify-center">

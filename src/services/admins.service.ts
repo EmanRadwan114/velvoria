@@ -8,13 +8,17 @@ import { environment } from '../environments/environment';
 })
 export class AdminsService {
   constructor(private _HttpClient: HttpClient) {}
- private URL = environment.backUrl;
+  private URL = environment.backUrl;
   addAdmin(adminData: {}) {
-    return this._HttpClient.post(`${this.URL}/auth/register`,{ ...adminData,"role":"admin"}, {
-      withCredentials: true,
-    });
+    return this._HttpClient.post(
+      `${this.URL}/auth/register`,
+      { ...adminData, role: 'admin' },
+      {
+        withCredentials: true,
+      }
+    );
   }
-getAdminbyId(id:string) {
+  getAdminbyId(id: string) {
     return this._HttpClient.put(`${this.URL}/user/${id}`, {
       withCredentials: true,
     });
@@ -26,16 +30,21 @@ getAdminbyId(id:string) {
       withCredentials: true,
     });
   }
- getAdmins() {
-    return this._HttpClient.get(`${this.URL}/users`, {
-      withCredentials: true,
-    });
+  getAdmins(page: number = 1, limit: number = 6) {
+    return this._HttpClient.get(
+      `${this.URL}/users?role=admin&page=${page}&limit=${limit}`,
+      {
+        withCredentials: true,
+      }
+    );
   }
- UpdateAdmins(id:string ,updatedData:{}) {
-    return this._HttpClient.put(`${this.URL}/users/me`,{...updatedData}, {
-      withCredentials: true,
-    });
+  UpdateAdmins(id: string, updatedData: {}) {
+    return this._HttpClient.put(
+      `${this.URL}/users/me`,
+      { ...updatedData },
+      {
+        withCredentials: true,
+      }
+    );
   }
-  
-  
 }

@@ -23,7 +23,6 @@ import { PaginationComponent } from '../sharedComponents/pagination/pagination.c
     CommonModule,
     RouterLink,
     ReactiveFormsModule,
-    PaginationComponent,
   ],
   templateUrl: './profile.component.html',
 })
@@ -61,6 +60,7 @@ export class ProfileComponent implements OnInit {
   getOrders(page: number) {
     this.usersService.getUserOrders(page).subscribe({
       next: (res) => {
+
         this.userOrders = [...res.data];
         this.totalPages = res.totalPages;
         console.log(' 🟢User orders:', this.userOrders, this.totalPages);
@@ -82,6 +82,7 @@ export class ProfileComponent implements OnInit {
     };
     return dateTime.toLocaleString('en-US', options);
   }
+
   ngOnInit(): void {
     this.route.queryParams.subscribe((params: { [key: string]: string }) => {
       const tab: string = params['tab'];
@@ -181,7 +182,8 @@ export class ProfileComponent implements OnInit {
     }
 
     this.usersService.updateUserProfile(updatedData).subscribe({
-      next: () => {
+      next: (res) => {
+        console.log(res);
         this._ToastService.show('success', 'Profile updated successfully');
         this.isEditingPersonalInfo = false;
 
@@ -189,9 +191,13 @@ export class ProfileComponent implements OnInit {
         this.usersService.getUserProfile().subscribe((user) => {
           localStorage.setItem('user', JSON.stringify(user.data));
         });
+
+        this.authService.notifyLogin();
       },
       error: (err) => {
-        const msg = err.error?.message || 'Failed to update profile.';
+        console.log(err);
+        const msg =
+          err.error?.errors[0]?.message || 'Failed to update profile.';
         this.emailErrorMessage = msg;
         this._ToastService.show('error', msg);
         this.isEditingPersonalInfo = false;
@@ -208,7 +214,8 @@ export class ProfileComponent implements OnInit {
     this.usersService
       .updateUserProfile({ oldPassword: currentPassword, newPassword })
       .subscribe({
-        next: () => {
+        next: (res) => {
+          console.log(res);
           this._ToastService.show('success', 'Password updated successfully.');
           this.isEditingPassword = false;
           this.passwordForm.reset();
@@ -217,9 +224,13 @@ export class ProfileComponent implements OnInit {
           this.usersService.getUserProfile().subscribe((user) => {
             localStorage.setItem('user', JSON.stringify(user.data));
           });
+
+          this.authService.notifyLogin();
         },
         error: (err) => {
-          const msg = err.error?.message || 'Failed to update password.';
+          console.log(err);
+          const msg =
+            err.error?.errors[0]?.message || 'Failed to update password.';
           this.passwordErrorMessage = msg;
           this._ToastService.show('error', msg);
           this.isEditingPassword = false;
