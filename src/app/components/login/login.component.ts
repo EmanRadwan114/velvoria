@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { TogglePasswordDirective } from '../../../directives/toggle-password.directive';
 import { AuthService } from '../../../services/auth.service';
+import { ToastService } from '../../../services/toast.service';
 import {
   FormControl,
   FormGroup,
@@ -25,12 +26,12 @@ import { environment } from '../../../environments/environment';
 })
 export class LoginComponent {
   showAlert = false;
-  message = '';
   constructor(
     public router: Router,
     private http: HttpClient,
     private authService: AuthService
   ) {}
+  private readonly _ToastService = inject(ToastService);
   userData = new FormGroup({
     email: new FormControl(null, [
       Validators.required,
@@ -52,8 +53,7 @@ export class LoginComponent {
   }
   addUser() {
     if (!this.userData.valid) {
-      this.message = 'you must fill login form';
-      this.clickA();
+      this._ToastService.show('error', 'you must fill login form');
     } else {
       const fullUrl = this.router.url;
       console.log(fullUrl); //user or admin
@@ -80,17 +80,9 @@ export class LoginComponent {
             }
           },
           error: (err) => {
-            console.log(err);
-            this.message = err.error.message;
-            this.clickA();
+            this._ToastService.show('error', err.error.message);
           },
         });
     }
-  }
-  clickA() {
-    this.showAlert = true;
-    setTimeout(() => {
-      this.showAlert = false;
-    }, 1000);
   }
 }
