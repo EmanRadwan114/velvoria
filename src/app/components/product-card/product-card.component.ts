@@ -29,16 +29,12 @@ export class ProductCardComponent {
 
   constructor(private cartService: CartService) {}
   addToWishList(id: string): void {
-    console.log('id', id);
-    console.log('isInWishlist', this.isInWishlist);
     this._WishlistService.addToWishlist(id).subscribe({
       next: (res: any) => {
-        console.log('Product added to wishlist!', res);
         this.isInWishlist = true;
         this._ToastService.show('success', 'Product added to wishlist!');
       },
       error: (err) => {
-        console.error('Failed to add product to wishlist', err);
         if (err.error.message == 'Product already in wishlist') {
           this._WishlistService.deleteFromWishlist(id).subscribe({
             next: (res: any) => {
@@ -49,7 +45,11 @@ export class ProductCardComponent {
               this.isInWishlist = false;
             },
           });
-        } else this._ToastService.show('error', err.error.message);
+        } else
+          this._ToastService.show(
+            'error',
+            'Login To Add Product to Your Wishlist!'
+          );
       },
     });
   }

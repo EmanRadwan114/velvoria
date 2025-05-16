@@ -37,15 +37,18 @@ export class HomeProductCardComponent implements OnInit {
         if (err.error.message === 'Product already in wishlist') {
           this.wishlistService.deleteFromWishlist(productId).subscribe({
             next: () => {
-              this.isInWishlist = false;
               this._ToastService.show(
                 'error',
                 'Product removed from wishlist!'
               );
+              this.isInWishlist = false;
             },
           });
         } else {
-          this._ToastService.show('error', err.error.message);
+          this._ToastService.show(
+            'error',
+            'Login To Add Product to Your Wishlist!'
+          );
         }
       },
     });
@@ -56,7 +59,6 @@ export class HomeProductCardComponent implements OnInit {
       if (localStorage.getItem('user')) {
         this.cartService.addToCart({ productId: id }).subscribe({
           next: (res: any) => {
-            // this.cartService.setCartItems(res.data);
             this.cartService.setTotal(res.totalItems);
             this.cartService.setSubtotal(res.subtotal);
             this._ToastService.show('success', 'Product added to cart!');
