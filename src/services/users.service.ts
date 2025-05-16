@@ -37,7 +37,7 @@ export class UsersService {
       `${this.URL}/orders/me?page=${page}`,
       {
         withCredentials: true,
-      }
-    );
+      })
+      .pipe(map((res:any) => res.data));
   }
 }

@@ -21,7 +21,6 @@ export class FilterationComponent {
   ];
   colors: string[] = [
     'White',
-    'Beige ',
     'Brown',
     'Gray',
     'Black',
@@ -32,7 +31,6 @@ export class FilterationComponent {
     'Orange',
     'Red',
     'Pink',
-    'Gold',
   ];
 
   material = 'all';
