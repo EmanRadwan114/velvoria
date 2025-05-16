@@ -9,16 +9,13 @@ import { PaginationComponent } from '../sharedComponents/pagination/pagination.c
 
 @Component({
   selector: 'app-cart',
-<<<<<<< HEAD
-  imports: [CommonModule, FormsModule, LoadingSPinnerComponent, RouterLink],
-=======
   imports: [
     CommonModule,
     FormsModule,
     LoadingSPinnerComponent,
     PaginationComponent,
+    RouterLink,
   ],
->>>>>>> d6f11d1ed70f3233afb96fadf5f3417e65be58fc
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css',
 })

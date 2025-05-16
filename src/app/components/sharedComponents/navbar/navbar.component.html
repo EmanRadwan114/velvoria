@@ -2,89 +2,93 @@
   <div class="container mx-auto flex justify-between items-center w-full">
     <div>
       <!-- LOGO -->
-      <a
-        routerLink="/home"
-        class="aboreto-regular text-2xl font-bold"
-      >VELVORIA</a>
+      <a routerLink="/home" class="aboreto-regular text-2xl font-bold"
+        >VELVORIA</a
+      >
     </div>
 
     <!-- Center: Navigation -->
 
     <ul class="nav-menu-custom md:flex items-center gap-x-2 lg:gap-x-8">
       <li>
-        <a
-          routerLink="/home"
-          class="hover:text-teal-700 font-medium"
-        >Home</a>
+        <a routerLink="/home" class="hover:text-teal-700 font-medium">Home</a>
       </li>
 
       <!-- Dropdown Furniture -->
       <div class="relative group inline-block">
-        <a class="cursor-pointer text-base font-medium px-4 py-2 hover:text-teal-700">
+        <a
+          class="cursor-pointer text-base font-medium px-4 py-2 hover:text-teal-700"
+        >
           Furniture <i class="fas fa-chevron-down ml-1 text-xs"></i>
         </a>
         <!-- Dropdown content -->
 
-        <div class="absolute left-0 top-full z-50 hidden group-hover:block bg-white w-64 p-4 shadow-md rounded-md">
+        <div
+          class="absolute left-0 top-full z-50 hidden group-hover:block bg-white w-64 p-4 shadow-md rounded-md"
+        >
           <div class="grid grid-cols-2 gap-3 text-sm text-gray-700">
-            <a
-              routerLink="/furnitures"
-              class="hover:text-teal-700"
-            >All Furnitures</a>
+            <a routerLink="/furnitures" class="hover:text-teal-700"
+              >All Furnitures</a
+            >
             <a
               routerLink="/furnitures/category/sofas"
               class="hover:hover:text-teal-700"
-            >Sofas</a>
+              >Sofas</a
+            >
 
             <a
               routerLink="/furnitures/category/storage units"
               class="hover:hover:text-teal-700"
-            >Storage Units</a>
+              >Storage Units</a
+            >
             <a
               routerLink="/furnitures/category/beds"
               class="hover:hover:text-teal-700"
-            >Beds</a>
+              >Beds</a
+            >
 
             <a
               routerLink="/furnitures/category/dining tables"
               class="hover:hover:text-teal-700"
-            >Dining Tables</a>
+              >Dining Tables</a
+            >
             <a
               routerLink="/furnitures/category/office desks"
               class="hover:text-teal-700"
-            >Office Desks</a>
+              >Office Desks</a
+            >
             <a
               routerLink="/furnitures/category/chairs"
               class="hover:text-teal-700"
-            >Chairs</a>
+              >Chairs</a
+            >
 
             <a
               routerLink="/furnitures/category/outdoor sets"
               class="hover:hover:text-teal-700"
-            >Outdoor Sets</a>
+              >Outdoor Sets</a
+            >
             <a
               routerLink="/furnitures/category/decors"
               class="hover:text-teal-700"
-            >Decors</a>
+              >Decors</a
+            >
             <a
               routerLink="/furnitures/category/lighting"
               class="hover:hover:text-teal-700"
-            >Lighting</a>
+              >Lighting</a
+            >
           </div>
         </div>
       </div>
 
       <li>
-        <a
-          routerLink="/about"
-          class="hover:text-teal-700 font-medium"
-        >About</a>
+        <a routerLink="/about" class="hover:text-teal-700 font-medium">About</a>
       </li>
       <li>
-        <a
-          routerLink="/contact-us"
-          class="hover:text-teal-700 font-medium"
-        >Contact</a>
+        <a routerLink="/contact-us" class="hover:text-teal-700 font-medium"
+          >Contact</a
+        >
       </li>
       <!-- Search -->
       <li class="hidden md:block">
@@ -94,7 +98,9 @@
           #searchForm="ngForm"
         >
           <div class="relative">
-            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+            <div
+              class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
+            >
               <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
             </div>
             <input
@@ -137,20 +143,16 @@
               </div>
               <div class="text-gray-500 font-semibold">
                 {{
-<<<<<<< HEAD
                   user?.email?.length > 15
                     ? user?.email.substring(0, 15) + "..."
                     : user?.email
-=======
-                user.email.length > 15
-                ? user.email.substring(0, 15) + "..."
-                : user.email
->>>>>>> d6f11d1ed70f3233afb96fadf5f3417e65be58fc
                 }}
               </div>
             </div>
           </div>
-          <div class="grid grid-cols-1 gap-3 text-sm font-semibold text-gray-600 px-4 py-4">
+          <div
+            class="grid grid-cols-1 gap-3 text-sm font-semibold text-gray-600 px-4 py-4"
+          >
             <a
               [routerLink]="['/profile']"
               [queryParams]="{ tab: 'info' }"
@@ -174,10 +176,7 @@
               class="block px-4 py-2 text-red-700 hover:bg-red-100 dark:hover:bg-red-500 dark:text-red-200 dark:hover:text-white font-semibold"
               (click)="signOut()"
             >
-              <i
-                class="fa fa-sign-out me-1 text-sm"
-                aria-hidden="true"
-              ></i>
+              <i class="fa fa-sign-out me-1 text-sm" aria-hidden="true"></i>
               Sign out
             </a>
           </div>
@@ -196,10 +195,7 @@
       <!-- profile icon end -->
 
       <!-- Favorite Icon -->
-      <a
-        routerLink="/favorites"
-        class="hover:text-teal-700 md:me-4"
-      >
+      <a routerLink="/favorites" class="hover:text-teal-700 md:me-4">
         <i class="fas fa-heart"></i>
       </a>
 
@@ -212,10 +208,15 @@
         >
           <div class="indicator">
             <i class="fas fa-shopping-cart text-lg"></i>
-            <span class="badge badge-sm indicator-item bg-teal-700 text-gray-100">{{ totalItems }}</span>
+            <span
+              class="badge badge-sm indicator-item bg-teal-700 text-gray-100"
+              >{{ totalItems }}</span
+            >
           </div>
         </div>
-        <div class="card card-compact dropdown-content bg-base-100 z-10 mt-3 w-52 shadow">
+        <div
+          class="card card-compact dropdown-content bg-base-100 z-10 mt-3 w-52 shadow"
+        >
           <div class="card-body">
             <span class="text-lg font-bold">{{ totalItems }} Items</span>
             <div class="card-actions">
@@ -239,10 +240,7 @@
         (click)="menuOpen = !menuOpen"
         aria-label="Toggle menu"
       >
-        <i
-          class="fas"
-          [ngClass]="menuOpen ? 'fa-times' : 'fa-bars'"
-        ></i>
+        <i class="fas" [ngClass]="menuOpen ? 'fa-times' : 'fa-bars'"></i>
       </button>
     </div>
     <ul
@@ -250,10 +248,9 @@
       class="md:hidden absolute top-10 left-0 mt-4 w-full bg-base-100 shadow-md space-y-2 z-50 p-4"
     >
       <li>
-        <a
-          routerLink="/home"
-          class="block px-4 py-2 hover:text-teal-700"
-        >Home</a>
+        <a routerLink="/home" class="block px-4 py-2 hover:text-teal-700"
+          >Home</a
+        >
       </li>
       <li>
         <a routerLink="/furnitures" class="block px-4 py-2 hover:text-teal-700"
@@ -261,27 +258,27 @@
         >
       </li>
       <li>
-        <a
-          routerLink="/about"
-          class="block px-4 py-2 hover:text-teal-700"
-        >About</a>
+        <a routerLink="/about" class="block px-4 py-2 hover:text-teal-700"
+          >About</a
+        >
       </li>
       <li>
-        <a
-          routerLink="/contact-us"
-          class="block px-4 py-2 hover:text-teal-700"
-        >Contact</a>
+        <a routerLink="/contact-us" class="block px-4 py-2 hover:text-teal-700"
+          >Contact</a
+        >
       </li>
 
       <!-- Search -->
-      <li >
+      <li>
         <form
           class="w-full md:w-40 lg:w-64"
           (ngSubmit)="search()"
           #searchForm="ngForm"
         >
           <div class="relative">
-            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+            <div
+              class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
+            >
               <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
             </div>
             <input

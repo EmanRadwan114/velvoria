@@ -28,13 +28,9 @@ export class ReviewsComponent implements OnInit {
   reviewData!: FormGroup;
   newReview!: {};
   responseMsg!: string;
-<<<<<<< HEAD
   isLoading = false;
-
-=======
   totalPages: number = 1;
   currentPage: number = 1;
->>>>>>> d6f11d1ed70f3233afb96fadf5f3417e65be58fc
   rate: number = 0;
 
   constructor(
@@ -67,12 +63,8 @@ export class ReviewsComponent implements OnInit {
     this.reviewService.getAllReviews(this.productID, page).subscribe({
       next: (res: any) => {
         this.reviews = [...res.data];
-<<<<<<< HEAD
         this.responseMsg = res.message;
-=======
         this.totalPages = res.totalPages;
-        console.log(res.data);
->>>>>>> d6f11d1ed70f3233afb96fadf5f3417e65be58fc
       },
       error: (err) => {
         this.responseMsg = err.error.message;
