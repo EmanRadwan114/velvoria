@@ -28,9 +28,9 @@
     <app-pagination></app-pagination>
     }@else {
     <p
-      class="text-center bg-zinc-100 text-yellow-600 font-bold p-6 rounded-sm shadow-2xl text-lg"
+      class="text-center bg-zinc-100 text-yellow-600 font-bold p-6 rounded-sm shadow-2xl text-lg capitalize"
     >
-      No reviews has been added for this product 😔
+      {{ responseMsg }} 😔
     </p>
     }
   </section>
@@ -59,7 +59,7 @@
       </div>
       @if (!(rate >0) && reviewData.touched) {
       <p class="text-red-800 font-medium text-md mt-5 capitalize">
-        select a rate from 1 to 5
+        choose rate from 1 to 5
       </p>
       }
     </div>
@@ -86,22 +86,17 @@
       </p>
       }
     </div>
+
     <button
       type="submit"
-      class="main-btn w-full p-3 mt-8 rounded-sm text-xl transition duration-200"
-      [disabled]="!isFormValid()"
+      class="reviewBtn main-btn w-full p-3 mt-8 rounded-sm text-xl transition duration-200 disabled:cursor-not-allowed disabled:opacity-75 cursor-pointer"
+      [disabled]="!isFormValid() || isLoading"
     >
-      Submit
+      <span *ngIf="!isLoading">Submit Review</span>
+      <span *ngIf="isLoading" class="flex items-center justify-center">
+        <app-loading-button></app-loading-button>
+      </span>
     </button>
-    @if (responseMsg == "success") {
-    <p class="text-green-800 font-medium text-md mt-5 text-center capitalize">
-      Your Review is added successfully ✔
-    </p>
-    } @else {
-    <p class="text-red-800 font-medium text-md mt-5 text-center capitalize">
-      {{ responseMsg }}
-    </p>
-    }
   </form>
 </section>
 

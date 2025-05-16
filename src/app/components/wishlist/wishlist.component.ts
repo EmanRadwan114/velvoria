@@ -3,10 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { WishlistService } from '../../../services/wishlist.service';
 import { ToastService } from '../../../services/toast.service';
 import { BreadcrumbComponent } from '../sharedComponents/breadcrumb/breadcrumb.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-wishlist',
-  imports: [CommonModule ,BreadcrumbComponent],
+  imports: [CommonModule, BreadcrumbComponent],
   templateUrl: './wishlist.component.html',
   styles: ``,
 })
@@ -15,7 +16,8 @@ export class WishlistComponent implements OnInit {
 
   constructor(
     private _WishlistService: WishlistService,
-    private _ToastService: ToastService
+    private _ToastService: ToastService,
+    public router: Router
   ) {}
 
   ngOnInit(): void {

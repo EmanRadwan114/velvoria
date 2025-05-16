@@ -65,12 +65,10 @@ export class ProductDetailsComponent implements OnInit {
   addToWishList(): void {
     this._WishlistService.addToWishlist(this.productID).subscribe({
       next: (res: any) => {
-        console.log('Product added to wishlist!', res);
         this.isInWishlist = true;
         this._ToastService.show('success', 'Product added to wishlist!');
       },
       error: (err) => {
-        console.error('Failed to add product to wishlist', err);
         if (err.error.message == 'Product already in wishlist') {
           this._WishlistService.deleteFromWishlist(this.productID).subscribe({
             next: (res: any) => {
@@ -81,7 +79,11 @@ export class ProductDetailsComponent implements OnInit {
               );
             },
           });
-        } else this._ToastService.show('success', err.error.message);
+        } else
+          this._ToastService.show(
+            'error',
+            'Login To add Product To Your Wishlist'
+          );
       },
     });
   }

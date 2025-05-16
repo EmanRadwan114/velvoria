@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CartService } from '../../../services/cart.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -8,7 +8,7 @@ import { LoadingSPinnerComponent } from '../sharedComponents/loading-spinner/loa
 
 @Component({
   selector: 'app-cart',
-  imports: [CommonModule, FormsModule,LoadingSPinnerComponent],
+  imports: [CommonModule, FormsModule, LoadingSPinnerComponent, RouterLink],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css',
 })

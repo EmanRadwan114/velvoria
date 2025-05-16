@@ -27,9 +27,11 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
     this.authService.isLoggedIn.subscribe((status) => {
       this.isLoggedIn = status;
+      this.user = status
+        ? JSON.parse(localStorage.getItem('user') || 'null')
+        : 'null';
     });
-    this.user = JSON.parse(localStorage.getItem('user') || 'null');
-    if (this.user) {
+    if (this.isLoggedIn) {
       this.cartService.cartItems$.subscribe((items) => {
         this.totalItems = items.reduce((sum, i) => sum + i.quantity, 0);
       });
@@ -52,7 +54,7 @@ export class NavbarComponent implements OnInit {
         next: (res: any) => {
           localStorage.removeItem('user');
           this.authService.notifyLogout();
-          this.router.navigate(['/login/user']);
+          this.router.navigate(['/home']);
         },
       });
   }

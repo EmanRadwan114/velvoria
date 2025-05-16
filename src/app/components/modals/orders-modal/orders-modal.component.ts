@@ -66,7 +66,7 @@ export class OrdersModalComponent implements OnChanges {
 
         if (this.activeModal === 'update') {
           this.orderForm.patchValue({
-            shippingStatus: this.orderData.shippingStatus,
+            shippingStatus: this.orderData?.shippingStatus,
           });
         }
 
@@ -85,7 +85,7 @@ export class OrdersModalComponent implements OnChanges {
       return;
     }
 
-    const newStatus = this.orderForm.value.shippingStatus;
+    const newStatus = this.orderForm.value?.shippingStatus;
     const currentStatus = this.orderData?.shippingStatus;
 
     if (newStatus === currentStatus) return;

@@ -6,7 +6,7 @@
   box-sizing: border-box;
 }
 
-button {
+button:not(.reviewBtn, .submit-btn) {
   cursor: pointer !important;
 }
 
