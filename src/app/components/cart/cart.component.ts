@@ -20,7 +20,7 @@ import { PaginationComponent } from '../sharedComponents/pagination/pagination.c
   styleUrl: './cart.component.css',
 })
 export class CartComponent implements OnInit {
-  message = 'loading';
+  loading: boolean = true;
   cartItems: any[] = [];
   currentPage: any;
   totalPages: any;
@@ -32,10 +32,11 @@ export class CartComponent implements OnInit {
     protected router: Router
   ) {}
   ngOnInit() {
+    this.loadCartFromBack();
     this.cartService.cartItems$.subscribe((items) => {
       if (items) {
         this.cartItems = items;
-        this.message = 'success';
+        this.loading = false;
       }
     });
     this.cartService.cartMetaSubject.subscribe((meta) => {
@@ -77,13 +78,17 @@ export class CartComponent implements OnInit {
   }
   loadCartFromBack(page: number = 1) {
     this.cartService.loadCartFromBackend(page).subscribe((cart) => {
-      this.cartService.setCartItems(cart.data);
-      this.cartService.setTotal(cart.totalItems);
-      this.cartService.cartMetaSubject.next({
-        currentPage: cart.currentPage,
-        totalPages: cart.totalPages,
-      });
-      this.cartService.setSubtotal(cart.subtotal);
+      if (cart.data.length == 0 && page > 1) {
+        this.changePage(page - 1);
+      } else {
+        this.cartService.setCartItems(cart.data);
+        this.cartService.setTotal(cart.totalItems);
+        this.cartService.cartMetaSubject.next({
+          currentPage: cart.currentPage,
+          totalPages: cart.totalPages,
+        });
+        this.cartService.setSubtotal(cart.subtotal);
+      }
     });
   }
   changePage(page: number) {
