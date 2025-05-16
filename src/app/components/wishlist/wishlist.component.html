@@ -6,9 +6,7 @@
     src="images/wish1.jpg"
   />
 
-  <div
-    class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50"
-  >
+  <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50">
     <app-breadcrumb style="color: white"></app-breadcrumb>
   </div>
 </div>
@@ -17,9 +15,7 @@
   <!-- Background Image Section -->
 
   <div class="mx-auto max-w-2xl px-4 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-    <div
-      class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8"
-    >
+    <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
       @for (item of WishList; track $index) {
       <div
         href="#"
@@ -41,6 +37,7 @@
         <h3 class="text-xl primary-text-color">{{ item.title }}</h3>
         <p class="text-lg font-medium primary-text-color">${{ item.price }}</p>
         <button
+          (click)="addToCart(item._id,item.stock)"
           class="text-2md btn flex items-center gap-2 w-full bg-gray-950 text-gray-50 h-12 border border-transparent hover:border-teal-700 hover:bg-transparent hover:text-teal-700 transition duration-200"
         >
           <i class="fas fa-shopping-cart"></i>

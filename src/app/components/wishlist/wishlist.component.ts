@@ -4,7 +4,7 @@ import { WishlistService } from '../../../services/wishlist.service';
 import { ToastService } from '../../../services/toast.service';
 import { BreadcrumbComponent } from '../sharedComponents/breadcrumb/breadcrumb.component';
 import { Router } from '@angular/router';
-
+import { CartService } from '../../../services/cart.service';
 @Component({
   selector: 'app-wishlist',
   imports: [CommonModule, BreadcrumbComponent],
@@ -19,7 +19,8 @@ export class WishlistComponent implements OnInit {
   constructor(
     private _WishlistService: WishlistService,
     private _ToastService: ToastService,
-    public router: Router
+    public router: Router,
+    private cartService: CartService
   ) {}
 
   ngOnInit(): void {
@@ -53,5 +54,26 @@ export class WishlistComponent implements OnInit {
         console.error('Failed to add to wishlist', e);
       },
     });
+  }
+  addToCart(id: any, stock: any) {
+    if (stock > 0) {
+      if (localStorage.getItem('user')) {
+        this.cartService.addToCart({ productId: id }).subscribe({
+          next: (res: any) => {
+            // this.cartService.setCartItems(res.data);
+            this.cartService.setTotal(res.totalItems);
+            this.cartService.setSubtotal(res.subtotal);
+            this._ToastService.show('success', 'Product added to cart!');
+          },
+          error: (err) => {
+            console.log(err.error.message);
+          },
+        });
+      } else {
+        this._ToastService.show('error', 'Login to add items to cart!');
+      }
+    } else {
+      this._ToastService.show('error', 'Product is out of stock!');
+    }
   }
 }
