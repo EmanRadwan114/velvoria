@@ -33,6 +33,7 @@ export class WishlistComponent implements OnInit {
       },
     });
   }
+  
 
   deleteFromWishlist(id: string) {
     this._WishlistService.deleteFromWishlist(id).subscribe({
@@ -42,7 +43,7 @@ export class WishlistComponent implements OnInit {
         console.log('deleted from wishlist!', res);
       },
       error: (e) => {
-        console.error('Failed to add to wishlist', e);
+        console.error('Failed to del from wishlist', e);
       },
     });
   }
