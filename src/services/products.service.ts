@@ -13,8 +13,11 @@ export class ProductsService {
   }
 
   //^ Get All Products
-  getAllProducts() {
-    return this._HttpClient.get(`${this.URL}/products`);
+  getAllProducts(page: number = 1, limit: number = 6) {
+    return this._HttpClient.get(
+      `${this.URL}/products?page=${page}&limit=${limit}`,
+      { withCredentials: true }
+    );
   }
 
   //^ Get Product By ID

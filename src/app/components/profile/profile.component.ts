@@ -185,9 +185,7 @@ export class ProfileComponent implements OnInit {
       error: (err) => {
         console.log(err);
         const msg =
-          err.error?.errors[0].message ||
-          err.error?.message ||
-          'Failed to update profile.';
+          err.error?.errors[0]?.message || 'Failed to update profile.';
         this.emailErrorMessage = msg;
         this._ToastService.show('error', msg);
         this.isEditingPersonalInfo = false;
@@ -220,9 +218,7 @@ export class ProfileComponent implements OnInit {
         error: (err) => {
           console.log(err);
           const msg =
-            err.error?.errors[0]?.message ||
-            err.error?.message ||
-            'Failed to update password.';
+            err.error?.errors[0]?.message || 'Failed to update password.';
           this.passwordErrorMessage = msg;
           this._ToastService.show('error', msg);
           this.isEditingPassword = false;

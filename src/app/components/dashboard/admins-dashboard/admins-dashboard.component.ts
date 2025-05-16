@@ -4,16 +4,26 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AdminsModalComponent } from '../../modals/admins-modal/admins-modal.component';
 import { ToastService } from '../../../../services/toast.service';
+import { DashboardPaginationComponent } from '../dashboard-pagination/dashboard-pagination.component';
 
 @Component({
   selector: 'app-admins-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule, AdminsModalComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    AdminsModalComponent,
+    DashboardPaginationComponent,
+  ],
   templateUrl: './admins-dashboard.component.html',
 })
 export class AdminsDashboardComponent implements OnInit {
   admins: any[] = [];
   isLoading = false;
+
+  currentPage = 1;
+  totalPages = 1;
+  limit = 8;
 
   // Modal state control
   showModal = false;
@@ -33,20 +43,26 @@ export class AdminsDashboardComponent implements OnInit {
   }
 
   // Load admin list
-  loadAdmins() {
+  loadAdmins(page: number = 1) {
     this.isLoading = true;
-    this.adminsService.getAdmins().subscribe({
+    this.adminsService.getAdmins(page, this.limit).subscribe({
       next: (res: any) => {
         this.admins = (res.data || res).filter(
           (user: any) => user.role === 'admin'
         );
         this.isLoading = false;
+        this.totalPages = res.totalPages;
+        this.currentPage = res.currentPage;
       },
       error: (err) => {
         console.error('Error loading admins', err);
         this.isLoading = false;
       },
     });
+  }
+
+  onPageChange(newPage: number) {
+    this.loadAdmins(newPage);
   }
 
   // Open modal with type (add, edit, view)
