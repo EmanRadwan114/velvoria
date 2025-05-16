@@ -1,14 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  FormBuilder,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ProductsService } from '../../../../services/products.service';
 import { CategoriesService } from '../../../../services/categories.service';
 import { ProductsModalComponent } from '../../modals/products-modal/products-modal.component';
 import { LoadingButtonComponent } from '../../sharedComponents/loading-button/loading-button.component';
 import { ToastService } from '../../../../services/toast.service';
+import { DashboardPaginationComponent } from '../dashboard-pagination/dashboard-pagination.component';
 @Component({
   selector: 'app-products-dashboard',
   standalone: true,
@@ -17,6 +15,7 @@ import { ToastService } from '../../../../services/toast.service';
     ReactiveFormsModule,
     ProductsModalComponent,
     LoadingButtonComponent,
+    DashboardPaginationComponent,
   ],
   templateUrl: './products-dashboard.component.html',
 })
@@ -24,10 +23,13 @@ export class ProductsDashboardComponent implements OnInit {
   private productsSvc = inject(ProductsService);
   private catsSvc = inject(CategoriesService);
   private readonly _ToastService = inject(ToastService);
-  
 
   productsList: any[] = [];
   categories: any[] = [];
+
+  currentPage = 1;
+  totalPages = 1;
+  limit = 5;
 
   activeModal: 'getById' | 'update' | 'add' | null = null;
   selectedId: string | null = null;
@@ -49,18 +51,25 @@ export class ProductsDashboardComponent implements OnInit {
     });
   }
 
-  loadProducts() {
-    this.productsSvc.getAllProducts().subscribe({
+  loadProducts(page: number = 1) {
+    this.productsSvc.getAllProducts(page, this.limit).subscribe({
       next: (res: any) => {
+        console.log(res);
         this.productsList = res.data.map((p: any) => ({
           ...p,
           categoryName:
             this.categories.find((c) => c._id === p.categoryID)?.name ||
             'Unknown',
         }));
+        this.currentPage = res.currentPage;
+        this.totalPages = res.totalPages;
       },
       error: (err) => console.error(err),
     });
+  }
+
+  onPageChange(newPage: number) {
+    this.loadProducts(newPage);
   }
 
   openModal(type: 'add' | 'update' | 'getById', id: string | null = null) {

@@ -18,10 +18,14 @@ export class CouponsService {
   }
 
   //^ Get All Coupons
-  getAllCoupons() {
-    return this._HttpClient.get(`${this.URL}/coupons`, {
-      withCredentials: true,
-    });
+  // Accept page and limit as optional parameters
+  getAllCoupons(page: number = 1, limit: number = 6) {
+    return this._HttpClient.get(
+      `${this.URL}/coupons?page=${page}&limit=${limit}`,
+      {
+        withCredentials: true,
+      }
+    );
   }
 
   //^ Get Coupon By ID

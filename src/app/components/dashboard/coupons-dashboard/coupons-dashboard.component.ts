@@ -4,11 +4,17 @@ import { FormsModule } from '@angular/forms';
 import { CouponsService } from '../../../../services/coupons.service';
 import { CouponsModalComponent } from '../../modals/coupons-modal/coupons-modal.component';
 import { ToastService } from '../../../../services/toast.service';
+import { DashboardPaginationComponent } from '../dashboard-pagination/dashboard-pagination.component';
 
 @Component({
   selector: 'app-coupons-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule, CouponsModalComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    CouponsModalComponent,
+    DashboardPaginationComponent,
+  ],
   templateUrl: './coupons-dashboard.component.html',
   styleUrl: './coupons-dashboard.component.css',
 })
@@ -16,6 +22,11 @@ export class CouponsDashboardComponent implements OnInit {
   coupons: any[] = [];
   activeModal: 'getById' | 'update' | 'add' | null = null;
   selectedId: string | null = null;
+
+  currentPage = 1;
+  totalPages = 1;
+  limit = 10;
+
   private readonly _ToastService = inject(ToastService);
 
   constructor(private couponsService: CouponsService) {}
@@ -25,15 +36,23 @@ export class CouponsDashboardComponent implements OnInit {
     console.log('Coupons Dashboard Initialized');
   }
 
-  fetchCoupons() {
-    this.couponsService.getAllCoupons().subscribe({
+  fetchCoupons(page: number = 1): void {
+    this.couponsService.getAllCoupons(page, this.limit).subscribe({
       next: (res: any) => {
         this.coupons = res.data || res;
+        this.totalPages = res.totalPages;
+        this.currentPage = res.currentPage;
       },
       error: (err) => {
         console.error('Failed to fetch coupons', err);
+        this.coupons = [];
+        this.totalPages = 1;
       },
     });
+  }
+
+  onPageChange(newPage: number) {
+    this.fetchCoupons(newPage);
   }
 
   openModal(type: 'getById' | 'update' | 'add', id: string | null = null) {
