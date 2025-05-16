@@ -1,6 +1,39 @@
-<div class="join w-full justify-center mt-4 shadow-none">
-  <button class="join-item btn shadow-none">1</button>
-  <button class="join-item btn shadow-none">2</button>
-  <button class="join-item btn shadow-none">3</button>
-  <button class="join-item btn shadow-none">4</button>
-</div>
+<nav class="mx-auto flex justify-center mb-5 mt-2 px-10">
+  <ul class="flex flex-wrap gap-2 sm:gap-3 justify-center">
+    <!-- Previous -->
+    <li>
+      <a
+        class="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full border cursor-pointer text-sm sm:text-base"
+        (click)="changePage(currentPage - 1)"
+        [class.opacity-50]="currentPage === 1"
+      >
+        <span class="material-icons text-xs sm:text-sm">arrow_left</span>
+      </a>
+    </li>
+
+    <!-- Pages -->
+    <li *ngFor="let page of [].constructor(totalPages); let i = index">
+      <a
+        class="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full text-sm sm:text-base cursor-pointer"
+        [ngClass]="{
+          'bg-gradient-to-tr from-teal-600 to-teal-400 text-white shadow-md': currentPage === i + 1,
+          'border border-blue-gray-100 text-blue-gray-500': currentPage !== i + 1
+        }"
+        (click)="changePage(i + 1)"
+      >
+        {{ i + 1 }}
+      </a>
+    </li>
+
+    <!-- Next -->
+    <li>
+      <a
+        class="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full border cursor-pointer text-sm sm:text-base"
+        (click)="changePage(currentPage + 1)"
+        [class.opacity-50]="currentPage === totalPages"
+      >
+        <span class="material-icons text-xs sm:text-sm">arrow_right</span>
+      </a>
+    </li>
+  </ul>
+</nav>

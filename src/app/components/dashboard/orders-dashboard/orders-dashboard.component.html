@@ -18,20 +18,20 @@
       </tr>
     </thead>
     <tbody
-      *ngIf="orders.length; else loading"
+      *ngIf="orders?.length; else loading"
       class="divide-y divide-gray-100 border-t border-gray-100"
     >
       <tr *ngFor="let o of orders" class="hover:bg-gray-50">
         <td class="px-6 py-4 text-gray-900 text-sm font-medium">
-          {{ o._id }}
+          {{ o?._id }}
         </td>
         <td class="px-6 py-4 text-sm text-gray-700">
           <ul>
             <li
-              *ngFor="let item of o.orderItems"
+              *ngFor="let item of o?.orderItems"
               class="bg-indigo-50 text-center m-1 rounded-full px-1 py-1 text-xs font-semibold"
             >
-              {{ item.product.title }}
+              {{ item?.product?.title }}
             </li>
           </ul>
         </td>
@@ -39,19 +39,19 @@
         <td class="px-6 py-4">
           <span
             [ngClass]="{
-              'bg-purple-50 text-purple-600': o.orderStatus === 'paid',
-              'bg-pink-50 text-pink-600': o.orderStatus === 'waiting'
+              'bg-purple-50 text-purple-600': o?.orderStatus === 'paid',
+              'bg-pink-50 text-pink-600': o?.orderStatus === 'waiting'
             }"
             class="inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-semibold"
           >
             <span
               class="h-1.5 w-1.5 rounded-full"
               [ngClass]="{
-                'bg-purple-600': o.orderStatus === 'paid',
-                'bg-pink-600': o.orderStatus === 'waiting'
+                'bg-purple-600': o?.orderStatus === 'paid',
+                'bg-pink-600': o?.orderStatus === 'waiting'
               }"
             ></span>
-            {{ o.orderStatus }}
+            {{ o?.orderStatus }}
           </span>
         </td>
 
@@ -59,19 +59,19 @@
         <td class="px-6 py-4">
           <span
             [ngClass]="{
-              'bg-green-50 text-green-600': o.paymentMethod === 'online',
-              'bg-orange-50 text-orange-600': o.paymentMethod === 'cash'
+              'bg-green-50 text-green-600': o?.paymentMethod === 'online',
+              'bg-orange-50 text-orange-600': o?.paymentMethod === 'cash'
             }"
             class="inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-semibold"
           >
             <span
               class="h-1.5 w-1.5 rounded-full"
               [ngClass]="{
-                'bg-green-600': o.paymentMethod === 'online',
-                'bg-orange-600': o.paymentMethod === 'cash'
+                'bg-green-600': o?.paymentMethod === 'online',
+                'bg-orange-600': o?.paymentMethod === 'cash'
               }"
             ></span>
-            {{ o.paymentMethod }}
+            {{ o?.paymentMethod }}
           </span>
         </td>
 
@@ -79,32 +79,32 @@
         <td class="px-6 py-4">
           <span
             [ngClass]="{
-              'bg-yellow-50 text-yellow-600': o.shippingStatus === 'pending',
-              'bg-green-50 text-green-600': o.shippingStatus === 'shipped',
-              'bg-blue-50 text-blue-600': o.shippingStatus === 'prepared'
+              'bg-yellow-50 text-yellow-600': o?.shippingStatus === 'pending',
+              'bg-green-50 text-green-600': o?.shippingStatus === 'shipped',
+              'bg-blue-50 text-blue-600': o?.shippingStatus === 'prepared'
             }"
             class="inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-semibold"
           >
             <span
               class="h-1.5 w-1.5 rounded-full"
               [ngClass]="{
-                'bg-yellow-600': o.shippingStatus === 'pending',
-                'bg-green-600': o.shippingStatus === 'shipped',
-                'bg-blue-600': o.shippingStatus === 'prepared'
+                'bg-yellow-600': o?.shippingStatus === 'pending',
+                'bg-green-600': o?.shippingStatus === 'shipped',
+                'bg-blue-600': o?.shippingStatus === 'prepared'
               }"
             ></span>
-            {{ o.shippingStatus }}
+            {{ o?.shippingStatus }}
           </span>
         </td>
         <td class="px-6 py-4 text-right">
           <div class="flex justify-end gap-5">
-            <button (click)="openModal('getById', o._id)">
+            <button (click)="openModal('getById', o?._id)">
               <i class="fa-solid fa-eye text-xl text-gray-900"></i>
             </button>
-            <button (click)="openModal('update', o._id)">
+            <button (click)="openModal('update', o?._id)">
               <i class="fa-solid fa-pencil text-xl text-blue-900"></i>
             </button>
-            <button (click)="triggerDelete(o._id)">
+            <button (click)="triggerDelete(o?._id)">
               <i class="fa-regular fa-trash-can text-xl text-red-800"></i>
             </button>
           </div>

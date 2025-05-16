@@ -31,8 +31,10 @@ export class ProductsService {
   }
 
   //^ Get Product By Category
-  getProductByCategory(category: string | null) {
-    return this._HttpClient.get(`${this.URL}/products/category/${category}`);
+  getProductByCategory(category: string | null, page: any = 1) {
+    return this._HttpClient.get(
+      `${this.URL}/products/category/${category}?page=${page}`
+    );
   }
 
   //^ Get Best Selling Product
@@ -70,7 +72,7 @@ export class ProductsService {
     });
   }
 
-  filterProducts(filters: Record<string, any>) {
+  filterProducts(filters: Record<string, any>, page: number = 1) {
     // build up HttpParams
     let params = new HttpParams();
     Object.entries(filters).forEach(([key, value]) => {
@@ -80,13 +82,12 @@ export class ProductsService {
     });
 
     return this._HttpClient.get<{ data: any[] }>(
-      `${this.URL}/products/filter`,
+      `${this.URL}/products/filter?page=${page}`,
       {
         params,
       }
     );
   }
-
   discountProducts() {
     return this._HttpClient.get(`${this.URL}/products/least-ordered-products`, {
       withCredentials: true,

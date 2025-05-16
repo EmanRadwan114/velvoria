@@ -29,16 +29,12 @@ export class ProductCardComponent {
 
   constructor(private cartService: CartService) {}
   addToWishList(id: string): void {
-    console.log('id', id);
-    console.log('isInWishlist', this.isInWishlist);
     this._WishlistService.addToWishlist(id).subscribe({
       next: (res: any) => {
-        console.log('Product added to wishlist!', res);
         this.isInWishlist = true;
         this._ToastService.show('success', 'Product added to wishlist!');
       },
       error: (err) => {
-        console.error('Failed to add product to wishlist', err);
         if (err.error.message == 'Product already in wishlist') {
           this._WishlistService.deleteFromWishlist(id).subscribe({
             next: (res: any) => {
@@ -49,23 +45,33 @@ export class ProductCardComponent {
               this.isInWishlist = false;
             },
           });
-        } else this._ToastService.show('error', err.error.message);
+        } else
+          this._ToastService.show(
+            'error',
+            'Login To Add Product to Your Wishlist!'
+          );
       },
     });
   }
   addToCart(id: string) {
-    if (localStorage.getItem('user')) {
-      this.cartService.addToCart({ productId: id }).subscribe({
-        next: (res: any) => {
-          this.cartService.setCartItems(res.data);
-          this._ToastService.show('success', 'Product added to cart!');
-        },
-        error: (err) => {
-          console.log(err.error.message);
-        },
-      });
+    if (this.product.stock > 0) {
+      if (localStorage.getItem('user')) {
+        this.cartService.addToCart({ productId: id }).subscribe({
+          next: (res: any) => {
+            // this.cartService.setCartItems(res.data);
+            this.cartService.setTotal(res.totalItems);
+            this.cartService.setSubtotal(res.subtotal);
+            this._ToastService.show('success', 'Product added to cart!');
+          },
+          error: (err) => {
+            console.log(err.error.message);
+          },
+        });
+      } else {
+        this._ToastService.show('error', 'Login to add items to cart!');
+      }
     } else {
-      this._ToastService.show('error', 'Login to add items to cart!');
+      this._ToastService.show('error', 'Product is out of stock!');
     }
   }
 }
