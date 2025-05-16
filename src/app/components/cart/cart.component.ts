@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CartService } from '../../../services/cart.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -9,12 +9,16 @@ import { PaginationComponent } from '../sharedComponents/pagination/pagination.c
 
 @Component({
   selector: 'app-cart',
+<<<<<<< HEAD
+  imports: [CommonModule, FormsModule, LoadingSPinnerComponent, RouterLink],
+=======
   imports: [
     CommonModule,
     FormsModule,
     LoadingSPinnerComponent,
     PaginationComponent,
   ],
+>>>>>>> d6f11d1ed70f3233afb96fadf5f3417e65be58fc
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css',
 })

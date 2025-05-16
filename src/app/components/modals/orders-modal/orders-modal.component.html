@@ -61,7 +61,7 @@
           class="p-3 border-2 border-teal-500 rounded-lg bg-gray-50 shadow-sm col-span-2"
         >
           <span class="font-semibold text-teal-800">Order ID:</span>
-          <div class="mt-1 text-base text-black">{{ orderData._id }}</div>
+          <div class="mt-1 text-base text-black">{{ orderData?._id }}</div>
         </div>
 
         <!-- Shipping Address -->
@@ -70,7 +70,7 @@
         >
           <span class="font-semibold text-teal-800">Shipping Address:</span>
           <div class="mt-1 text-base text-black">
-            {{ orderData.shippingAddress }}
+            {{ orderData?.shippingAddress }}
           </div>
         </div>
 
@@ -80,7 +80,7 @@
         >
           <span class="font-semibold text-teal-800">Total Price:</span>
           <div class="mt-1 text-base text-black">
-            ${{ orderData.totalPrice }}
+            ${{ orderData?.totalPrice }}
           </div>
         </div>
 
@@ -90,7 +90,7 @@
         >
           <span class="font-semibold text-teal-800">Order Status:</span>
           <div class="mt-1 text-base text-black">
-            {{ orderData.orderStatus }}
+            {{ orderData?.orderStatus }}
           </div>
         </div>
 
@@ -100,7 +100,7 @@
         >
           <span class="font-semibold text-teal-800">Payment Method:</span>
           <div class="mt-1 text-base text-black">
-            {{ orderData.paymentMethod }}
+            {{ orderData?.paymentMethod }}
           </div>
         </div>
 
@@ -110,7 +110,7 @@
         >
           <span class="font-semibold text-teal-800">Shipping Status:</span>
           <div class="mt-1 text-base text-black">
-            {{ orderData.shippingStatus }}
+            {{ orderData?.shippingStatus }}
           </div>
         </div>
 
@@ -120,8 +120,8 @@
         >
           <span class="font-semibold text-teal-800">Order Items:</span>
           <ul class="mt-1 list-disc list-inside text-base text-black">
-            <li *ngFor="let item of orderData.orderItems">
-              {{ item.product.title }} × {{ item.quantity }}
+            <li *ngFor="let item of orderData?.orderItems">
+              {{ item?.product?.title }} × {{ item?.quantity }}
             </li>
           </ul>
         </div>

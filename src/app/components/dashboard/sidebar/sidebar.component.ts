@@ -23,4 +23,8 @@ export class SidebarComponent implements OnInit {
   closeSidenav() {
     this.sidenav = false;
   }
+
+  logout() {
+    localStorage.removeItem('user');
+  }
 }

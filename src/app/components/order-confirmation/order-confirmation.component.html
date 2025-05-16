@@ -22,7 +22,7 @@
       </h2>
       <p class="mb-2">
         <span class="font-semibold">Payment Status: </span>
-        {{ order.orderStatus }}
+        {{ order?.orderStatus }}
       </p>
       <p class="mb-2">
         <span class="font-semibold">Date:</span> {{ order.createdAt | date }}
@@ -30,61 +30,51 @@
       <p>
         <span class="font-semibold">Payment Method:</span>
         {{
-          order.paymentMethod === "cash" ? "Cash on Delivery" : "Online Payment"
+          order?.paymentMethod === "cash"
+            ? "Cash on Delivery"
+            : "Online Payment"
         }}
       </p>
     </div>
 
     <div class="bg-zinc-50 rounded-lg shadow p-6 mb-6">
       <h2 class="text-xl font-semibold mb-4">Shipping Address</h2>
-      <p>{{ order.shippingAddress }}</p>
+      <p>{{ order?.shippingAddress }}</p>
     </div>
 
-    <div class="bg-zinc-50 rounded-lg shadow p-4 mb-6">
-      <h2 class="text-lg font-semibold mb-3">
-        Order Items ({{ order.orderItems.length }})
+    <!-- Items Slider -->
+    <div class="bg-zinc-50 rounded-lg shadow p-6 mb-6">
+      <h2 class="text-lg font-semibold mb-4">
+        Your Order ({{ order?.orderItems.length }} items)
       </h2>
-      <div class="space-y-4">
-        <div
-          *ngFor="let item of order.orderItems"
-          class="flex flex-col sm:flex-row gap-4 p-3 border rounded-lg"
-        >
-          <div
-            class="flex-shrink-0 w-full sm:w-24 h-24 bg-gray-100 rounded-lg overflow-hidden"
-          >
-            <img
-              [src]="item.product.thumbnail"
-              [alt]="item.product.title"
-              class="w-full h-full object-cover"
-            />
-          </div>
-
-          <div class="flex-1 min-w-0">
-            <div class="flex flex-col sm:flex-row sm:justify-between gap-2">
-              <h3 class="text-md font-medium truncate text-teal-800">
-                {{ item.product.title }}
-              </h3>
-              <p class="text-md font-medium whitespace-nowrap">
-                {{ item.product.price * item.quantity | currency : "EGP" }}
-              </p>
-            </div>
-
+      <div class="relative">
+        <div class="overflow-x-auto pb-4">
+          <div class="flex space-x-4">
             <div
-              class="mt-1 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-sm text-gray-600"
+              *ngFor="let item of order?.orderItems"
+              class="flex-shrink-0 w-48"
             >
-              <div>
-                <span *ngIf="item.product.material">{{
-                  item.product.material
-                }}</span>
-                <span *ngIf="item.product.material && item.product.color">
-                  •
-                </span>
-                <span *ngIf="item.product.color">{{ item.product.color }}</span>
+              <div class="border rounded-lg p-3 h-full flex flex-col">
+                <img
+                  [src]="item?.product.thumbnail"
+                  [alt]="item?.product.title"
+                  class="w-full h-32 object-cover rounded-md mb-2"
+                />
+                <h3
+                  class="font-medium text-sm truncate flex-grow text-teal-800"
+                >
+                  {{ item?.product.title }}
+                </h3>
+                <div class="mt-2">
+                  <p class="text-gray-600 text-sm">
+                    {{ item?.product.price | currency : "EGP" }} ×
+                    {{ item?.quantity }}
+                  </p>
+                  <p class="font-medium text-sm mt-1">
+                    {{ item?.product.price * item.quantity | currency : "EGP" }}
+                  </p>
+                </div>
               </div>
-              <p class="whitespace-nowrap">
-                <span class="text-teal-800 font-semibold">Quantity:</span>
-                {{ item.quantity }}
-              </p>
             </div>
           </div>
         </div>

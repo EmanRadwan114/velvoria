@@ -46,6 +46,7 @@ export class OrdersService {
     shippingAddress: string;
     paymentMethod: string;
     couponCode?: string;
+    totalPrice: number;
   }) {
     return this.http.post(`${environment.backUrl}/orders`, orderData, {
       withCredentials: true,
