@@ -1,34 +1,67 @@
-<div class="flex justify-center items-center gap-2 mt-4">
+<!-- Shared Pagination Layout for All Screen Sizes -->
+<div class="flex justify-center items-center gap-2 mt-4 flex-wrap">
+  <!-- Prev Button -->
   <button
     [ngClass]="{
       'btn-teal-disabled': currentPage === 1,
-      'btn-teal': currentPage !== 1
+      'btn-teal-circ': currentPage !== 1
     }"
     (click)="changePage(currentPage - 1)"
   >
-    Prev
+    <svg
+      class="w-3.5 h-3.5 rtl:rotate-180"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 14 10"
+    >
+      <path
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M13 5H1m0 0 4 4M1 5l4-4"
+      />
+    </svg>
   </button>
 
+  <!-- Pages -->
   <ng-container *ngFor="let page of totalPagesArray">
     <button
-      class="py-2 px-4 mt-2 rounded border"
+      *ngIf="page !== '...'; else ellipsis"
       [ngClass]="{
-        'bg-teal-600 text-white': currentPage === page,
-        'bg-white text-teal-600 border-teal-600': currentPage !== page
+        'btn-teal-circ': currentPage === page,
+        'btn-teal-border': currentPage !== page
       }"
-      (click)="changePage(page)"
+      (click)="changePage(+page)"
     >
       {{ page }}
     </button>
+    <ng-template #ellipsis>
+      <span class="px-2 text-gray-500">...</span>
+    </ng-template>
   </ng-container>
 
+  <!-- Next Button -->
   <button
     [ngClass]="{
       'btn-teal-disabled': currentPage === totalPages,
-      'btn-teal': currentPage !== totalPages
+      'btn-teal-circ': currentPage !== totalPages
     }"
     (click)="changePage(currentPage + 1)"
   >
-    Next
+    <svg
+      class="w-3.5 h-3.5 rtl:rotate-180"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 14 10"
+    >
+      <path
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M1 5h12m0 0L9 1m4 4L9 9"
+      />
+    </svg>
   </button>
 </div>

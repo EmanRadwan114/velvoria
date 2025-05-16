@@ -178,8 +178,16 @@ button:not(.reviewBtn, .submit-btn) {
   @apply bg-teal-600 text-white py-2 px-4 rounded hover:bg-teal-700 transition mt-2;
 }
 
+.btn-teal-circ {
+  @apply bg-gradient-to-tr from-teal-600 to-teal-400 hover:from-teal-700 hover:to-teal-500 text-white shadow-md flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full transition mt-2;
+}
+
 .btn-teal-disabled {
-  @apply bg-teal-600 text-white py-2 px-4 rounded transition mt-2 tab-disabled;
+  @apply bg-gradient-to-tr from-teal-600 to-teal-400 text-white shadow-md flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full transition mt-2 tab-disabled;
+}
+
+.btn-teal-border {
+  @apply bg-white text-teal-600 border border-teal-600 hover:bg-gray-100 shadow-md flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full transition mt-2;
 }
 
 .btn-red {

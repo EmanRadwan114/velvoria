@@ -25,7 +25,7 @@ export class CouponsDashboardComponent implements OnInit {
 
   currentPage = 1;
   totalPages = 1;
-  limit = 10;
+  limit = 8;
 
   private readonly _ToastService = inject(ToastService);
 

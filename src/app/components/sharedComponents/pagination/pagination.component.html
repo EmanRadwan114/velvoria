@@ -16,8 +16,10 @@
       <a
         class="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full text-sm sm:text-base cursor-pointer"
         [ngClass]="{
-          'bg-gradient-to-tr from-teal-600 to-teal-400 text-white shadow-md': currentPage === i + 1,
-          'border border-blue-gray-100 text-blue-gray-500': currentPage !== i + 1
+          'bg-gradient-to-tr from-teal-600 to-teal-400 text-white shadow-md':
+            currentPage === i + 1,
+          'border border-blue-gray-100 text-blue-gray-500':
+            currentPage !== i + 1
         }"
         (click)="changePage(i + 1)"
       >
