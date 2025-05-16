@@ -2,19 +2,21 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 import { AuthService } from '../../../../services/auth.service';
 import { CartService } from '../../../../services/cart.service';
 @Component({
   selector: 'app-navbar',
-  imports: [RouterLink, CommonModule, FormsModule],
+  imports: [RouterLink, CommonModule, FormsModule,RouterLinkActive],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
 })
 export class NavbarComponent implements OnInit {
-  menuOpen = false;
+  menuOpen: boolean = false;
   isLoggedIn: boolean = false;
+  furnitureMenuOpen: boolean = false;
+
   user: any;
   searchQuery = '';
   totalItems = 0;

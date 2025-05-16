@@ -248,22 +248,146 @@
       class="md:hidden absolute top-10 left-0 mt-4 w-full bg-base-100 shadow-md space-y-2 z-50 p-4"
     >
       <li>
-        <a routerLink="/home" class="block px-4 py-2 hover:text-teal-700"
+        <a
+          routerLink="/home"
+          class="block px-4 py-2 hover:text-teal-700"
+          routerLinkActive="text-teal-700"
+          [routerLinkActiveOptions]="{ exact: true }"
           >Home</a
         >
       </li>
       <li>
-        <a routerLink="/furnitures" class="block px-4 py-2 hover:text-teal-700"
-          >Furniture</a
+        <div
+          (click)="furnitureMenuOpen = !furnitureMenuOpen"
+          class="flex items-center justify-between px-4 py-2 cursor-pointer hover:text-teal-700"
         >
+          <span>Furniture</span>
+          <i
+            class="fas"
+            [ngClass]="furnitureMenuOpen ? 'fa-chevron-up' : 'fa-chevron-down'"
+          ></i>
+        </div>
+
+        <ul
+          *ngIf="furnitureMenuOpen"
+          class="pl-6 grid grid-cols-2 gap-x-4 gap-y-2 text-sm text-gray-700"
+        >
+          <li>
+            <a
+              routerLink="/furnitures"
+              class="block hover:text-teal-700"
+              routerLinkActive="text-teal-700"
+              [routerLinkActiveOptions]="{ exact: true }"
+              >All Furnitures</a
+            >
+          </li>
+          <li>
+            <a
+              routerLink="/furnitures/category/sofas"
+              class="block hover:text-teal-700"
+              routerLinkActive="text-teal-700"
+              [routerLinkActiveOptions]="{ exact: true }"
+              >Sofas</a
+            >
+          </li>
+          <li>
+            <a
+              routerLink="/furnitures/category/storage units"
+              class="block hover:text-teal-700"
+              routerLinkActive="text-teal-700"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
+              Storage Units</a
+            >
+          </li>
+          <li>
+            <a
+              routerLink="/furnitures/category/beds"
+              class="block hover:text-teal-700"
+              routerLinkActive="text-teal-700"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
+              Beds</a
+            >
+          </li>
+          <li>
+            <a
+              routerLink="/furnitures/category/dining tables"
+              class="block hover:text-teal-700"
+              routerLinkActive="text-teal-700"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
+              Dining Tables</a
+            >
+          </li>
+          <li>
+            <a
+              routerLink="/furnitures/category/office desks"
+              class="block hover:text-teal-700"
+              routerLinkActive="text-teal-700"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
+              Office Desks</a
+            >
+          </li>
+          <li>
+            <a
+              routerLink="/furnitures/category/chairs"
+              class="block hover:text-teal-700"
+              routerLinkActive="text-teal-700"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
+              Chairs</a
+            >
+          </li>
+          <li>
+            <a
+              routerLink="/furnitures/category/outdoor sets"
+              class="block hover:text-teal-700"
+              routerLinkActive="text-teal-700"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
+              Outdoor Sets</a
+            >
+          </li>
+          <li>
+            <a
+              routerLink="/furnitures/category/decors"
+              class="block hover:text-teal-700"
+              routerLinkActive="text-teal-700"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
+              Decors</a
+            >
+          </li>
+          <li>
+            <a
+              routerLink="/furnitures/category/lighting"
+              class="block hover:text-teal-700"
+              routerLinkActive="text-teal-700"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
+              Lighting</a
+            >
+          </li>
+        </ul>
       </li>
+
       <li>
-        <a routerLink="/about" class="block px-4 py-2 hover:text-teal-700"
+        <a
+          routerLink="/about"
+          class="block px-4 py-2 hover:text-teal-700"
+          routerLinkActive="text-teal-700"
+          [routerLinkActiveOptions]="{ exact: true }"
           >About</a
         >
       </li>
       <li>
-        <a routerLink="/contact-us" class="block px-4 py-2 hover:text-teal-700"
+        <a
+          routerLink="/contact-us"
+          class="block px-4 py-2 hover:text-teal-700"
+          routerLinkActive="text-teal-700"
+          [routerLinkActiveOptions]="{ exact: true }"
           >Contact</a
         >
       </li>
@@ -295,28 +419,3 @@
     </ul>
   </div>
 </nav>
-
-<!-- icon for user profile  -->
-<!-- <div class="dropdown dropdown-end">
-      <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
-        <div class="w-10 rounded-full">
-          <img
-            alt="Tailwind CSS Navbar component"
-            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-          />
-        </div>
-      </div>
-      <ul
-        tabindex="0"
-        class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
-      >
-        <li>
-          <a class="justify-between">
-            Profile
-            <span class="badge">New</span>
-          </a>
-        </li>
-        <li><a>Settings</a></li>
-        <li><a>Logout</a></li>
-      </ul>
-    </div> -->
