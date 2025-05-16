@@ -29,7 +29,7 @@ export class ProductsDashboardComponent implements OnInit {
 
   currentPage = 1;
   totalPages = 1;
-  limit = 5;
+  limit = 8;
 
   activeModal: 'getById' | 'update' | 'add' | null = null;
   selectedId: string | null = null;
@@ -54,7 +54,6 @@ export class ProductsDashboardComponent implements OnInit {
   loadProducts(page: number = 1) {
     this.productsSvc.getAllProducts(page, this.limit).subscribe({
       next: (res: any) => {
-        console.log(res);
         this.productsList = res.data.map((p: any) => ({
           ...p,
           categoryName:

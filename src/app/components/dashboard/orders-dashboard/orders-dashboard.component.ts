@@ -25,7 +25,7 @@ export class OrdersDashboardComponent implements OnInit {
 
   currentPage = 1;
   totalPages = 1;
-  limit = 8;
+  limit = 7;
 
   private readonly _ToastService = inject(ToastService);
 
