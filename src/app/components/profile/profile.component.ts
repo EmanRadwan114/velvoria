@@ -23,7 +23,6 @@ import { PaginationComponent } from '../sharedComponents/pagination/pagination.c
     CommonModule,
     RouterLink,
     ReactiveFormsModule,
-    PaginationComponent,
   ],
   templateUrl: './profile.component.html',
 })
