@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
-// import { ProductsComponent } from './components/products/products.component';
 import { CartComponent } from './components/cart/cart.component';
 import { SearchComponent } from './components/search/search.component';
 import { RegisterComponent } from './components/register/register.component';
@@ -17,6 +16,7 @@ import { AdminsDashboardComponent } from './components/dashboard/admins-dashboar
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { OrderConfirmationComponent } from './components/order-confirmation/order-confirmation.component';
 import { DashboardHomeComponent } from './components/dashboard/dashboard-home/dashboard-home.component';
+import { authGuard } from '../guards/auth.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -41,40 +41,73 @@ export const routes: Routes = [
   // DASHBOARD
   {
     path: 'dashboard',
-    component: DashboardHomeComponent,
-    title: 'Dashboard',
+    canActivateChild: [authGuard],
+    children: [
+      {
+        path: '',
+        component: DashboardHomeComponent,
+        title: 'Dashboard Home',
+      },
+      {
+        path: 'categories',
+        component: CategoriesDashboardComponent,
+        title: 'Categories Dashboard',
+      },
+      {
+        path: 'products',
+        component: ProductsDashboardComponent,
+        title: 'Products Dashboard',
+      },
+      {
+        path: 'users',
+        component: UsersDashboardComponent,
+        title: 'Users Dashboard',
+      },
+      {
+        path: 'admins',
+        component: AdminsDashboardComponent,
+        title: 'Admins Dashboard',
+      },
+      {
+        path: 'coupons',
+        component: CouponsDashboardComponent,
+        title: 'Coupons Dashboard',
+      },
+      {
+        path: 'orders',
+        component: OrdersDashboardComponent,
+        title: 'Orders Dashboard',
+      },
+    ],
   },
   {
-    path: 'dashboard/categories',
-    component: CategoriesDashboardComponent,
-    title: 'Categories Dashboard',
+    path: '',
+    canActivateChild: [authGuard],
+    children: [
+      {
+        path: 'profile',
+        loadComponent: () =>
+          import('./components/profile/profile.component').then(
+            (c) => c.ProfileComponent
+          ),
+        title: 'Profile',
+      },
+      { path: 'checkout', component: CheckoutComponent, title: 'Checkout' },
+      {
+        path: 'orders/:orderId',
+        component: OrderConfirmationComponent,
+        title: 'Order Confirmation',
+      },
+    ],
   },
   {
-    path: 'dashboard/products',
-    component: ProductsDashboardComponent,
-    title: 'Products Dashboard',
+    path: 'favorites',
+    loadComponent: () =>
+      import('./components/wishlist/wishlist.component').then(
+        (c) => c.WishlistComponent
+      ),
+    title: 'Wishlist',
   },
-  {
-    path: 'dashboard/users',
-    component: UsersDashboardComponent,
-    title: 'Users Dashboard',
-  },
-  {
-    path: 'dashboard/admins',
-    component: AdminsDashboardComponent,
-    title: 'Admins Dashboard',
-  },
-  {
-    path: 'dashboard/coupons',
-    component: CouponsDashboardComponent,
-    title: 'Coupons Dashboard',
-  },
-  {
-    path: 'dashboard/orders',
-    component: OrdersDashboardComponent,
-    title: 'Orders Dashboard',
-  },
-
   /////
   {
     path: 'register/user',
@@ -97,22 +130,6 @@ export const routes: Routes = [
     title: 'Login',
   },
   {
-    path: 'favorites',
-    loadComponent: () =>
-      import('./components/wishlist/wishlist.component').then(
-        (c) => c.WishlistComponent
-      ),
-    title: 'Wishlist',
-  },
-  {
-    path: 'profile',
-    loadComponent: () =>
-      import('./components/profile/profile.component').then(
-        (c) => c.ProfileComponent
-      ),
-    title: 'Profile',
-  },
-  {
     path: 'about',
     loadComponent: () =>
       import('./components/about/about.component').then(
@@ -127,12 +144,6 @@ export const routes: Routes = [
         (c) => c.ContactsComponent
       ),
     title: 'Contact Us',
-  },
-  { path: 'checkout', component: CheckoutComponent, title: 'Checkout' },
-  {
-    path: 'orders/:orderId',
-    component: OrderConfirmationComponent,
-    title: 'Order Confirmation',
   },
   {
     path: '**',
