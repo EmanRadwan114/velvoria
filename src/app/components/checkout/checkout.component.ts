@@ -87,6 +87,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       next: (response: any) => {
         this.cartItems = response.data;
         this.cartLoading = false;
+        console.log(response);
       },
       error: (err) => {
         this.error = 'Failed to load cart items';
