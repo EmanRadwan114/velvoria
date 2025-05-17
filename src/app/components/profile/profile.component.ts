@@ -18,12 +18,7 @@ import { PaginationComponent } from '../sharedComponents/pagination/pagination.c
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [
-    FormsModule,
-    CommonModule,
-    RouterLink,
-    ReactiveFormsModule,
-  ],
+  imports: [FormsModule, CommonModule, RouterLink, ReactiveFormsModule],
   templateUrl: './profile.component.html',
 })
 export class ProfileComponent implements OnInit {
@@ -42,10 +37,8 @@ export class ProfileComponent implements OnInit {
   originalEmail: string = '';
   role: string = '';
 
-  emailErrorMessage: string | null = null;
-  passwordErrorMessage: string | null = null;
-
   userOrders: any[] = [];
+
   private readonly _ToastService = inject(ToastService);
 
   constructor(
@@ -60,7 +53,6 @@ export class ProfileComponent implements OnInit {
   getOrders(page: number) {
     this.usersService.getUserOrders(page).subscribe({
       next: (res) => {
-
         this.userOrders = [...res.data];
         this.totalPages = res.totalPages;
         console.log(' 🟢User orders:', this.userOrders, this.totalPages);
@@ -72,15 +64,13 @@ export class ProfileComponent implements OnInit {
   }
 
   getDateTimeOrder(date: string): string {
-    const dateTime = new Date(date);
-    const options: Intl.DateTimeFormatOptions = {
+    return new Date(date).toLocaleString('en-US', {
       year: 'numeric',
       month: '2-digit',
       day: '2-digit',
       hour: '2-digit',
       minute: '2-digit',
-    };
-    return dateTime.toLocaleString('en-US', options);
+    });
   }
 
   ngOnInit(): void {
@@ -90,32 +80,31 @@ export class ProfileComponent implements OnInit {
       this.isPersonalInfo = !this.isOrder;
     });
     this.getOrders(this.currentPage);
+    this.loadUserProfile();
+  }
+
+  private loadUserProfile(): void {
     this.usersService.getUserProfile().subscribe((user) => {
-      this.originalEmail = user.data.email;
-      this.role = user.data.role;
-      this.image = user.data.image;
+      const { name, email, image, address, role } = user.data;
+
+      this.originalEmail = email;
+      this.role = role;
+      this.image = image;
 
       const formConfig: any = {
-        name: [user.data.name, [Validators.required, Validators.minLength(3)]],
-        email: [
-          user.data.email,
-          [
-            Validators.required,
-            Validators.pattern(/^[\w.-]+@([\w-]+\.)+[a-zA-Z]{2,}$/),
-          ],
-        ],
-        image: [user.data.image || '', [Validators.required]],
+        name: [name, [Validators.required, Validators.minLength(3)]],
+        email: [email, [Validators.required, Validators.email]],
+        image: [image || '', [Validators.required]],
       };
 
-      if (user.data.role === 'user') {
+      if (role === 'user') {
         formConfig.address = [
-          user.data.address?.[user.data.address.length - 1] || '',
-          [Validators.required],
+          address?.[address.length - 1] || '',
+          [Validators.required, Validators.minLength(5)],
         ];
       }
 
       this.personalInfoForm = this.fb.group(formConfig);
-
       this.passwordForm = this.fb.group({
         currentPassword: ['', [Validators.required]],
         newPassword: [
@@ -131,6 +120,7 @@ export class ProfileComponent implements OnInit {
       });
     });
   }
+
   changePage(page: any) {
     this.currentPage = page;
     this.getOrders(this.currentPage);
@@ -147,19 +137,25 @@ export class ProfileComponent implements OnInit {
     this.router.navigate([], { queryParams: { tab: 'orders' } });
   }
 
+  private updateProfileFields(): void {
+    this.usersService.getUserProfile().subscribe((user) => {
+      const { name, email, image, address } = user.data;
+
+      this.personalInfoForm.patchValue({
+        name,
+        email,
+        image: image || '',
+        address: address?.[address.length - 1] || '',
+      });
+      localStorage.setItem('user', JSON.stringify(user.data));
+    });
+  }
+
   editCancelPersonalInfo(): void {
     this.isEditingPersonalInfo = !this.isEditingPersonalInfo;
 
     if (!this.isEditingPersonalInfo) {
-      this.usersService.getUserProfile().subscribe((user) => {
-        this.personalInfoForm.patchValue({
-          name: user.data.name,
-          email: user.data.email,
-          address: user.data.address?.[user.address.length - 1] || '',
-          image: user.data.image || '',
-        });
-        this.originalEmail = user.data.email;
-      });
+      this.updateProfileFields();
     }
   }
 
@@ -183,25 +179,22 @@ export class ProfileComponent implements OnInit {
 
     this.usersService.updateUserProfile(updatedData).subscribe({
       next: (res) => {
-        console.log(res);
         this._ToastService.show('success', 'Profile updated successfully');
         this.isEditingPersonalInfo = false;
+        this.updateProfileFields();
 
-        // Fetch the updated profile and store it in localStorage
-        this.usersService.getUserProfile().subscribe((user) => {
-          localStorage.setItem('user', JSON.stringify(user.data));
-        });
-
-        this.authService.notifyLogin();
+        if (this.originalEmail !== email)
+          setTimeout(() => this.signOut(), 3000);
       },
       error: (err) => {
         console.log(err);
-        const msg =
-          err.error?.errors[0]?.message || 'Failed to update profile.';
-        this.emailErrorMessage = msg;
+        const msg: string =
+          err?.error?.errors?.[0]?.message ??
+          err?.error?.message ??
+          'Failed to update profile.';
         this._ToastService.show('error', msg);
         this.isEditingPersonalInfo = false;
-        this.emailErrorMessage = null;
+        this.updateProfileFields();
       },
     });
   }
@@ -224,17 +217,16 @@ export class ProfileComponent implements OnInit {
           this.usersService.getUserProfile().subscribe((user) => {
             localStorage.setItem('user', JSON.stringify(user.data));
           });
-
-          this.authService.notifyLogin();
         },
         error: (err) => {
           console.log(err);
-          const msg =
-            err.error?.errors[0]?.message || 'Failed to update password.';
-          this.passwordErrorMessage = msg;
+          const msg: string =
+            err?.error?.errors?.[0]?.message ??
+            err?.error?.message ??
+            'Failed to update password.';
           this._ToastService.show('error', msg);
           this.isEditingPassword = false;
-          this.passwordErrorMessage = null;
+          this.passwordForm.reset();
         },
       });
   }
@@ -248,7 +240,7 @@ export class ProfileComponent implements OnInit {
         next: (res: any) => {
           localStorage.removeItem('user');
           this.authService.notifyLogout();
-          this.router.navigate(['/login/user']);
+          this.router.navigate([`/login/${this.role}`]);
         },
       });
   }
