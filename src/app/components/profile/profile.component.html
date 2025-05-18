@@ -112,7 +112,7 @@
                     "
                   >
                     <p class="text-sm text-red-600 mt-1">
-                      Full Name should be at least 3 letters
+                      Full Name should be at least 3 characters
                     </p>
                   </div>
                 </div>
@@ -128,15 +128,13 @@
                   />
                   <!-- Email -->
                   <div
-                    *ngIf="personalInfoForm.get('email')?.errors?.['required'] && personalInfoForm.get('email')?.touched"
-                  >
-                    <p class="text-sm text-red-600 mt-1">Email is required</p>
-                  </div>
-                  <div
-                    *ngIf="personalInfoForm.get('email')?.errors?.['required'] && personalInfoForm.get('email')?.touched"
+                    *ngIf="
+                      personalInfoForm.get('email')?.invalid &&
+                      personalInfoForm.get('email')?.touched
+                    "
                   >
                     <p class="text-sm text-red-600 mt-1">
-                      Invalid email format
+                      Please enter a valid email address.
                     </p>
                   </div>
                 </div>
@@ -158,7 +156,9 @@
                       personalInfoForm.get('address')?.touched
                     "
                   >
-                    <p class="text-sm text-red-600 mt-1">Address is required</p>
+                    <p class="text-sm text-red-600 mt-1">
+                      Address must be at least 5 characters.
+                    </p>
                   </div>
                 </div>
 
@@ -226,6 +226,17 @@
                     formControlName="currentPassword"
                     class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-700 placeholder-gray-400"
                   />
+
+                  <div
+                    *ngIf="
+                      passwordForm.get('currentPassword')?.invalid &&
+                      passwordForm.get('currentPassword')?.touched
+                    "
+                  >
+                    <p class="text-sm text-red-600 mt-1">
+                      Invalid Password format
+                    </p>
+                  </div>
                 </div>
 
                 <div>
@@ -245,7 +256,7 @@
                     "
                   >
                     <p class="text-sm text-red-600 mt-1">
-                      New password is required
+                      Invalid Password format
                     </p>
                   </div>
                 </div>
