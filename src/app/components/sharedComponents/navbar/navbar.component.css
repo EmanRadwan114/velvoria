@@ -1,0 +1,10 @@
+.search:focus{
+  outline: none;
+border: 1px solid var(--primary-txt-color);
+}
+/* Hide on small screens (less than 768px) */
+@media (max-width: 767px) {
+  .nav-menu-custom {
+    display: none;
+  }
+}

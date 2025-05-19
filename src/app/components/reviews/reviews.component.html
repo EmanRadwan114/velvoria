@@ -1,0 +1,105 @@
+<section
+  class="px-4 lg:px-18 flex flex-col lg:flex-row justify-between gap-10 mb-10 bg-blend-lighten bg-neutral-800 py-10"
+>
+  <section class="w-full lg:w-1/2 text-zinc-200 flex flex-col justify-between">
+    <h2 class="text-3xl font-semibold mb-8">Customer Reviews</h2>
+
+    @if (reviews.length > 0) { @for (review of reviews; track $index) {
+    <div
+      class="mb-5 py-3 px-4 rounded-sm shadow"
+      [ngClass]="$odd ? `bg-zinc-100 text-zinc-700` : $even ? `shadow-2xl bg-neutral-700` : ``"
+    >
+      <div class="flex justify-between gap-4">
+        <h3 class="text-lg text-yellow-600 mb-2 font-semibold capitalize w-1/2">
+          {{ review.user.name }}
+        </h3>
+        <div class="rate w-1/2 text-end">
+          @for (star of [1,2,3,4,5]; track $index) {
+          <i
+            class="text-lg text-yellow-500 fa-regular fa-star"
+            [ngClass]="star <= review.rating ? 'fas' : 'fa-regular'"
+          ></i>
+          }
+        </div>
+      </div>
+      <p>{{ review.description }}</p>
+    </div>
+    }
+    <app-pagination
+      [totalPages]="totalPages"
+      [currentPage]="currentPage"
+      (pageChanged)="changePage($event)"
+    ></app-pagination>
+    }@else {
+    <p
+      class="text-center bg-zinc-100 text-yellow-600 font-bold p-6 rounded-sm shadow-2xl text-lg capitalize"
+    >
+      {{ responseMsg }} 😔
+    </p>
+    }
+  </section>
+  <form
+    action=""
+    method="post"
+    class="w-full lg:w-1/2 shadow-2xl p-8 bg-zinc-100 rounded-sm"
+    (submit)="addNewReview($event)"
+    [formGroup]="reviewData"
+  >
+    <h3 class="text-3xl font-semibold text-zinc-700 mb-8">Leave a Review</h3>
+    <div class="form-control mb-10">
+      <label
+        for="review-desc"
+        class="font-medium text-lg text-zinc-700 mb-3 block capitalize"
+        >Add Your Rating</label
+      >
+      <div class="flex gap-x-1.5 group">
+        @for (item of [1,2,3,4,5]; track $index) {
+        <i
+          class="text-2xl text-yellow-500 cursor-pointer fa-star"
+          [ngClass]="rate >= item ? 'fas' : 'fa-regular'"
+          (click)="handleRate(item)"
+        ></i>
+        }
+      </div>
+      @if (!(rate >0) && reviewData.touched) {
+      <p class="text-red-800 font-medium text-md mt-5 capitalize">
+        choose rate from 1 to 5
+      </p>
+      }
+    </div>
+    <div class="form-control">
+      <label
+        for="review-desc"
+        class="font-medium text-lg text-zinc-700 mb-4 block capitalize"
+        >Review Description</label
+      >
+      <textarea
+        class="w-full rounded-sm p-2 border-2 border-zinc-600 placeholder-zinc-600"
+        placeholder="Enter Your Review"
+        id="review-desc"
+        rows="4"
+        formControlName="description"
+      ></textarea>
+      @if (isDescValid() && reviewData.dirty) {
+      <p class="text-green-800 font-medium text-md mt-5 capitalize">
+        Your Review description is valid ✔
+      </p>
+      } @else if(!isDescValid() && reviewData.dirty){
+      <p class="text-red-800 font-medium text-md mt-5 capitalize">
+        Your Review description should be at least 3 characters
+      </p>
+      }
+    </div>
+
+    <button
+      type="submit"
+      class="reviewBtn main-btn w-full p-3 mt-8 rounded-sm text-xl transition duration-200 disabled:cursor-not-allowed disabled:opacity-75 cursor-pointer"
+      [disabled]="!isFormValid() || isLoading"
+    >
+      <span *ngIf="!isLoading">Submit Review</span>
+      <span *ngIf="isLoading" class="flex items-center justify-center">
+        <app-loading-button></app-loading-button>
+      </span>
+    </button>
+  </form>
+</section>

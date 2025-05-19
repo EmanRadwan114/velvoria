@@ -1,0 +1,71 @@
+<div class="h-[100vh] flex justify-center items-center">
+  <div class="px-4 py-10">
+    <h2 class="text-5xl mb-20 text-center">Related Products</h2>
+
+    <div class="relative flex items-center justify-center">
+      <!-- Left Arrow -->
+      <button
+        class="absolute  left-12  sm:left-0 z-10 -translate-x-14 bg-teal-600 hover:bg-teal-700 text-white rounded-full shadow-lg p-3 transition disabled:opacity-50 disabled:cursor-not-allowed"
+        (click)="scrollLeft()"
+        [disabled]="disableArrows"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 19l-7-7 7-7"
+          />
+        </svg>
+      </button>
+
+      <!-- Products Wrapper -->
+      <div
+        class="w-[274px] md:w-[548px] lg:w-[822px] xl:w-[1096px] overflow-hidden"
+      >
+        <div
+          class="flex transition-transform duration-500 ease-in-out"
+          [style.transform]="getTransform()"
+          [ngClass]="{
+            'justify-center': products.length <= cardsPerView
+          }"
+        >
+          <div
+            *ngFor="let product of products"
+            class="w-[250px] mx-3 my-5 shrink-0"
+          >
+            <app-product-card [product]="product"></app-product-card>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Arrow -->
+      <button
+        class="absolute right-12  sm:right-0 z-10 translate-x-14 bg-teal-600 hover:bg-teal-700 text-white rounded-full shadow-lg p-3 transition disabled:opacity-50 disabled:cursor-not-allowed"
+        (click)="scrollRight()"
+        [disabled]="disableArrows"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9 5l7 7-7 7"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>

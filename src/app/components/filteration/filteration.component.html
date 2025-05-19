@@ -1,0 +1,93 @@
+<!-- FILTER WRAPPER -->
+<div class="w-full max-w-[500px] mx-auto ">
+
+  <!-- FILTER TITLE -->
+  <h2 class="text-gray-800 text-xl font-semibold mb-4 text-center">Filters</h2>
+
+  <!-- MATERIAL FILTER -->
+  <div class="mb-6 w-full ">
+    <label class="block  bg-gray-100 text-gray-700 h-10 w-full text-center p-2 text-lg font-medium">
+      Material
+    </label>
+    <fieldset class="bg-base-100 border-base-300  rounded-box w-full text border p-4 flex flex-row flex-wrap justify-center lg:justify-between  gap-2">
+
+      <div *ngFor="let mat of materials" class="mb-2">
+        <label class="flex items-center gap-1">
+          <input
+            type="radio"
+            class="radio"
+            name="material"
+            [value]="mat"
+            [(ngModel)]="material"
+            (change)="onFilterChange()"
+          />
+          {{ mat }}
+        </label>
+      </div>
+    </fieldset>
+  </div>
+
+  <!-- COLOR FILTER -->
+  <div class="mb-6 w-full">
+    <h2 class="bg-gray-100 text-gray-700 h-10 text-center p-2 text-lg font-medium w-full">Color</h2>
+
+    <fieldset class="bg-base-100 border-base-300 text-lg rounded-box w-full text border p-4 flex flex-wrap gap-4 justify-center">
+      <!-- All Option -->
+      <label class="flex items-center gap-2 cursor-pointer">
+        <input
+          type="radio"
+          class="radio"
+          name="color"
+          value="all"
+          [(ngModel)]="color"
+          (change)="onFilterChange()"
+        />
+        <span>All</span>
+      </label>
+
+      <!-- Loop Over Colors -->
+      <label
+        *ngFor="let c of colors"
+        class="cursor-pointer flex flex-col items-center gap-1"
+      >
+        <input
+          type="radio"
+          class="hidden"
+          name="color"
+          [value]="c.toLowerCase()"
+          [(ngModel)]="color"
+          (change)="onFilterChange()"
+        />
+        <div
+          class="w-6 h-6 rounded-full border border-gray-400"
+          [style.backgroundColor]="c.toLowerCase()"
+          [class.outline]="color.toLowerCase() === c.toLowerCase()"
+          [class.outline-2]="color.toLowerCase() === c.toLowerCase()"
+          [class.outline-offset-2]="color.toLowerCase() === c.toLowerCase()"
+        ></div>
+        
+        
+      </label>
+    </fieldset>
+  </div>
+
+  <!-- PRICE FILTER -->
+  <div class="mb-6 w-full">
+    <h2 class="bg-gray-100 text-gray-700 h-10 text-center p-2 text-lg font-medium w-full">Price</h2>
+
+    <label class="block mb-2 text-center">Select Max Price:</label>
+    <input
+      type="range"
+      [min]="minPrice"
+      [max]="maxPrice"
+      [(ngModel)]="price"
+      (change)="onFilterChange()"
+      class="range-slider w-full mt-2 range range-xs range-neutral"
+    />
+    <div class="flex justify-between w-full mt-2 text-sm text-gray-600">
+      <span>{{ minPrice }} EGP</span>
+      <span>{{ price }} EGP</span>
+    </div>
+  </div>
+
+</div>

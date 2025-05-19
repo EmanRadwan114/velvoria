@@ -1,0 +1,21 @@
+<div class="fixed top-5 right-5 space-y-2 z-50">
+  <div *ngFor="let toast of toasts$ | async"
+    class="w-80 p-4 rounded-lg flex  items-center gap-4"
+    [ngClass]="{
+      'bg-green-100 text-green-700': toast.type === 'success',
+      'bg-red-100 text-red-700': toast.type === 'error',
+      'bg-yellow-100 text-yellow-700': toast.type === 'warning',
+      'bg-blue-100 text-blue-700': toast.type === 'info'
+    }">
+
+    <ng-container [ngSwitch]="toast.type">
+      <i *ngSwitchCase="'success'" class="fa-solid fa-check" style="color: #63E6BE;"></i>
+      <i *ngSwitchCase="'info'" class="fa-solid fa-info" style="color: #0b8ff4;"></i>
+      <i *ngSwitchCase="'warning'" class="fa-solid fa-circle-exclamation" style="color: #FFD43B;"></i>
+      <i *ngSwitchDefault class="fa-solid fa-xmark" style="color: #f41010;"></i>
+    </ng-container>
+
+    <span class="text-sm">{{ toast.message }}</span>
+    <button (click)="dismiss(toast.id)" class="ml-auto text-xl font-bold">×</button>
+  </div>
+</div>

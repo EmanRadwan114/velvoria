@@ -1,32 +1,133 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
-import { CategoriesComponent } from './components/categories/categories.component';
-import { ProductsComponent } from './components/products/products.component';
 import { CartComponent } from './components/cart/cart.component';
 import { SearchComponent } from './components/search/search.component';
+import { RegisterComponent } from './components/register/register.component';
+import { LoginComponent } from './components/login/login.component';
+import { ProductDetailsComponent } from './components/product-details/product-details.component';
+import { ProductsCategoryComponent } from './components/products-category/products-category.component';
+import { ProductsDashboardComponent } from './components/dashboard/products-dashboard/products-dashboard.component';
+import { CategoriesDashboardComponent } from './components/dashboard/categories-dashboard/categories-dashboard.component';
+import { UsersDashboardComponent } from './components/dashboard/users-dashboard/users-dashboard.component';
+import { OrdersDashboardComponent } from './components/dashboard/orders-dashboard/orders-dashboard.component';
+import { CouponsDashboardComponent } from './components/dashboard/coupons-dashboard/coupons-dashboard.component';
+import { AdminsDashboardComponent } from './components/dashboard/admins-dashboard/admins-dashboard.component';
+
+import { CheckoutComponent } from './components/checkout/checkout.component';
+import { OrderConfirmationComponent } from './components/order-confirmation/order-confirmation.component';
+import { DashboardHomeComponent } from './components/dashboard/dashboard-home/dashboard-home.component';
+import { authGuard } from '../guards/auth.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent, title: 'Home' },
-  { path: 'categories', component: CategoriesComponent, title: 'Categories' },
-  { path: 'products', component: ProductsComponent, title: 'Products' },
+  {
+    path: 'furnitures',
+    component: ProductsCategoryComponent,
+    title: 'Products',
+  },
+  {
+    path: 'furnitures/category/:category',
+    component: ProductsCategoryComponent,
+  },
+  {
+    path: 'furnitures/:id',
+    component: ProductDetailsComponent,
+    title: 'Product Details',
+  },
   { path: 'cart', component: CartComponent, title: 'Cart' },
   { path: 'search', component: SearchComponent, title: 'Search Results' },
+
+  // DASHBOARD
   {
-    path: 'wishlist',
+    path: 'dashboard',
+    canActivateChild: [authGuard],
+    children: [
+      {
+        path: '',
+        component: DashboardHomeComponent,
+        title: 'Dashboard Home',
+      },
+      {
+        path: 'categories',
+        component: CategoriesDashboardComponent,
+        title: 'Categories Dashboard',
+      },
+      {
+        path: 'products',
+        component: ProductsDashboardComponent,
+        title: 'Products Dashboard',
+      },
+      {
+        path: 'users',
+        component: UsersDashboardComponent,
+        title: 'Users Dashboard',
+      },
+      {
+        path: 'admins',
+        component: AdminsDashboardComponent,
+        title: 'Admins Dashboard',
+      },
+      {
+        path: 'coupons',
+        component: CouponsDashboardComponent,
+        title: 'Coupons Dashboard',
+      },
+      {
+        path: 'orders',
+        component: OrdersDashboardComponent,
+        title: 'Orders Dashboard',
+      },
+    ],
+  },
+  {
+    path: '',
+    canActivateChild: [authGuard],
+    children: [
+      {
+        path: 'profile',
+        loadComponent: () =>
+          import('./components/profile/profile.component').then(
+            (c) => c.ProfileComponent
+          ),
+        title: 'Profile',
+      },
+      { path: 'checkout', component: CheckoutComponent, title: 'Checkout' },
+      {
+        path: 'orders/:orderId',
+        component: OrderConfirmationComponent,
+        title: 'Order Confirmation',
+      },
+    ],
+  },
+  {
+    path: 'favorites',
     loadComponent: () =>
       import('./components/wishlist/wishlist.component').then(
         (c) => c.WishlistComponent
       ),
     title: 'Wishlist',
   },
+  /////
   {
-    path: 'profile',
-    loadComponent: () =>
-      import('./components/profile/profile.component').then(
-        (c) => c.ProfileComponent
-      ),
-    title: 'Wishlist',
+    path: 'register/user',
+    component: RegisterComponent,
+    title: 'Registration',
+  },
+  {
+    path: 'register/admin',
+    component: RegisterComponent,
+    title: 'Registration',
+  },
+  {
+    path: 'login/user',
+    component: LoginComponent,
+    title: 'Login',
+  },
+  {
+    path: 'login/admin',
+    component: LoginComponent,
+    title: 'Login',
   },
   {
     path: 'about',

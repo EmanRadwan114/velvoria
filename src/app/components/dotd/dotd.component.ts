@@ -1,54 +1,71 @@
-import { Component, OnInit } from '@angular/core';
-import { interval } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { DealofDayService } from '../../../services/dealof-day.service';
+import { Subscription, interval } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-dotd',
-  imports: [],
+  imports:[CommonModule],
   templateUrl: './dotd.component.html',
   styles: ``,
 })
-export class DOTDComponent implements OnInit {
-  DealOfTheDayProduct: {
-    img: string;
-    title: string;
-    des: string;
-    afterDiscount: number;
-    beforeDiscount: number;
-    endDate: Date;
-  } = {
-    img: 'ddd',
-    title: 'Chairs For Room',
-    des: 'orem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillu',
-    afterDiscount: 1222.74,
-    beforeDiscount: 2000.99,
-    endDate: new Date('2025-05-29T14:30:45'),
-  };
+export class DOTDComponent implements OnInit, OnDestroy {
+  DealOfTheDayProduct: any = {};
   timeLeft: any;
-  IntervalForupdateCountdown: any;
+  IntervalForupdateCountdown: Subscription = Subscription.EMPTY;
+
+  private productSubscription: Subscription = Subscription.EMPTY;
+
+  constructor(private _DealofDayService: DealofDayService) {}
 
   ngOnInit(): void {
-    this.updateCountdown()
-    this.IntervalForupdateCountdown = setInterval(() => {
+    this.getProduct(); 
+    this.updateCountdown(); 
+
+   
+    this.IntervalForupdateCountdown = interval(1000).subscribe(() => {
       this.updateCountdown();
-    }, 1000);
+    });
   }
 
-  updateCountdown() {
+  private getProduct(): void {
+    this.productSubscription = this._DealofDayService.selectedproduct$.subscribe(
+      (res) => {
+        this.DealOfTheDayProduct = res;
+        this.updateCountdown(); 
+      }
+    );
+  }
+
+  private updateCountdown(): void {
     const now = new Date();
-    const endDate = this.DealOfTheDayProduct.endDate;
-    const diffMs = endDate.getTime() - now.getTime();
+    const endDate = new Date(this.DealOfTheDayProduct?.endDate);
+    const diffMs = Math.max(0, endDate.getTime() - now.getTime());
+
+    const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diffMs % (1000 * 60)) / 1000);
 
     this.timeLeft = {
-      days: Math.max(0, Math.floor(diffMs / (1000 * 60 * 60 * 24))),
-      hours: Math.max(
-        0,
-        Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-      ),
-      minutes: Math.max(
-        0,
-        Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60))
-      ),
-      seconds: Math.max(0, Math.floor((diffMs % (1000 * 60)) / 1000)),
+      days: this.formatTime(days),
+      hours: this.formatTime(hours),
+      minutes: this.formatTime(minutes),
+      seconds: this.formatTime(seconds),
     };
+  }
+
+  private formatTime(value: number): string {
+    return value < 10 ? `0${value}` : `${value}`;
+  }
+
+  ngOnDestroy() {
+  
+    if (this.IntervalForupdateCountdown) {
+      this.IntervalForupdateCountdown.unsubscribe();
+    }
+    if (this.productSubscription) {
+      this.productSubscription.unsubscribe();
+    }
   }
 }

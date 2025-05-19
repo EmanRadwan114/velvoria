@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-not-found',
   imports: [],
   templateUrl: './not-found.component.html',
-  styles: ``
+  styleUrl: './not-found.component.css',
 })
-export class NotFoundComponent {
-
-}
+export class NotFoundComponent {}
