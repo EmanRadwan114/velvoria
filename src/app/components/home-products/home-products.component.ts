@@ -51,6 +51,7 @@ export class HomeProductsComponent implements OnInit {
 
           this.loadProductsByTab(this.activeTab);
 
+          this.isLoading = false;
           console.log(this.isInWishlistArr);
         },
         error: (err) => {
@@ -78,7 +79,6 @@ export class HomeProductsComponent implements OnInit {
   }
 
   onTabChange(tab: string): void {
-    this.isLoading = true;
     this.activeTab = tab;
 
     this.loadProductsByTab(tab);

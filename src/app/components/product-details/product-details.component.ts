@@ -63,29 +63,31 @@ export class ProductDetailsComponent implements OnInit {
 
   //add to wishlist
   addToWishList(): void {
-    this._WishlistService.addToWishlist(this.productID).subscribe({
-      next: (res: any) => {
-        this.isInWishlist = true;
-        this._ToastService.show('success', 'Product added to wishlist!');
-      },
-      error: (err) => {
-        if (err.error.message == 'Product already in wishlist') {
-          this._WishlistService.deleteFromWishlist(this.productID).subscribe({
-            next: (res: any) => {
-              this.isInWishlist = false;
-              this._ToastService.show(
-                'error',
-                'Product removed from wishlist!'
-              );
-            },
-          });
-        } else
-          this._ToastService.show(
-            'error',
-            'Login To add Product To Your Wishlist'
-          );
-      },
-    });
+    if (localStorage.getItem('user')) {
+      this._WishlistService.addToWishlist(this.productID).subscribe({
+        next: (res: any) => {
+          this.isInWishlist = true;
+          this._ToastService.show('success', 'Product added to wishlist!');
+        },
+        error: (err) => {
+          if (err.error.message == 'Product already in wishlist') {
+            this._WishlistService.deleteFromWishlist(this.productID).subscribe({
+              next: (res: any) => {
+                this.isInWishlist = false;
+                this._ToastService.show(
+                  'error',
+                  'Product removed from wishlist!'
+                );
+              },
+            });
+          } else
+            this._ToastService.show(
+              'error',
+              'Login To add Product To Your Wishlist'
+            );
+        },
+      });
+    }
   }
   // add to cart
   addToCart() {
