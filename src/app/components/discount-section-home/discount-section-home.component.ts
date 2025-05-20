@@ -37,7 +37,7 @@ export class DiscountSectionHomeComponent implements OnInit {
 
   getDiscountPercentage(price: number): string {
     if (price > 0) {
-      const discountedPrice = price * (1 - 0.35); // apply 35% discount
+      const discountedPrice = price * (1 - 0.2); // apply 35% discount
       return new Intl.NumberFormat('en-EG', {
         style: 'currency',
         currency: 'EGP',
