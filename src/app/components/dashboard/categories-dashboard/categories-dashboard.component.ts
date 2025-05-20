@@ -52,7 +52,6 @@ export class CategoriesDashboardComponent implements OnInit {
     this.loading = true;
     this._CategoryServices.getAllCategories().subscribe({
       next: (res: any) => {
-        console.log(res.data);
         this.categoriesList = res.data;
         this.loading = false;
       },
@@ -92,44 +91,6 @@ export class CategoriesDashboardComponent implements OnInit {
     this.selectedCategory = null;
   }
 
-  // submitForm() {
-
-  //   if (this.categoryForm.invalid) {
-  //     this.categoryForm.markAllAsTouched();
-  //     return
-  //   };
-
-  //   const formData = this.categoryForm.value;
-
-  //   if (this.activeModal === 'add') {
-  //     this.categoriesService.addCategory(formData).subscribe({
-  //       next: () => {
-  //         this._ToastService.show('success', 'category added successfully');
-  //         this.fetchCategories();
-  //         this.closeModal();
-  //       },
-  //       error: (err) => {
-  //         console.log(err);
-  //         this._ToastService.show('error', 'Failed to add category');
-  //       },
-  //     });
-  //   } else if (this.activeModal === 'update' && this.selectedId) {
-  //     this.categoriesService
-  //       .updateCategory(this.selectedId, formData)
-  //       .subscribe({
-  //         next: () => {
-  //           this._ToastService.show('success', 'category updated successfully');
-  //           this.fetchCategories();
-  //           this.closeModal();
-  //         },
-  //         error: (err) => {
-  //           console.log(err);
-  //           this._ToastService.show('error', 'Failed to update category');
-  //         },
-  //       });
-  //   }
-  // }
-
   deleteId: string | null = null;
   showDeleteConfirm = false;
 
@@ -148,7 +109,6 @@ export class CategoriesDashboardComponent implements OnInit {
         },
         error: (err: any) => {
           this._ToastService.show('error', 'Failed to delete category');
-
           console.error('Failed to delete category', err);
           this.cancelDelete();
         },

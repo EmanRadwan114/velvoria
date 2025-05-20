@@ -37,7 +37,6 @@ export class DealofDayService {
   }
 
   private getDealOfTheDay() {
-    console.log('🔄 Fetching deal of the day from server');
     return this._httpClient.get<any[]>(
       `${this.URL}/products/least-ordered-products`,
       {
@@ -47,9 +46,7 @@ export class DealofDayService {
   }
 
   checkAndUpdateDeal() {
-    this.getDealOfTheDay().subscribe((res) => {
-      console.log('🔎 API Response in Angular:', res);
-    });
+    this.getDealOfTheDay().subscribe((res) => {});
     const deal = this.getDealOfDayFromLocalStorage();
     const now = new Date();
 
@@ -59,7 +56,6 @@ export class DealofDayService {
         if (res && res.length > 0) {
           // Ensure that we have a valid product in the response
           this.setDealOfTheDay(res[0]);
-          console.log('🔄 Deal of the day updated');
         } else {
           console.log('⚠️ No products available for deal');
         }

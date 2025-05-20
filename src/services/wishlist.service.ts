@@ -8,9 +8,7 @@ import { HttpClient } from '@angular/common/http';
 export class WishlistService {
   private URL = environment.backUrl;
 
-  constructor(private _HttpClient: HttpClient) {
-    console.log(_HttpClient);
-  }
+  constructor(private _HttpClient: HttpClient) {}
   getWishList(page: number = 1) {
     return this._HttpClient.get(`${this.URL}/wishlist?page=${page}`, {
       withCredentials: true,

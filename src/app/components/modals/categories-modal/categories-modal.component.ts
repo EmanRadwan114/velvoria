@@ -119,7 +119,6 @@ export class CategoriesModalComponent implements OnChanges {
           this._ToastService.show('error', 'failed to add category');
         },
       });
-      console.log('Submitting payload:', payload);
     }
 
     if (this.activeModal === 'update' && this.categoryId) {

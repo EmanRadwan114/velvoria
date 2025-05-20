@@ -8,9 +8,7 @@ import { environment } from '../environments/environment';
 export class CategoriesService {
   private URL = `${environment.backUrl}`;
 
-  constructor(private _HttpClient: HttpClient) {
-    console.log(_HttpClient);
-  }
+  constructor(private _HttpClient: HttpClient) {}
 
   //^ Add Category
   addCategory(newCategory: {}) {

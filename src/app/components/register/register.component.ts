@@ -25,6 +25,8 @@ import { environment } from '../../../environments/environment';
 })
 export class RegisterComponent {
   signUp = false;
+  isLoading = false;
+
   private readonly _ToastService = inject(ToastService);
   constructor(public router: Router, private http: HttpClient) {}
   userData = new FormGroup({
@@ -63,6 +65,7 @@ export class RegisterComponent {
     if (!this.userData.valid || !this.passwordsMatch) {
       this._ToastService.show('error', 'you must fill registration form');
     } else {
+      this.isLoading = true;
       let user = {
         name: this.userData.controls.name.value,
         email: this.userData.controls.email.value,
@@ -76,10 +79,12 @@ export class RegisterComponent {
           next: (res) => {
             if (res) {
               this.signUp = true;
+              this.isLoading = false;
             }
           },
           error: (err) => {
             this._ToastService.show('error', err.error.message);
+            this.isLoading = false;
           },
         });
     }

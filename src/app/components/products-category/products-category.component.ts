@@ -71,24 +71,6 @@ export class ProductsCategoryComponent implements OnInit {
     }
   }
 
-  // handleFilterChange(filterQuery: any): void {
-  //   const fullQuery: any = { ...filterQuery };
-  //   if (this.currentCategoryId) {
-  //     fullQuery.category = this.currentCategoryId;
-  //   }
-
-  //   console.log('Full filter query:', fullQuery);
-
-  //   this.prdServices.filterProducts(fullQuery).subscribe({
-  //     next: (res: any) => {
-  //       this.filteredProductsList = res.data;
-  //     },
-  //     error: (err) => { console.error('Filter Error status =', err.status);
-  //     console.error('Filter Error body =', err.error);
-  //     this._ToastService.show('error', err.error.message);
-  //    },
-  //   });
-  // }
   handleFilterChange(filterQuery: any, resetPage = true): void {
     const fullQuery: any = { ...filterQuery };
     this.isFiltered = true;
@@ -108,13 +90,10 @@ export class ProductsCategoryComponent implements OnInit {
       }
     });
 
-    console.log('Full filter query:', fullQuery);
-    console.log(this.currentPage);
     this.lastFilterQuery = fullQuery;
     this.prdServices.filterProducts(fullQuery, this.currentPage).subscribe({
       next: (res: any) => {
         this.filteredProductsList = res.data;
-        console.log(res.data);
         this.totalPages = res.totalPages;
       },
       error: (err) => {

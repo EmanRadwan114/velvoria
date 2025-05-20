@@ -9,9 +9,7 @@ export class CouponsService {
   private URL = environment.backUrl;
   couponApplied = new EventEmitter<{ couponCode: string; discount: number }>();
 
-  constructor(private _HttpClient: HttpClient) {
-    console.log(_HttpClient);
-  }
+  constructor(private _HttpClient: HttpClient) {}
 
   setCouponCode(couponCode: string, discount: number) {
     this.couponApplied.emit({ couponCode, discount });

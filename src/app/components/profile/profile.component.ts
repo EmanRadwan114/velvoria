@@ -179,6 +179,7 @@ export class ProfileComponent implements OnInit {
   }
 
   savePersonalInfo(): void {
+    this.isLoading = true;
     if (this.personalInfoForm.invalid) return;
 
     const { name, email, image, address } = this.personalInfoForm.value;
@@ -194,8 +195,8 @@ export class ProfileComponent implements OnInit {
         this.isEditingPersonalInfo = false;
         this.updateProfileFields();
 
-        if (this.originalEmail !== email)
-          setTimeout(() => this.signOut(), 3000);
+        this.isLoading = false;
+        if (this.originalEmail !== email) this.signOut();
       },
       error: (err) => {
         console.log(err);
@@ -219,7 +220,6 @@ export class ProfileComponent implements OnInit {
       .updateUserProfile({ oldPassword: currentPassword, newPassword })
       .subscribe({
         next: (res) => {
-          console.log(res);
           this._ToastService.show('success', 'Password updated successfully.');
           this.isEditingPassword = false;
           this.passwordForm.reset();
@@ -243,7 +243,6 @@ export class ProfileComponent implements OnInit {
   }
 
   signOut() {
-    this.isLoading = true;
     this.http
       .post(`${environment.backUrl}/auth/logout`, null, {
         withCredentials: true,
@@ -252,7 +251,6 @@ export class ProfileComponent implements OnInit {
         next: (res: any) => {
           localStorage.removeItem('user');
           this.authService.notifyLogout();
-          this.isLoading = false;
           this.router.navigate([`/login`]);
         },
       });

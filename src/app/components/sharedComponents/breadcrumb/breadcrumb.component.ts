@@ -25,7 +25,6 @@ export class BreadcrumbComponent {
       .subscribe(() => {
         const path = this.router.url;
         const segments = path.split('/').filter((segment) => segment);
-        console.log('hi', path, segments);
 
         if (segments.length === 0) {
           this.breadcrumb = ['Home']; // If no segments, default to 'Home'

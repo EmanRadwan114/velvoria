@@ -36,10 +36,15 @@ export class AdminsModalComponent implements OnInit {
     // Initialize form
     this.form = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
-      email: ['', [Validators.required, Validators.email, ]],
-      password: ['', [Validators.minLength(6), Validators.required ,
-        Validators.pattern(/^(?!\d+$)[a-zA-Z0-9_]+$/),
-      ]],
+      email: ['', [Validators.required, Validators.email]],
+      password: [
+        '',
+        [
+          Validators.minLength(6),
+          Validators.required,
+          Validators.pattern(/^(?!\d+$)[a-zA-Z0-9_]+$/),
+        ],
+      ],
       image: [
         'https://img.freepik.com/free-vector/illustration-user-avatar-icon_53876-5907.jpg?uid=R194767243&ga=GA1.1.1957810835.1742649565&semt=ais_hybrid&w=740',
       ],
@@ -84,7 +89,6 @@ export class AdminsModalComponent implements OnInit {
       });
     } else if (this.type === 'edit' && this.admin?._id) {
       // If password is empty, remove it from request
-      console.log('🎇👉🟢Updating admin ID:', this.admin._id);
       if (!formData.password) delete formData.password;
 
       this.adminsService
@@ -113,7 +117,6 @@ export class AdminsModalComponent implements OnInit {
     this.saved.emit();
     this.isLoading = false;
   }
-
 
   handleError(err: any) {
     console.error('Operation failed', err);

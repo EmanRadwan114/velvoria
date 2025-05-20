@@ -19,7 +19,6 @@ export class DiscountSectionHomeComponent implements OnInit {
     this.ProductService.discountProducts().subscribe({
       next: (res: any) => {
         this.discountProducts = res.data || res;
-        console.log(' 🟢Discount products:', this.discountProducts);
       },
       error: (err: any) => {
         console.error('Error fetching discount products', err);
@@ -36,19 +35,17 @@ export class DiscountSectionHomeComponent implements OnInit {
     });
   }
 
-getDiscountPercentage(price: number): string {
-  if (price > 0) {
-    const discountedPrice = price * (1 - 0.35); // apply 35% discount
-    return new Intl.NumberFormat('en-EG', {
-      style: 'currency',
-      currency: 'EGP',
-      minimumFractionDigits: 0,
-     
-    maximumFractionDigits: 0,
-    }).format(discountedPrice);
+  getDiscountPercentage(price: number): string {
+    if (price > 0) {
+      const discountedPrice = price * (1 - 0.35); // apply 35% discount
+      return new Intl.NumberFormat('en-EG', {
+        style: 'currency',
+        currency: 'EGP',
+        minimumFractionDigits: 0,
+
+        maximumFractionDigits: 0,
+      }).format(discountedPrice);
+    }
+    return 'EGP 0';
   }
-  return 'EGP 0';
-}
-
-
 }

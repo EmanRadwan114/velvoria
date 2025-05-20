@@ -52,7 +52,6 @@ export class ProductDetailsComponent implements OnInit {
             .subscribe({
               next: (catRes: any) => {
                 this.categoryName = catRes.data.name;
-                console.log('Category Name:', this.categoryName);
               },
               error: (err) => console.error('Category API Error:', err),
             });

@@ -55,8 +55,6 @@ export class FilterationComponent {
     if (this.price) {
       filterQuery.price = this.price;
     }
-
-    console.log('Filteration emits:', filterQuery);
     this.filterChanged.emit(filterQuery);
   }
 }

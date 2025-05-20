@@ -12,6 +12,7 @@ import {
 import { RouterLink, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { LoadingButtonComponent } from '../sharedComponents/loading-button/loading-button.component';
 
 @Component({
   selector: 'app-login',
@@ -20,12 +21,15 @@ import { environment } from '../../../environments/environment';
     CommonModule,
     RouterLink,
     TogglePasswordDirective,
+    LoadingButtonComponent,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
   showAlert = false;
+  isLoading = false;
+
   constructor(
     public router: Router,
     private http: HttpClient,
@@ -48,15 +52,15 @@ export class LoginComponent {
     return this.userData.controls.email;
   }
   get validPassword() {
-    console.log(this.userData.controls.password);
     return this.userData.controls.password;
   }
   addUser() {
     if (!this.userData.valid) {
       this._ToastService.show('error', 'you must fill login form');
     } else {
+      this.isLoading = true;
+
       const fullUrl = this.router.url;
-      console.log(fullUrl); //user or admin
       let user = {
         email: this.userData.controls.email.value,
         password: this.userData.controls.password.value,
@@ -74,6 +78,7 @@ export class LoginComponent {
                 JSON.stringify({ email, name, image, role, address })
               );
               this.authService.notifyLogin();
+              this.isLoading = false;
               this.router.navigate([
                 `${role === 'user' ? '/home' : '/dashboard'}`,
               ]);
@@ -81,6 +86,7 @@ export class LoginComponent {
           },
           error: (err) => {
             this._ToastService.show('error', err.error.message);
+            this.isLoading = false;
           },
         });
     }

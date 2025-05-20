@@ -8,9 +8,7 @@ import { environment } from '../environments/environment';
 export class ProductsService {
   private URL = environment.backUrl;
 
-  constructor(private _HttpClient: HttpClient) {
-    console.log(_HttpClient);
-  }
+  constructor(private _HttpClient: HttpClient) {}
 
   //^ Get All Products
   getAllProducts(page: number = 1, limit: number = 6) {

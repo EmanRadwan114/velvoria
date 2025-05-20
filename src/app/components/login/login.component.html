@@ -1,20 +1,19 @@
-<div
-  id="parent"
-  class="w-full flex justify-center items-center"
->
-  <div class="w-10/12 lg:w-8/12 flex bg-gray-100/90 rounded-2xl p-1 pl-2 items-center">
-    <form
-      [formGroup]="userData"
-      class="flex flex-col p-3 flex-1/2"
-    >
+<div id="parent" class="w-full flex justify-center items-center">
+  <div
+    class="w-10/12 lg:w-8/12 flex bg-gray-100/90 rounded-2xl p-1 pl-2 items-center"
+  >
+    <form [formGroup]="userData" class="flex flex-col p-3 flex-1/2">
       <div>
         <h1
           class="aboreto-regular text-3xl font-bold mt-5 mb-3 cursor-pointer"
-          (click)="router.navigate([
-          '/home']);"
-        >VELVORIA</h1>
+          (click)="router.navigate(['/home'])"
+        >
+          VELVORIA
+        </h1>
       </div>
-      <p class="italic text-sm mb-4 ml-2">Welcome back! Log in to continue enjoying the timeless comfort of Velvoria.
+      <p class="italic text-sm mb-4 ml-2">
+        Welcome back! Log in to continue enjoying the timeless comfort of
+        Velvoria.
       </p>
       <div class="ml-3">
         <div class="mt-4 w-full md:w-11/12">
@@ -25,8 +24,10 @@
             placeholder="Email"
             formControlName="email"
             [ngClass]="{
-              'border-green-500 focus:outline-green-500': validEmail.valid && validEmail.touched,
-              'border-red-500 focus:outline-red-500': !validEmail.valid && validEmail.touched
+              'border-green-500 focus:outline-green-500':
+                validEmail.valid && validEmail.touched,
+              'border-red-500 focus:outline-red-500':
+                !validEmail.valid && validEmail.touched
             }"
           />
           @if(!validEmail.valid && validEmail.touched){
@@ -34,7 +35,7 @@
           }
         </div>
 
-        <div class="mt-4  w-full md:w-11/12">
+        <div class="mt-4 w-full md:w-11/12">
           <div class="relative">
             <input
               class="py-2.5 sm:py-3 ps-4 pe-10 block sm:text-sm input validator w-full rounded-3xl p-5"
@@ -43,13 +44,15 @@
               formControlName="password"
               #passwordInput
               [ngClass]="{
-                'border-green-500 focus:outline-green-500': validPassword.valid && validPassword.touched,
-                'border-red-500 focus:outline-red-500': !validPassword.valid && validPassword.touched
+                'border-green-500 focus:outline-green-500':
+                  validPassword.valid && validPassword.touched,
+                'border-red-500 focus:outline-red-500':
+                  !validPassword.valid && validPassword.touched
               }"
             />
             <button
               type="button"
-              class="absolute inset-y-0 end-1 flex items-center z-20 px-3 cursor-pointer text-gray-400 rounded-e-md focus:outline-hidden focus:text-teal-600  dark:focus:text-teal-500"
+              class="absolute inset-y-0 end-1 flex items-center z-20 px-3 cursor-pointer text-gray-400 rounded-e-md focus:outline-hidden focus:text-teal-600 dark:focus:text-teal-500"
             >
               <i
                 class="fa fa-eye shrink-0 size-3.5"
@@ -58,24 +61,32 @@
             </button>
           </div>
           @if(!validPassword.valid && validPassword.touched){
-          <div class="text-red-600 ml-3 text-sm">Password must be at least 8 characters and include:<br>
-            • one uppercase letter and one lowercase letter<br>
-            • one number<br>
-            • one special character (&commat;, _, $, or -)<br></div>
+          <div class="text-red-600 ml-3 text-sm">
+            Password must be at least 8 characters and include:<br />
+            • one uppercase letter and one lowercase letter<br />
+            • one number<br />
+            • one special character (&commat;, _, $, or -)<br />
+          </div>
           }
         </div>
         <div class="mt-5 ml-2">
           <button
             class="main-btn p-2 rounded-xl w-6/12 mb-2 block"
             (click)="addUser()"
-          >Sign in</button>
+          >
+            @if (isLoading) {
+            <app-loading-button></app-loading-button>
+            }@else { Sign in }
+          </button>
           <a
-            [routerLink]="router.url.includes('user')?'/register/user':'/register/admin'"
+            [routerLink]="
+              router.url.includes('user') ? '/register/user' : '/register/admin'
+            "
             class="text-teal-700 underline cursor-pointer pl-1"
           >
-            New user? Sign up.</a>
+            New user? Sign up.</a
+          >
         </div>
-
       </div>
     </form>
     <img
@@ -84,6 +95,6 @@
       height="400"
       width="400"
       class="flex-1/2 rounded-lg hidden md:inline"
-    >
+    />
   </div>
 </div>

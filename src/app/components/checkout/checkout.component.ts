@@ -114,8 +114,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.cartLoading = true;
     this.ordersService.getCartItems().subscribe({
       next: (response: any) => {
-        console.log(response);
-
         this.cartItems = response.data;
         this.cartLoading = false;
       },
@@ -165,8 +163,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         }
       },
       error: (err) => {
-        console.log(err);
-
         this.isLoading = false;
         this.toastService.show('error', err.error?.message);
       },
