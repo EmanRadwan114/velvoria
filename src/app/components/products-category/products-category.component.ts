@@ -43,32 +43,49 @@ export class ProductsCategoryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // First load wishlist, then fetch products
-    this._WishlistService.getAllWishList().subscribe({
-      next: (res: any) => {
-        this.isInWishlistArr = res.wishlist.map((item: any) => item._id);
+    this._ActivatedRoute.paramMap.subscribe({
+      next: (p) => {
+        const category = p.get('category');
+        this.categoryName = category || 'all';
 
-        this._ActivatedRoute.paramMap.subscribe({
-          next: (p) => {
-            const category = p.get('category');
-            this.categoryName = category || 'all';
+        // Reset relevant values when changing category
+        this.currentPage = 1;
+        this.isFiltered = false;
+        this.lastFilterQuery = {};
 
-            // Reset relevant values when changing category
-            this.currentPage = 1;
-            this.isFiltered = false;
-            this.lastFilterQuery = {};
-
-            this.fetchProducts();
-          },
-          error: (err) => console.log(err),
-        });
-
-        console.log(this.isInWishlistArr);
+        this.fetchProducts();
       },
-      error: (err) => {
-        console.error('Error loading wishlist:', err);
-      },
+      error: (err) => console.log(err),
     });
+
+    if (localStorage.getItem('user')) {
+      // First load wishlist, then fetch products
+      this._WishlistService.getAllWishList().subscribe({
+        next: (res: any) => {
+          this.isInWishlistArr = res.wishlist.map((item: any) => item._id);
+
+          this._ActivatedRoute.paramMap.subscribe({
+            next: (p) => {
+              const category = p.get('category');
+              this.categoryName = category || 'all';
+
+              // Reset relevant values when changing category
+              this.currentPage = 1;
+              this.isFiltered = false;
+              this.lastFilterQuery = {};
+
+              this.fetchProducts();
+            },
+            error: (err) => console.log(err),
+          });
+
+          console.log(this.isInWishlistArr);
+        },
+        error: (err) => {
+          console.error('Error loading wishlist:', err);
+        },
+      });
+    }
   }
 
   private fetchProducts(): void {
