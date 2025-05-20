@@ -34,30 +34,32 @@ export class ProductCardComponent implements OnInit {
   }
 
   addToWishList(productId: string): void {
-    this._WishlistService.addToWishlist(productId).subscribe({
-      next: () => {
-        this.isInWishlist = true;
-        this._ToastService.show('success', 'Product added to wishlist!');
-      },
-      error: (err) => {
-        if (err.error.message === 'Product already in wishlist') {
-          this._WishlistService.deleteFromWishlist(productId).subscribe({
-            next: () => {
-              this._ToastService.show(
-                'success',
-                'Product removed from wishlist!'
-              );
-              this.isInWishlist = false;
-            },
-          });
-        } else {
-          this._ToastService.show(
-            'error',
-            'Login To Add Product to Your Wishlist!'
-          );
-        }
-      },
-    });
+    if (localStorage.getItem('user')) {
+      this._WishlistService.addToWishlist(productId).subscribe({
+        next: () => {
+          this.isInWishlist = true;
+          this._ToastService.show('success', 'Product added to wishlist!');
+        },
+        error: (err) => {
+          if (err.error.message === 'Product already in wishlist') {
+            this._WishlistService.deleteFromWishlist(productId).subscribe({
+              next: () => {
+                this._ToastService.show(
+                  'success',
+                  'Product removed from wishlist!'
+                );
+                this.isInWishlist = false;
+              },
+            });
+          } else {
+            this._ToastService.show(
+              'error',
+              'Login To Add Product to Your Wishlist!'
+            );
+          }
+        },
+      });
+    }
   }
 
   addToCart(id: string) {
