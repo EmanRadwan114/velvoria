@@ -41,20 +41,24 @@ export class HomeProductsComponent implements OnInit {
   ngOnInit(): void {
     this.isLoading = true;
 
+    this.loadProductsByTab(this.activeTab);
+
     // First load wishlist, then fetch products
-    this._WishlistService.getAllWishList().subscribe({
-      next: (res: any) => {
-        this.isInWishlistArr = res.wishlist.map((item: any) => item._id);
+    if (localStorage.getItem('user')) {
+      this._WishlistService.getAllWishList().subscribe({
+        next: (res: any) => {
+          this.isInWishlistArr = res.wishlist.map((item: any) => item._id);
 
-        this.loadProductsByTab(this.activeTab);
+          this.loadProductsByTab(this.activeTab);
 
-        console.log(this.isInWishlistArr);
-      },
-      error: (err) => {
-        console.error('Error loading wishlist:', err);
-        this.isLoading = false;
-      },
-    });
+          console.log(this.isInWishlistArr);
+        },
+        error: (err) => {
+          console.error('Error loading wishlist:', err);
+          this.isLoading = false;
+        },
+      });
+    }
   }
 
   loadProductsByTab(tabKey: string): void {
