@@ -96,7 +96,12 @@
               Password is required
             </div>
             <div *ngIf="form.get('password')?.errors?.['minlength']">
-              Minimum 6 characters
+              <div class="text-red-600 ml-3 text-sm">
+                Password must be at least 8 characters and include:<br />
+                • one uppercase letter and one lowercase letter<br />
+                • one number<br />
+                • one special character (&commat;, _, $, or -)<br />
+              </div>
             </div>
           </div>
         </div>

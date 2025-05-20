@@ -38,13 +38,9 @@ export class AdminsService {
       }
     );
   }
-  UpdateAdmins(id: string, updatedData: {}) {
-    return this._HttpClient.put(
-      `${this.URL}/users/me`,
-      { ...updatedData },
-      {
-        withCredentials: true,
-      }
-    );
+  UpdateAdmins(id: string, updatedData: any) {
+    return this._HttpClient.put(`${this.URL}/users/${id}`, updatedData, {
+      withCredentials: true,
+    });
   }
 }

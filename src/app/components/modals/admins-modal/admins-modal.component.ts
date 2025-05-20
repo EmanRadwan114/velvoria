@@ -42,11 +42,11 @@ export class AdminsModalComponent implements OnInit {
         [
           Validators.minLength(6),
           Validators.required,
-          Validators.pattern(/^(?!\d+$)[a-zA-Z0-9_]+$/),
+          Validators.pattern(
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@_$-])[A-Za-z\d@_$-]{8,}$/
+          ),
+          ,
         ],
-      ],
-      image: [
-        'https://img.freepik.com/free-vector/illustration-user-avatar-icon_53876-5907.jpg?uid=R194767243&ga=GA1.1.1957810835.1742649565&semt=ais_hybrid&w=740',
       ],
     });
 
@@ -62,7 +62,7 @@ export class AdminsModalComponent implements OnInit {
     if (this.type === 'add') {
       this.form
         .get('password')
-        ?.setValidators([Validators.required, Validators.minLength(6)]);
+        ?.setValidators([Validators.required, Validators.minLength(8)]);
     }
   }
 
@@ -84,31 +84,23 @@ export class AdminsModalComponent implements OnInit {
         },
         error: (err) => {
           this.handleError(err);
-          this._ToastService.show('error', 'Failed to add coupon');
+          this._ToastService.show('error', err.error.message);
         },
       });
     } else if (this.type === 'edit' && this.admin?._id) {
       // If password is empty, remove it from request
       if (!formData.password) delete formData.password;
 
-      this.adminsService
-        .UpdateAdmins(this.admin._id, {
-          name: formData.name,
-          oldPassword: formData.password,
-          newPassword: formData.password,
-          image:
-            'https://img.freepik.com/free-vector/illustration-user-avatar-icon_53876-5907.jpg?uid=R194767243&ga=GA1.1.1957810835.1742649565&semt=ais_hybrid&w=740',
-        })
-        .subscribe({
-          next: () => {
-            this._ToastService.show('success', 'Admin updated successfully');
-            this.handleSuccess();
-          },
-          error: (err) => {
-            this.handleError(err);
-            this._ToastService.show('error', 'Failed to update coupon');
-          },
-        });
+      this.adminsService.UpdateAdmins(this.admin?._id, formData).subscribe({
+        next: () => {
+          this._ToastService.show('success', 'Admin updated successfully');
+          this.handleSuccess();
+        },
+        error: (err) => {
+          this.handleError(err);
+          this._ToastService.show('error', err.error.message);
+        },
+      });
     }
   }
 

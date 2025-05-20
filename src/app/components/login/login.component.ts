@@ -12,7 +12,6 @@ import {
 import { RouterLink, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { LoadingButtonComponent } from '../sharedComponents/loading-button/loading-button.component';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +20,6 @@ import { LoadingButtonComponent } from '../sharedComponents/loading-button/loadi
     CommonModule,
     RouterLink,
     TogglePasswordDirective,
-    LoadingButtonComponent,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',

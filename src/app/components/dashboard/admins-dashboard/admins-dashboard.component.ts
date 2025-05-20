@@ -52,9 +52,9 @@ export class AdminsDashboardComponent implements OnInit {
         this.admins = (res.data || res).filter(
           (user: any) => user.role === 'admin'
         );
-        this.isLoading = false;
         this.totalPages = res.totalPages;
         this.currentPage = res.currentPage;
+        this.isLoading = false;
       },
       error: (err) => {
         console.error('Error loading admins', err);

@@ -121,9 +121,7 @@
             class="main-btn p-2 rounded-xl w-6/12 mb-2 block"
             (click)="addUser()"
           >
-            @if (isLoading) {
-            <app-loading-button></app-loading-button>
-            }@else { Sign Up }
+            @if (isLoading) { Processing... }@else { Sign Up }
           </button>
           <a
             routerLink="/login"

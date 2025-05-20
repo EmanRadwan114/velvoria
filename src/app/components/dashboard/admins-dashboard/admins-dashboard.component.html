@@ -1,10 +1,10 @@
-<!-- Loading State -->
-@if (isLoading) {<app-loading-spinner></app-loading-spinner>}
+<!-- Loading Placeholder -->
+@if (isLoading) {<app-loading-spinner></app-loading-spinner>}@else {
+
 <!-- Add New Admin Button -->
-<div *ngIf="!isLoading" class="flex justify-end mb-4">
+<div class="flex justify-end mb-4">
   <button (click)="openModal('add')" class="btn-teal">+ Add New Admin</button>
 </div>
-
 <!-- Admins Table -->
 <div *ngIf="!isLoading" class="w-full overflow-auto">
   <div class="rounded-lg border border-gray-200 shadow-md">
@@ -13,6 +13,9 @@
         <tr>
           <th class="px-6 py-4 font-medium text-gray-900 text-left">Name</th>
           <th class="px-6 py-4 font-medium text-gray-900 text-left">Email</th>
+          <th class="px-6 py-4 font-medium text-gray-900 text-left">
+            Is Email Activated
+          </th>
           <th class="px-6 py-4 font-medium text-gray-900 text-right">
             Actions
           </th>
@@ -20,16 +23,16 @@
       </thead>
       <tbody class="divide-y divide-gray-100 border-t border-gray-100">
         <tr *ngFor="let admin of admins" class="hover:bg-gray-50">
-          <td class="px-6 py-4 text-gray-900">{{ admin.name }}</td>
+          <td class="px-6 py-4 text-gray-900 capitalize">{{ admin.name }}</td>
           <td class="px-6 py-4 text-gray-600">{{ admin.email }}</td>
+          <td class="px-6 py-4 text-gray-600 capitalize">
+            {{ admin.isEmailActive }}
+          </td>
 
           <td class="px-6 py-4 text-right">
             <div class="flex justify-end gap-5">
               <button (click)="openModal('view', admin)">
                 <i class="fa-solid fa-eye text-lg text-gray-900"></i>
-              </button>
-              <button (click)="openModal('edit', admin)">
-                <i class="fa-solid fa-pencil text-lg text-blue-900"></i>
               </button>
               <button (click)="confirmDelete(admin)">
                 <i class="fa-regular fa-trash-can text-lg text-red-800"></i>
@@ -81,5 +84,5 @@
   [currentPage]="currentPage"
   [totalPages]="totalPages"
   (pageChange)="onPageChange($event)"
-  *ngIf="!isLoading"
 ></app-dashboard-pagination>
+}
