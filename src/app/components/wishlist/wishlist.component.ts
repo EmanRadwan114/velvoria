@@ -54,22 +54,24 @@ export class WishlistComponent implements OnInit {
   }
 
   getWishlist(page = 1) {
-    this.isLoading = true;
-    this._WishlistService.getWishList(page).subscribe({
-      next: (res: any) => {
-        this.WishList = res.wishlist;
-        if (this.WishList.length === 0 && page > 1) {
-          this.changePage(page - 1);
-        }
-        this.totalPages = res.totalPages;
-        this.currentPage = res.currentPage;
-        this.isLoading = false;
-      },
-      error: (e) => {
-        console.error('Failed to get wishlist', e);
-        this.isLoading = false;
-      },
-    });
+    if (localStorage.getItem('user')) {
+      this.isLoading = true;
+      this._WishlistService.getWishList(page).subscribe({
+        next: (res: any) => {
+          this.WishList = res.wishlist;
+          if (this.WishList.length === 0 && page > 1) {
+            this.changePage(page - 1);
+          }
+          this.totalPages = res.totalPages;
+          this.currentPage = res.currentPage;
+          this.isLoading = false;
+        },
+        error: (e) => {
+          console.error('Failed to get wishlist', e);
+          this.isLoading = false;
+        },
+      });
+    }
   }
   changePage(page: number) {
     this.currentPage = page;
@@ -93,20 +95,22 @@ export class WishlistComponent implements OnInit {
   }
 
   addToCart(id: string) {
-    this.isLoading = true;
-    this.cartService.addToCart({ productId: id }).subscribe({
-      next: (res: any) => {
-        this.cartService.setTotal(res.totalItems);
-        this.cartService.setSubtotal(res.subtotal);
-        this._ToastService.show('success', 'Product added to cart!');
-        this.deleteFromWishlist(id);
-        this.isLoading = false;
-      },
-      error: (err) => {
-        this._ToastService.show('error', err.error.message);
-        this.isLoading = false;
-      },
-    });
+    if (localStorage.getItem('user')) {
+      this.isLoading = true;
+      this.cartService.addToCart({ productId: id }).subscribe({
+        next: (res: any) => {
+          this.cartService.setTotal(res.totalItems);
+          this.cartService.setSubtotal(res.subtotal);
+          this._ToastService.show('success', 'Product added to cart!');
+          this.deleteFromWishlist(id);
+          this.isLoading = false;
+        },
+        error: (err) => {
+          this._ToastService.show('error', err.error.message);
+          this.isLoading = false;
+        },
+      });
+    }
   }
   clearWishlist() {
     this.isLoading = true;
