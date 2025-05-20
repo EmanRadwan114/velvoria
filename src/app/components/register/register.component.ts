@@ -12,6 +12,7 @@ import {
 import { RouterLink, Router } from '@angular/router';
 import { UsersService } from '../../../services/users.service';
 import { environment } from '../../../environments/environment';
+import { LoadingButtonComponent } from '../sharedComponents/loading-button/loading-button.component';
 @Component({
   selector: 'app-register',
   imports: [
@@ -19,6 +20,7 @@ import { environment } from '../../../environments/environment';
     CommonModule,
     RouterLink,
     TogglePasswordDirective,
+    LoadingButtonComponent,
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
