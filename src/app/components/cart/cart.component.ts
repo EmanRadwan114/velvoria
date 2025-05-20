@@ -93,21 +93,23 @@ export class CartComponent implements OnInit {
     });
   }
   loadCartFromBack(page: number = 1) {
-    this.loading = true;
-    this.cartService.loadCartFromBackend(page).subscribe((cart) => {
-      if (cart.data.length == 0 && page > 1) {
-        this.changePage(page - 1);
-      } else {
-        this.cartService.setCartItems(cart.data);
-        this.cartService.setTotal(cart.totalItems);
-        this.cartService.cartMetaSubject.next({
-          currentPage: cart.currentPage,
-          totalPages: cart.totalPages,
-        });
-        this.cartService.setSubtotal(cart.subtotal);
-      }
-      this.loading = false;
-    });
+    if (localStorage.getItem('user')) {
+      this.loading = true;
+      this.cartService.loadCartFromBackend(page).subscribe((cart) => {
+        if (cart.data.length == 0 && page > 1) {
+          this.changePage(page - 1);
+        } else {
+          this.cartService.setCartItems(cart.data);
+          this.cartService.setTotal(cart.totalItems);
+          this.cartService.cartMetaSubject.next({
+            currentPage: cart.currentPage,
+            totalPages: cart.totalPages,
+          });
+          this.cartService.setSubtotal(cart.subtotal);
+        }
+        this.loading = false;
+      });
+    }
   }
   changePage(page: number) {
     this.currentPage = page;
