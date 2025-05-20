@@ -9,6 +9,7 @@ import { ProductsService } from '../../../services/products.service';
 import { LoadingSPinnerComponent } from '../sharedComponents/loading-spinner/loading-spinner.component';
 import { FilterationComponent } from '../filteration/filteration.component';
 import { ToastService } from '../../../services/toast.service';
+import { WishlistService } from '../../../services/wishlist.service';
 
 @Component({
   selector: 'app-search',
@@ -30,11 +31,15 @@ export class SearchComponent implements OnInit {
   message = 'loading';
   isFiltered = false;
   lastFilterQuery: any = {};
+
+  isInWishlistArr: string[] = [];
+
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
     private prdServices: ProductsService,
-    private _ToastService: ToastService
+    private _ToastService: ToastService,
+    private _WishlistService: WishlistService
   ) {}
   fetchProducts(): void {
     this.isFiltered = false;
@@ -48,6 +53,11 @@ export class SearchComponent implements OnInit {
           this.products = res['data'];
           this.totalPages = res.totalPages;
           this.currentPage = res.currentPage;
+
+          this.products = res.data.map((item: any) => ({
+            ...item,
+            isInWishlist: this.isInWishlistArr.includes(item._id),
+          }));
         },
         error: (err) => {
           console.log(err.error.message);
@@ -60,6 +70,20 @@ export class SearchComponent implements OnInit {
       this.query = params['q'];
       this.currentPage = 1;
       this.fetchProducts();
+
+      if (localStorage.getItem('user')) {
+        // First load wishlist, then fetch products
+        this._WishlistService.getAllWishList().subscribe({
+          next: (res: any) => {
+            this.isInWishlistArr = res.wishlist.map((item: any) => item._id);
+
+            this.fetchProducts();
+          },
+          error: (err) => {
+            console.error('Error loading wishlist:', err);
+          },
+        });
+      }
     });
   }
   changePage(page: number): void {
