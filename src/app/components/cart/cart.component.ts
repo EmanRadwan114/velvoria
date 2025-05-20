@@ -107,9 +107,9 @@ export class CartComponent implements OnInit {
           });
           this.cartService.setSubtotal(cart.subtotal);
         }
-        this.loading = false;
       });
     }
+    this.loading = false;
   }
   changePage(page: number) {
     this.currentPage = page;
