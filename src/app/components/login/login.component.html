@@ -77,9 +77,7 @@
             @if (isLoading) { Processing... }@else { Sign in }
           </button>
           <a
-            [routerLink]="
-              router.url.includes('user') ? '/register/user' : '/register/admin'
-            "
+            routerLink="/register"
             class="text-teal-700 underline cursor-pointer pl-1"
           >
             New user? Sign up.</a
