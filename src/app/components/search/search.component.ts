@@ -7,6 +7,9 @@ import { environment } from '../../../environments/environment';
 import { PaginationComponent } from '../sharedComponents/pagination/pagination.component';
 import { ProductsService } from '../../../services/products.service';
 import { LoadingSPinnerComponent } from '../sharedComponents/loading-spinner/loading-spinner.component';
+import { FilterationComponent } from '../filteration/filteration.component';
+import { ToastService } from '../../../services/toast.service';
+
 @Component({
   selector: 'app-search',
   imports: [
@@ -14,6 +17,7 @@ import { LoadingSPinnerComponent } from '../sharedComponents/loading-spinner/loa
     ProductsComponent,
     PaginationComponent,
     LoadingSPinnerComponent,
+    FilterationComponent,
   ],
   templateUrl: './search.component.html',
   styles: ``,
@@ -29,7 +33,8 @@ export class SearchComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
-    private prdServices: ProductsService
+    private prdServices: ProductsService,
+    private _ToastService: ToastService
   ) {}
   fetchProducts(): void {
     this.isFiltered = false;
@@ -42,6 +47,7 @@ export class SearchComponent implements OnInit {
           this.message = 'success';
           this.products = res['data'];
           this.totalPages = res.totalPages;
+          this.currentPage = res.currentPage;
         },
         error: (err) => {
           console.log(err.error.message);
@@ -67,9 +73,11 @@ export class SearchComponent implements OnInit {
   handleFilterChange(filterQuery: any, resetPage = true): void {
     const fullQuery: any = { ...filterQuery };
     this.isFiltered = true;
+
     if (this.query) {
       fullQuery.search = this.query;
     }
+
     if (resetPage) this.currentPage = 1;
 
     Object.keys(fullQuery).forEach((key) => {
@@ -83,14 +91,25 @@ export class SearchComponent implements OnInit {
     });
 
     this.lastFilterQuery = fullQuery;
+
     this.prdServices.filterProducts(fullQuery, this.currentPage).subscribe({
       next: (res: any) => {
-        this.products = res.data;
-        this.totalPages = res.totalPages;
+        if (!res.data || res.data.length === 0) {
+          this.products = [];
+          this.message = 'No products were found matching your selection';
+          this.totalPages = 1;
+          this.currentPage = 1;
+        } else {
+          this.products = res.data;
+          this.totalPages = res.totalPages || 1;
+          this.currentPage = res.currentPage || 1;
+          this.message = 'success';
+          console.log(res);
+        }
       },
       error: (err) => {
-        console.error('Filter Error status =', err.status);
-        console.error('Filter Error body =', err.error);
+        this.products = [];
+        this._ToastService.show('error', err.error.message || 'Server error');
         this.message = 'No products were found matching your selection';
       },
     });
