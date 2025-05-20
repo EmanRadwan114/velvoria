@@ -25,12 +25,16 @@ export class BreadcrumbComponent {
       .subscribe(() => {
         const path = this.router.url;
         const segments = path.split('/').filter((segment) => segment);
+        console.log(segments, path);
 
         if (segments.length === 0) {
           this.breadcrumb = ['Home']; // If no segments, default to 'Home'
         } else {
           this.breadcrumb = ['Home', ...segments.map(this.formatSegments)];
+          console.log(this.breadcrumb);
         }
+
+        // console.log(this.breadcrumb);
       });
   }
 

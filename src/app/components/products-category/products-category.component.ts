@@ -78,8 +78,6 @@ export class ProductsCategoryComponent implements OnInit {
             },
             error: (err) => console.log(err),
           });
-
-          console.log(this.isInWishlistArr);
         },
         error: (err) => {
           console.error('Error loading wishlist:', err);

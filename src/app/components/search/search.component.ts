@@ -10,6 +10,7 @@ import { LoadingSPinnerComponent } from '../sharedComponents/loading-spinner/loa
 import { FilterationComponent } from '../filteration/filteration.component';
 import { ToastService } from '../../../services/toast.service';
 import { WishlistService } from '../../../services/wishlist.service';
+import { BreadcrumbComponent } from '../sharedComponents/breadcrumb/breadcrumb.component';
 
 @Component({
   selector: 'app-search',
@@ -19,6 +20,7 @@ import { WishlistService } from '../../../services/wishlist.service';
     PaginationComponent,
     LoadingSPinnerComponent,
     FilterationComponent,
+    BreadcrumbComponent,
   ],
   templateUrl: './search.component.html',
   styles: ``,
