@@ -204,7 +204,7 @@ export class ProfileComponent implements OnInit {
         const msg: string =
           err?.error?.errors?.[0]?.message ??
           err?.error?.message ??
-          'Failed to update profile.';
+          'Failed to update profile';
         this._ToastService.show('error', msg);
         this.isEditingPersonalInfo = false;
         this.updateProfileFields();
