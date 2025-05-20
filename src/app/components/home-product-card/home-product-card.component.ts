@@ -53,6 +53,8 @@ export class HomeProductCardComponent implements OnInit {
           }
         },
       });
+    } else {
+      this._ToastService.show('error', 'Login to add product to wishlist!');
     }
   }
 
