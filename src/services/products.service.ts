@@ -10,6 +10,12 @@ export class ProductsService {
 
   constructor(private _HttpClient: HttpClient) {}
 
+  //^ Get All Products without pagination
+  getProducts() {
+    return this._HttpClient.get(`${this.URL}/products?all=true`, {
+      withCredentials: true,
+    });
+  }
   //^ Get All Products
   getAllProducts(page: number = 1, limit: number = 6) {
     return this._HttpClient.get(

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { WishlistService } from '../../../services/wishlist.service';
 import { ToastComponent } from '../sharedComponents/toast/toast.component';
@@ -13,7 +13,7 @@ import { CartService } from '../../../services/cart.service';
   templateUrl: './product-card.component.html',
   styleUrl: './product-card.component.css',
 })
-export class ProductCardComponent {
+export class ProductCardComponent implements OnInit {
   hovered = 0;
   showToast: any;
   showToastCart: any;
@@ -29,53 +29,50 @@ export class ProductCardComponent {
 
   constructor(private cartService: CartService) {}
 
-  isInWishlistFunc(id: string) {
-    this._WishlistService.getWishList().subscribe({
-      next: (res: any) => {
-        this.isInWishlist = res.wishlist.some(
-          (item: { productId: string }) => item.productId === id
-        );
-      },
-      error: (err) => {
-        console.error('Failed to get wishlist', err);
-      },
-    });
+  ngOnInit(): void {
+    this.isInWishlist = this.product?.isInWishlist || false;
   }
 
-  addToWishList(id: string): void {
-    this._WishlistService.addToWishlist(id).subscribe({
-      next: (res: any) => {
+  addToWishList(productId: string): void {
+    this._WishlistService.addToWishlist(productId).subscribe({
+      next: () => {
         this.isInWishlist = true;
         this._ToastService.show('success', 'Product added to wishlist!');
       },
       error: (err) => {
-        if (err.error.message == 'Product already in wishlist') {
-          this._WishlistService.deleteFromWishlist(id).subscribe({
-            next: (res: any) => {
+        if (err.error.message === 'Product already in wishlist') {
+          this._WishlistService.deleteFromWishlist(productId).subscribe({
+            next: () => {
               this._ToastService.show(
-                'error',
+                'success',
                 'Product removed from wishlist!'
               );
               this.isInWishlist = false;
             },
           });
-        } else
+        } else {
           this._ToastService.show(
             'error',
             'Login To Add Product to Your Wishlist!'
           );
+        }
       },
     });
   }
+
   addToCart(id: string) {
     if (this.product.stock > 0) {
       if (localStorage.getItem('user')) {
         this.cartService.addToCart({ productId: id }).subscribe({
           next: (res: any) => {
-            // this.cartService.setCartItems(res.data);
             this.cartService.setTotal(res.totalItems);
             this.cartService.setSubtotal(res.subtotal);
             this._ToastService.show('success', 'Product added to cart!');
+            this._WishlistService.deleteFromWishlist(id).subscribe({
+              next: () => {
+                this.isInWishlist = false;
+              },
+            });
           },
           error: (err) => {
             console.log(err.error.message);

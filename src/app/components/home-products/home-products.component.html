@@ -67,7 +67,7 @@
         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 sm:col-span-4 md:col-span-2 gap-4 md:gap-6"
       >
         <app-home-product-card
-          *ngFor="let product of filteredList.slice(0, 4)"
+          *ngFor="let product of products.slice(0, 4)"
           [product]="product"
           [isLargeCard]="false"
         ></app-home-product-card>
@@ -76,7 +76,7 @@
       <!-- Middle Section - 1 product -->
       <div class="grid grid-cols-1 col-span-1 sm:col-span-4 md:col-span-2">
         <app-home-product-card
-          *ngFor="let product of filteredList.slice(4, 5)"
+          *ngFor="let product of products.slice(4, 5)"
           [product]="product"
           [isLargeCard]="true"
         ></app-home-product-card>
@@ -87,7 +87,7 @@
         class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 sm:col-span-4 lg:col-span-1 gap-4 md:gap-6"
       >
         <app-home-product-card
-          *ngFor="let product of filteredList.slice(5, 7)"
+          *ngFor="let product of products.slice(5, 7)"
           [product]="product"
           [isLargeCard]="false"
         ></app-home-product-card>

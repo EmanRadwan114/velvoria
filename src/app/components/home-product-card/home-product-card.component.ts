@@ -38,7 +38,7 @@ export class HomeProductCardComponent implements OnInit {
           this.wishlistService.deleteFromWishlist(productId).subscribe({
             next: () => {
               this._ToastService.show(
-                'error',
+                'success',
                 'Product removed from wishlist!'
               );
               this.isInWishlist = false;
@@ -62,6 +62,11 @@ export class HomeProductCardComponent implements OnInit {
             this.cartService.setTotal(res.totalItems);
             this.cartService.setSubtotal(res.subtotal);
             this._ToastService.show('success', 'Product added to cart!');
+            this.wishlistService.deleteFromWishlist(id).subscribe({
+              next: () => {
+                this.isInWishlist = false;
+              },
+            });
           },
           error: (err) => {
             console.log(err.error.message);

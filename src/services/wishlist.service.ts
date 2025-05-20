@@ -9,6 +9,13 @@ export class WishlistService {
   private URL = environment.backUrl;
 
   constructor(private _HttpClient: HttpClient) {}
+
+  getAllWishList() {
+    return this._HttpClient.get(`${this.URL}/wishlist?all=true`, {
+      withCredentials: true,
+    });
+  }
+
   getWishList(page: number = 1) {
     return this._HttpClient.get(`${this.URL}/wishlist?page=${page}`, {
       withCredentials: true,

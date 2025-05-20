@@ -4,6 +4,7 @@ import { ProductsService } from '../../../services/products.service';
 import { ProductsComponent } from '../products/products.component';
 import { ToastService } from '../../../services/toast.service';
 import { PaginationComponent } from '../sharedComponents/pagination/pagination.component';
+import { WishlistService } from '../../../services/wishlist.service';
 
 @Component({
   selector: 'app-products-category',
@@ -20,19 +21,35 @@ export class ProductsCategoryComponent implements OnInit {
   lastFilterQuery: any = {};
   currentCategoryId: string | null = null;
 
+  isInWishlistArr: string[] = [];
+
   private readonly _ActivatedRoute = inject(ActivatedRoute);
   private readonly _ToastService = inject(ToastService);
 
-  constructor(private prdServices: ProductsService) {}
+  constructor(
+    private prdServices: ProductsService,
+    private _WishlistService: WishlistService
+  ) {}
 
   ngOnInit(): void {
-    this._ActivatedRoute.paramMap.subscribe({
-      next: (p) => {
-        const category = p.get('category');
-        this.categoryName = category || 'all';
-        this.fetchProducts();
+    // First load wishlist, then fetch products
+    this._WishlistService.getAllWishList().subscribe({
+      next: (res: any) => {
+        this.isInWishlistArr = res.wishlist.map((item: any) => item._id);
+
+        this._ActivatedRoute.paramMap.subscribe({
+          next: (p) => {
+            const category = p.get('category');
+            this.categoryName = category || 'all';
+            this.fetchProducts();
+          },
+          error: (err) => console.log(err),
+        });
+        console.log(this.isInWishlistArr);
       },
-      error: (err) => console.log(err),
+      error: (err) => {
+        console.error('Error loading wishlist:', err);
+      },
     });
   }
 
@@ -51,6 +68,12 @@ export class ProductsCategoryComponent implements OnInit {
         this.productsList = res.data;
         this.totalPages = res.totalPages;
         this.filteredProductsList = [...this.productsList];
+
+        this.filteredProductsList = res.data.map((item: any) => ({
+          ...item,
+          isInWishlist: this.isInWishlistArr.includes(item._id),
+        }));
+        console.log(this.filteredProductsList);
 
         if (this.categoryName !== 'all' && this.productsList.length) {
           this.currentCategoryId = this.productsList[0].categoryID._id;

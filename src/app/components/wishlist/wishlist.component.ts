@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { CartService } from '../../../services/cart.service';
 import { AuthService } from '../../../services/auth.service';
 import { LoadingSPinnerComponent } from '../sharedComponents/loading-spinner/loading-spinner.component';
+import { ProductsService } from '../../../services/products.service';
 
 @Component({
   selector: 'app-wishlist',
@@ -22,10 +23,13 @@ export class WishlistComponent implements OnInit {
   isLoggedIn: boolean = false;
   user: any;
 
-  isLoading: boolean = true;
+  isLoading: boolean = false;
+
+  products!: {}[];
 
   constructor(
     private _WishlistService: WishlistService,
+    private productsService: ProductsService,
     private _ToastService: ToastService,
     public router: Router,
     private cartService: CartService,
@@ -42,16 +46,18 @@ export class WishlistComponent implements OnInit {
 
     this.getWishlist(this.currentPage);
   }
+
   getWishlist(page = 1) {
+    this.isLoading = true;
     this._WishlistService.getWishList(page).subscribe({
       next: (res: any) => {
-        this.isLoading = true;
         this.WishList = res.wishlist;
         this.totalPages = res.totalPages;
         this.isLoading = false;
       },
       error: (e) => {
         console.error('Failed to get wishlist', e);
+        this.isLoading = false;
       },
     });
   }
@@ -61,6 +67,7 @@ export class WishlistComponent implements OnInit {
   }
 
   deleteFromWishlist(id: string) {
+    this.isLoading = true;
     this._WishlistService.deleteFromWishlist(id).subscribe({
       next: (res) => {
         this.getWishlist(this.currentPage);
@@ -75,20 +82,23 @@ export class WishlistComponent implements OnInit {
   }
 
   addToCart(id: string) {
+    this.isLoading = true;
     this.cartService.addToCart({ productId: id }).subscribe({
       next: (res: any) => {
         this.cartService.setTotal(res.totalItems);
         this.cartService.setSubtotal(res.subtotal);
         this._ToastService.show('success', 'Product added to cart!');
         this.deleteFromWishlist(id);
+        this.isLoading = false;
       },
       error: (err) => {
-        this.isLoading = false;
         this._ToastService.show('error', err.error.message);
+        this.isLoading = false;
       },
     });
   }
   clearWishlist() {
+    this.isLoading = true;
     this._WishlistService.clearWishlist().subscribe({
       next: (res) => {
         this.isLoading = false;

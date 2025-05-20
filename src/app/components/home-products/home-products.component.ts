@@ -5,9 +5,11 @@ import { Router } from '@angular/router';
 import { ProductsService } from '../../../services/products.service';
 import { HomeProductCardComponent } from '../home-product-card/home-product-card.component';
 import { LoadingSPinnerComponent } from '../sharedComponents/loading-spinner/loading-spinner.component';
+import { WishlistService } from '../../../services/wishlist.service';
 
 @Component({
   selector: 'app-home-products',
+  standalone: true,
   imports: [
     CommonModule,
     FormsModule,
@@ -15,36 +17,57 @@ import { LoadingSPinnerComponent } from '../sharedComponents/loading-spinner/loa
     LoadingSPinnerComponent,
   ],
   templateUrl: './home-products.component.html',
-  styleUrl: './home-products.component.css',
+  styleUrls: ['./home-products.component.css'],
 })
 export class HomeProductsComponent implements OnInit {
   isLoading = false;
-  constructor(private router: Router, private prdServices: ProductsService) {}
-
-  ////! there is no 'SALE' label so i removed it temp
+  isInWishlistArr: string[] = [];
+  products: any[] = [];
 
   tabs = [
     { key: 'hot', label: 'HOT' },
     { key: 'new arrival', label: 'ARRIVALS' },
     { key: 'trendy', label: 'TRENDING' },
-    // { key: 'hot', label: 'SALE OFF' },
   ];
 
   activeTab: string = 'hot';
 
-  products: object[] = [];
-  filteredList: object[] = [];
+  constructor(
+    private router: Router,
+    private prdServices: ProductsService,
+    private _WishlistService: WishlistService
+  ) {}
 
   ngOnInit(): void {
     this.isLoading = true;
-    this.prdServices.getProductByLabel(this.activeTab).subscribe({
+
+    // First load wishlist, then fetch products
+    this._WishlistService.getAllWishList().subscribe({
       next: (res: any) => {
-        this.products = res.data;
-        this.filteredList = [...this.products];
+        this.isInWishlistArr = res.wishlist.map((item: any) => item._id);
+
+        this.loadProductsByTab(this.activeTab);
+
+        console.log(this.isInWishlistArr);
+      },
+      error: (err) => {
+        console.error('Error loading wishlist:', err);
         this.isLoading = false;
       },
-      error: (err: any) => {
-        console.log(err);
+    });
+  }
+
+  loadProductsByTab(tabKey: string): void {
+    this.prdServices.getProductByLabel(tabKey).subscribe({
+      next: (res: any) => {
+        this.products = res.data.map((item: any) => ({
+          ...item,
+          isInWishlist: this.isInWishlistArr.includes(item._id),
+        }));
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Error loading products:', err);
         this.isLoading = false;
       },
     });
@@ -54,17 +77,7 @@ export class HomeProductsComponent implements OnInit {
     this.isLoading = true;
     this.activeTab = tab;
 
-    this.prdServices.getProductByLabel(this.activeTab).subscribe({
-      next: (res: any) => {
-        this.products = res.data;
-        this.filteredList = [...this.products];
-        this.isLoading = false;
-      },
-      error: (err) => {
-        console.log(err);
-        this.isLoading = false;
-      },
-    });
+    this.loadProductsByTab(tab);
   }
 
   viewAllBtn(): void {
