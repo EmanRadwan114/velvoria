@@ -99,12 +99,10 @@ export class ProfileComponent implements OnInit {
 
       this.originalEmail = email;
       this.role = role;
-      this.image = image;
 
       const formConfig: any = {
         name: [name, [Validators.required, Validators.minLength(3)]],
         email: [email, [Validators.required, Validators.email]],
-        image: [image || '', [Validators.required]],
       };
 
       if (role === 'user') {
