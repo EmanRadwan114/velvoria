@@ -8,10 +8,16 @@ import { CartService } from '../../../services/cart.service';
 import { AuthService } from '../../../services/auth.service';
 import { LoadingSPinnerComponent } from '../sharedComponents/loading-spinner/loading-spinner.component';
 import { ProductsService } from '../../../services/products.service';
+import { PaginationComponent } from '../sharedComponents/pagination/pagination.component';
 
 @Component({
   selector: 'app-wishlist',
-  imports: [CommonModule, BreadcrumbComponent, LoadingSPinnerComponent],
+  imports: [
+    CommonModule,
+    BreadcrumbComponent,
+    LoadingSPinnerComponent,
+    PaginationComponent,
+  ],
   templateUrl: './wishlist.component.html',
   styles: ``,
 })
@@ -52,7 +58,11 @@ export class WishlistComponent implements OnInit {
     this._WishlistService.getWishList(page).subscribe({
       next: (res: any) => {
         this.WishList = res.wishlist;
+        if (this.WishList.length === 0 && page > 1) {
+          this.changePage(page - 1);
+        }
         this.totalPages = res.totalPages;
+        this.currentPage = res.currentPage;
         this.isLoading = false;
       },
       error: (e) => {
@@ -71,6 +81,7 @@ export class WishlistComponent implements OnInit {
     this._WishlistService.deleteFromWishlist(id).subscribe({
       next: (res) => {
         this.getWishlist(this.currentPage);
+
         this.isLoading = false;
         this._ToastService.show('success', 'Product removed from wishlist!');
       },

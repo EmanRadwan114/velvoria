@@ -21,7 +21,7 @@ import { AuthService } from '../../../services/auth.service';
   styleUrl: './cart.component.css',
 })
 export class CartComponent implements OnInit {
-  loading: boolean = true;
+  loading: boolean = false;
   cartItems: any[] = [];
   currentPage: any;
   totalPages: any;
@@ -49,7 +49,6 @@ export class CartComponent implements OnInit {
     this.cartService.cartItems$.subscribe((items) => {
       if (items) {
         this.cartItems = items;
-        this.loading = false;
       }
     });
     this.cartService.cartMetaSubject.subscribe((meta) => {
@@ -74,22 +73,27 @@ export class CartComponent implements OnInit {
     }
   }
   removeProductFromCart(item: any) {
+    this.loading = true;
     this.cartService
       .removeFromCart(item.productId._id)
       .subscribe((res: any) => {
         this.cartService.setTotal(res.totalItems);
         this.cartService.setSubtotal(res.subtotal);
         this.loadCartFromBack(this.currentPage);
+        this.loading = false;
       });
   }
   removeCart() {
+    this.loading = true;
     this.cartService.removeCart().subscribe(() => {
       this.cartService.setTotal(0);
       this.cartService.setSubtotal(0);
       this.loadCartFromBack();
+      this.loading = false;
     });
   }
   loadCartFromBack(page: number = 1) {
+    this.loading = true;
     this.cartService.loadCartFromBackend(page).subscribe((cart) => {
       if (cart.data.length == 0 && page > 1) {
         this.changePage(page - 1);
@@ -102,6 +106,7 @@ export class CartComponent implements OnInit {
         });
         this.cartService.setSubtotal(cart.subtotal);
       }
+      this.loading = false;
     });
   }
   changePage(page: number) {

@@ -61,12 +61,18 @@
           Add To Cart
         </button>
       </div>
+
       }
 
       <!-- More products... -->
     </div>
   </div>
 </div>
+<app-pagination
+  [currentPage]="currentPage"
+  [totalPages]="totalPages"
+  (pageChanged)="changePage($event)"
+></app-pagination>
 } @else {
 <div class="h-screen flex flex-col justify-center items-center">
   <h2
