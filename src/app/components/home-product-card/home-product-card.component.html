@@ -6,7 +6,7 @@
     class="relative w-full overflow-hidden"
     [ngClass]="isLargeCard ? `pb-[200px] md:pb-[550px]`:`pb-[200px]`"
   >
-    <a [routerLink]="['/furnitures', product?._id]">
+    <a [routerLink]="['/furniture', product?._id]">
       <img
         [src]="product.thumbnail"
         [alt]="product.title"
@@ -74,7 +74,7 @@
       New
     </div>
     <div class="mt-4 flex flex-col">
-      <span class="text-xl font-bold text-gray-800">{{
+      <span class="text-lg text-gray-800">{{
         product.price | currency : "EGP"
       }}</span>
     </div>

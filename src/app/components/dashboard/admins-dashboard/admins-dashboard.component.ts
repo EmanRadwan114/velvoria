@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { AdminsModalComponent } from '../../modals/admins-modal/admins-modal.component';
 import { ToastService } from '../../../../services/toast.service';
 import { DashboardPaginationComponent } from '../dashboard-pagination/dashboard-pagination.component';
+import { LoadingSPinnerComponent } from '../../sharedComponents/loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'app-admins-dashboard',
@@ -14,6 +15,7 @@ import { DashboardPaginationComponent } from '../dashboard-pagination/dashboard-
     FormsModule,
     AdminsModalComponent,
     DashboardPaginationComponent,
+    LoadingSPinnerComponent,
   ],
   templateUrl: './admins-dashboard.component.html',
 })
@@ -108,6 +110,7 @@ export class AdminsDashboardComponent implements OnInit {
         this.loadAdmins();
         this.showDeleteConfirm = false;
         this.adminToDelete = null;
+        this.isLoading = false;
       },
       error: (err) => {
         this._ToastService.show('error', 'Failed to delete admin');

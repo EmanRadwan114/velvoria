@@ -1,10 +1,15 @@
+<!-- Loading Placeholder -->
+@if (isLoading) {<app-loading-spinner></app-loading-spinner>}
 <!-- Add Button -->
-<div class="flex justify-end mb-4">
+<div *ngIf="!isLoading" class="flex justify-end mb-4">
   <button (click)="openModal('add')" class="btn-teal">+ Add New Coupon</button>
 </div>
 
 <!-- Coupons Table -->
-<div class="rounded-lg border border-gray-200 shadow-md overflow-auto">
+<div
+  *ngIf="!isLoading"
+  class="rounded-lg border border-gray-200 shadow-md overflow-auto"
+>
   <table class="w-full table-auto">
     <thead class="bg-gray-50">
       <tr>
@@ -17,7 +22,7 @@
       </tr>
     </thead>
     <tbody
-      *ngIf="coupons.length; else loading"
+      *ngIf="coupons.length"
       class="divide-y divide-gray-100 border-t border-gray-100"
     >
       <tr *ngFor="let c of coupons" class="hover:bg-gray-50">
@@ -100,11 +105,6 @@
   </div>
 </div>
 
-<!-- Loading Placeholder -->
-<ng-template #loading>
-  <p class="text-center text-gray-500 mt-4">Loading coupons...</p>
-</ng-template>
-
 <!-- Reusable Modal Component -->
 <app-coupons-modal
   [activeModal]="activeModal"
@@ -117,4 +117,5 @@
   [currentPage]="currentPage"
   [totalPages]="totalPages"
   (pageChange)="onPageChange($event)"
+  *ngIf="!isLoading"
 ></app-dashboard-pagination>

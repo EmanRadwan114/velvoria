@@ -5,6 +5,7 @@ import { OrdersService } from '../../../../services/orders.service';
 import { OrdersModalComponent } from '../../modals/orders-modal/orders-modal.component';
 import { ToastService } from '../../../../services/toast.service';
 import { DashboardPaginationComponent } from '../dashboard-pagination/dashboard-pagination.component';
+import { LoadingSPinnerComponent } from '../../sharedComponents/loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'app-orders-dashboard',
@@ -14,6 +15,7 @@ import { DashboardPaginationComponent } from '../dashboard-pagination/dashboard-
     FormsModule,
     OrdersModalComponent,
     DashboardPaginationComponent,
+    LoadingSPinnerComponent,
   ],
   templateUrl: './orders-dashboard.component.html',
   styleUrl: './orders-dashboard.component.css',
@@ -27,6 +29,8 @@ export class OrdersDashboardComponent implements OnInit {
   totalPages = 1;
   limit = 7;
 
+  isLoading = false;
+
   private readonly _ToastService = inject(ToastService);
 
   constructor(private ordersService: OrdersService) {}
@@ -36,16 +40,19 @@ export class OrdersDashboardComponent implements OnInit {
   }
 
   fetchOrders(page: number = 1) {
+    this.isLoading = true;
     this.ordersService.getAllOrders(page, this.limit).subscribe({
       next: (res: any) => {
         this.orders = res.data || res;
         this.totalPages = res.totalPages;
         this.currentPage = res.currentPage;
+        this.isLoading = false;
       },
       error: (err) => {
         console.error('Failed to fetch orders', err);
         this.orders = [];
         this.totalPages = 1;
+        this.isLoading = false;
       },
     });
   }

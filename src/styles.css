@@ -109,7 +109,7 @@ button:not(.reviewBtn, .submit-btn) {
   color: #ffff;
 }
 .sec-btn:hover {
-  border: 2px solid var(--primary-txt-color);
+  outline: 2px solid var(--primary-txt-color);
   background-color: transparent;
   color: var(--primary-txt-color);
 }

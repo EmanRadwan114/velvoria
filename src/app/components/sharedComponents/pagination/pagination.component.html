@@ -3,9 +3,12 @@
     <!-- Previous -->
     <li>
       <a
-        class="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full border cursor-pointer text-sm sm:text-base"
+        class="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full border text-sm sm:text-base"
         (click)="changePage(currentPage - 1)"
         [class.opacity-50]="currentPage === 1"
+        [ngClass]="
+          currentPage === 1 ? 'disabled cursor-not-allowed' : 'cursor-pointer'
+        "
       >
         <span class="material-icons text-xs sm:text-sm">arrow_left</span>
       </a>
@@ -30,9 +33,14 @@
     <!-- Next -->
     <li>
       <a
-        class="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full border cursor-pointer text-sm sm:text-base"
+        class="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full border text-sm sm:text-base"
         (click)="changePage(currentPage + 1)"
         [class.opacity-50]="currentPage === totalPages"
+        [ngClass]="
+          currentPage === totalPages
+            ? 'disabled cursor-not-allowed'
+            : 'cursor-pointer'
+        "
       >
         <span class="material-icons text-xs sm:text-sm">arrow_right</span>
       </a>

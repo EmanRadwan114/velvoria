@@ -63,13 +63,10 @@ export class RegisterComponent {
     if (!this.userData.valid || !this.passwordsMatch) {
       this._ToastService.show('error', 'you must fill registration form');
     } else {
-      const fullUrl = this.router.url;
-      console.log(fullUrl); //user or admin
       let user = {
         name: this.userData.controls.name.value,
         email: this.userData.controls.email.value,
         password: this.userData.controls.password.value,
-        role: fullUrl.includes('user') ? 'user' : 'admin',
       };
       this.http
         .post(`${environment.backUrl}/auth/register`, user, {

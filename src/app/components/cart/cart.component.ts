@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LoadingSPinnerComponent } from '../sharedComponents/loading-spinner/loading-spinner.component';
 import { PaginationComponent } from '../sharedComponents/pagination/pagination.component';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-cart',
@@ -25,13 +26,25 @@ export class CartComponent implements OnInit {
   currentPage: any;
   totalPages: any;
   subtotal: any;
+
+  isLoggedIn: boolean = false;
+  user: any;
+
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
     protected cartService: CartService,
-    protected router: Router
+    protected router: Router,
+    private authService: AuthService
   ) {}
   ngOnInit() {
+    this.authService.isLoggedIn.subscribe((status) => {
+      this.isLoggedIn = status;
+      this.user = status
+        ? JSON.parse(localStorage.getItem('user') || 'null')
+        : 'null';
+    });
+
     this.loadCartFromBack();
     this.cartService.cartItems$.subscribe((items) => {
       if (items) {

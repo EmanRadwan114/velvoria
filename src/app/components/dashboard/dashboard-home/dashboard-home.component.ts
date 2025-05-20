@@ -11,6 +11,7 @@ import {
 } from 'ng-apexcharts';
 import { environment } from '../../../../environments/environment';
 import { ProductsService } from '../../../../services/products.service';
+import { LoadingSPinnerComponent } from '../../sharedComponents/loading-spinner/loading-spinner.component';
 
 export interface ChartOptions {
   series: ApexAxisChartSeries;
@@ -23,7 +24,12 @@ export interface ChartOptions {
 @Component({
   selector: 'app-dashboard-home',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, NgApexchartsModule],
+  imports: [
+    CommonModule,
+    HttpClientModule,
+    NgApexchartsModule,
+    LoadingSPinnerComponent,
+  ],
   templateUrl: './dashboard-home.component.html',
   styles: [],
 })
@@ -31,6 +37,8 @@ export class DashboardHomeComponent implements OnInit {
   public ordersChartOptions: Partial<ChartOptions> | any;
   public revenueChartOptions: Partial<ChartOptions> | any;
   private apiUrl = `${environment.backUrl}/orders/orders-by-month?year=2025`;
+
+  isLoading = false;
 
   months = [
     'Jan',
@@ -76,15 +84,17 @@ export class DashboardHomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchData();
-
+    this.isLoading = true;
     this.productsService.getBestSelling().subscribe({
       next: (data: any) => {
         this.bestSellingProducts = data.data;
+        this.isLoading = false;
       },
     });
     this.productsService.getLeastOrderedProducts().subscribe({
       next: (data: any) => {
         this.leastOrderedProducts = data.data;
+        this.isLoading = false;
       },
     });
   }

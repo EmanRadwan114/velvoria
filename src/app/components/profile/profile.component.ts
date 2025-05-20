@@ -14,11 +14,19 @@ import { environment } from '../../../environments/environment';
 import { AuthService } from '../../../services/auth.service';
 import { ToastService } from '../../../services/toast.service';
 import { PaginationComponent } from '../sharedComponents/pagination/pagination.component';
+import { LoadingSPinnerComponent } from '../sharedComponents/loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [FormsModule, CommonModule, RouterLink, ReactiveFormsModule],
+  imports: [
+    FormsModule,
+    CommonModule,
+    RouterLink,
+    ReactiveFormsModule,
+    PaginationComponent,
+    LoadingSPinnerComponent,
+  ],
   templateUrl: './profile.component.html',
 })
 export class ProfileComponent implements OnInit {
@@ -39,6 +47,8 @@ export class ProfileComponent implements OnInit {
 
   userOrders: any[] = [];
 
+  isLoading = false;
+
   private readonly _ToastService = inject(ToastService);
 
   constructor(
@@ -55,7 +65,6 @@ export class ProfileComponent implements OnInit {
       next: (res) => {
         this.userOrders = [...res.data];
         this.totalPages = res.totalPages;
-        console.log(' 🟢User orders:', this.userOrders, this.totalPages);
       },
       error: (err) => {
         console.error('Error fetching user orders!!!!', err);
@@ -84,6 +93,7 @@ export class ProfileComponent implements OnInit {
   }
 
   private loadUserProfile(): void {
+    this.isLoading = true;
     this.usersService.getUserProfile().subscribe((user) => {
       const { name, email, image, address, role } = user.data;
 
@@ -118,6 +128,7 @@ export class ProfileComponent implements OnInit {
         ],
         confirmPassword: ['', [Validators.required]],
       });
+      this.isLoading = false;
     });
   }
 
@@ -172,6 +183,8 @@ export class ProfileComponent implements OnInit {
 
     const { name, email, image, address } = this.personalInfoForm.value;
     const updatedData: any = { name, email, image };
+
+    console.log(updatedData);
 
     if (this.role === 'user') {
       updatedData.address = address;
@@ -240,7 +253,7 @@ export class ProfileComponent implements OnInit {
         next: (res: any) => {
           localStorage.removeItem('user');
           this.authService.notifyLogout();
-          this.router.navigate([`/login/${this.role}`]);
+          this.router.navigate([`/login`]);
         },
       });
   }

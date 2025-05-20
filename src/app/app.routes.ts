@@ -8,7 +8,6 @@ import { ProductDetailsComponent } from './components/product-details/product-de
 import { ProductsCategoryComponent } from './components/products-category/products-category.component';
 import { ProductsDashboardComponent } from './components/dashboard/products-dashboard/products-dashboard.component';
 import { CategoriesDashboardComponent } from './components/dashboard/categories-dashboard/categories-dashboard.component';
-import { UsersDashboardComponent } from './components/dashboard/users-dashboard/users-dashboard.component';
 import { OrdersDashboardComponent } from './components/dashboard/orders-dashboard/orders-dashboard.component';
 import { CouponsDashboardComponent } from './components/dashboard/coupons-dashboard/coupons-dashboard.component';
 import { AdminsDashboardComponent } from './components/dashboard/admins-dashboard/admins-dashboard.component';
@@ -16,32 +15,33 @@ import { AdminsDashboardComponent } from './components/dashboard/admins-dashboar
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { OrderConfirmationComponent } from './components/order-confirmation/order-confirmation.component';
 import { DashboardHomeComponent } from './components/dashboard/dashboard-home/dashboard-home.component';
-import { authGuard } from '../guards/auth.guard';
+import { userAuthGuard } from '../guards/userAuth.guard';
+import { adminAuthGuards } from '../guards/adminAuth.guard';
+import { siteGuard } from '../guards/siteGuard.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent, title: 'Home' },
   {
-    path: 'furnitures',
+    path: 'furniture',
     component: ProductsCategoryComponent,
     title: 'Products',
   },
   {
-    path: 'furnitures/category/:category',
+    path: 'furniture/category/:category',
     component: ProductsCategoryComponent,
   },
   {
-    path: 'furnitures/:id',
+    path: 'furniture/:id',
     component: ProductDetailsComponent,
     title: 'Product Details',
   },
-  { path: 'cart', component: CartComponent, title: 'Cart' },
   { path: 'search', component: SearchComponent, title: 'Search Results' },
 
   // DASHBOARD
   {
     path: 'dashboard',
-    canActivateChild: [authGuard],
+    canActivateChild: [adminAuthGuards],
     children: [
       {
         path: '',
@@ -57,11 +57,6 @@ export const routes: Routes = [
         path: 'products',
         component: ProductsDashboardComponent,
         title: 'Products Dashboard',
-      },
-      {
-        path: 'users',
-        component: UsersDashboardComponent,
-        title: 'Users Dashboard',
       },
       {
         path: 'admins',
@@ -82,7 +77,7 @@ export const routes: Routes = [
   },
   {
     path: '',
-    canActivateChild: [authGuard],
+    canActivateChild: [userAuthGuard],
     children: [
       {
         path: 'profile',
@@ -100,8 +95,9 @@ export const routes: Routes = [
       },
     ],
   },
+  { path: 'cart', component: CartComponent, title: 'Cart' },
   {
-    path: 'favorites',
+    path: 'wishlist',
     loadComponent: () =>
       import('./components/wishlist/wishlist.component').then(
         (c) => c.WishlistComponent
@@ -110,24 +106,20 @@ export const routes: Routes = [
   },
   /////
   {
-    path: 'register/user',
-    component: RegisterComponent,
-    title: 'Registration',
-  },
-  {
-    path: 'register/admin',
-    component: RegisterComponent,
-    title: 'Registration',
-  },
-  {
-    path: 'login/user',
-    component: LoginComponent,
-    title: 'Login',
-  },
-  {
-    path: 'login/admin',
-    component: LoginComponent,
-    title: 'Login',
+    path: '',
+    canActivateChild: [siteGuard],
+    children: [
+      {
+        path: 'register',
+        component: RegisterComponent,
+        title: 'Registration',
+      },
+      {
+        path: 'login',
+        component: LoginComponent,
+        title: 'Login',
+      },
+    ],
   },
   {
     path: 'about',

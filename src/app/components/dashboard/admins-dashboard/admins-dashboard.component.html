@@ -1,12 +1,8 @@
-<!-- Add New Admin Button -->
-<div class="flex justify-end mb-4">
-  <button (click)="openModal('add')" class="btn-teal">+ Add New Admin</button>
-</div>
-
 <!-- Loading State -->
-<div *ngIf="isLoading" class="text-center py-8">
-  <span class="loading loading-spinner loading-lg"></span>
-  <p>Loading admins...</p>
+@if (isLoading) {<app-loading-spinner></app-loading-spinner>}
+<!-- Add New Admin Button -->
+<div *ngIf="!isLoading" class="flex justify-end mb-4">
+  <button (click)="openModal('add')" class="btn-teal">+ Add New Admin</button>
 </div>
 
 <!-- Admins Table -->
@@ -85,4 +81,5 @@
   [currentPage]="currentPage"
   [totalPages]="totalPages"
   (pageChange)="onPageChange($event)"
+  *ngIf="!isLoading"
 ></app-dashboard-pagination>

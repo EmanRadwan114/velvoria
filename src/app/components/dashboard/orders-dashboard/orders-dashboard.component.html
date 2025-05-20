@@ -1,5 +1,10 @@
+@if (isLoading) {<app-loading-spinner></app-loading-spinner>}
 <!-- Orders Table -->
-<div class="rounded-lg border border-gray-200 shadow-md overflow-auto mt-4">
+<div
+  *ngIf="!isLoading"
+  class="rounded-lg border border-gray-200 shadow-md overflow-auto mt-4"
+>
+  <!-- Loading Placeholder -->
   <table class="w-full table-auto">
     <thead class="bg-gray-50">
       <tr>
@@ -18,7 +23,7 @@
       </tr>
     </thead>
     <tbody
-      *ngIf="orders?.length; else loading"
+      *ngIf="orders?.length"
       class="divide-y divide-gray-100 border-t border-gray-100"
     >
       <tr *ngFor="let o of orders" class="hover:bg-gray-50">
@@ -131,11 +136,6 @@
   </div>
 </div>
 
-<!-- Loading Placeholder -->
-<ng-template #loading>
-  <p class="text-center text-gray-500 mt-4">Loading orders...</p>
-</ng-template>
-
 <!-- Reusable Modal Component -->
 <app-orders-modal
   *ngIf="activeModal"
@@ -146,6 +146,7 @@
 />
 
 <app-dashboard-pagination
+  *ngIf="!isLoading"
   [currentPage]="currentPage"
   [totalPages]="totalPages"
   (pageChange)="onPageChange($event)"

@@ -1,4 +1,8 @@
+<!-- Loading Placeholder -->
+@if (isLoading) {<app-loading-spinner></app-loading-spinner>}
+
 <section
+  *ngIf="!isLoading"
   class="py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-teal-50 to-white text-center"
 >
   <!-- ^charts -->

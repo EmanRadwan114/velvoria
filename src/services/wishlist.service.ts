@@ -21,6 +21,11 @@ export class WishlistService {
       withCredentials: true,
     });
   }
+  clearWishlist() {
+    return this._HttpClient.delete(`${this.URL}/wishlist`, {
+      withCredentials: true,
+    });
+  }
 
   addToWishlist(id: string) {
     return this._HttpClient.put(`${this.URL}/wishlist/add/${id}`, null, {

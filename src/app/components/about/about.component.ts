@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { BreadcrumbComponent } from '../sharedComponents/breadcrumb/breadcrumb.component';
 import { AppFeaturesComponent } from '../app-features/app-features.component';
 import { CommonModule } from '@angular/common';
+import { BreadcrumbComponent } from '../sharedComponents/breadcrumb/breadcrumb.component';
 
 @Component({
   selector: 'app-about',
-  imports: [BreadcrumbComponent, AppFeaturesComponent, CommonModule],
+  imports: [AppFeaturesComponent, CommonModule, BreadcrumbComponent],
   templateUrl: './about.component.html',
   styles: ``,
 })

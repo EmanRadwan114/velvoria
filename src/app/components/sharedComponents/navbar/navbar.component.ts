@@ -8,7 +8,7 @@ import { AuthService } from '../../../../services/auth.service';
 import { CartService } from '../../../../services/cart.service';
 @Component({
   selector: 'app-navbar',
-  imports: [RouterLink, CommonModule, FormsModule,RouterLinkActive],
+  imports: [RouterLink, CommonModule, FormsModule, RouterLinkActive],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
 })
@@ -20,6 +20,9 @@ export class NavbarComponent implements OnInit {
   user: any;
   searchQuery = '';
   totalItems = 0;
+
+  isProfileMenuShown = false;
+
   constructor(
     protected router: Router,
     private http: HttpClient,
@@ -40,6 +43,11 @@ export class NavbarComponent implements OnInit {
       });
     }
   }
+
+  toggleProfileMenu() {
+    this.isProfileMenuShown = !this.isProfileMenuShown;
+  }
+
   search() {
     if (this.searchQuery.trim()) {
       this.router.navigate(['/search'], {

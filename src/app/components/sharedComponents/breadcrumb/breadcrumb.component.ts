@@ -1,4 +1,9 @@
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  Router,
+  RouterLink,
+} from '@angular/router';
 import { filter } from 'rxjs';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -6,7 +11,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-breadcrumb',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './breadcrumb.component.html',
   // styleUrls: ['./breadcrumb.component.css'],
 })
@@ -20,14 +25,13 @@ export class BreadcrumbComponent {
       .subscribe(() => {
         const path = this.router.url;
         const segments = path.split('/').filter((segment) => segment);
+        console.log('hi', path, segments);
 
         if (segments.length === 0) {
           this.breadcrumb = ['Home']; // If no segments, default to 'Home'
         } else {
           this.breadcrumb = ['Home', ...segments.map(this.formatSegments)];
         }
-
-        console.log('Breadcrumb:', this.breadcrumb); // Debugging breadcrumb
       });
   }
 

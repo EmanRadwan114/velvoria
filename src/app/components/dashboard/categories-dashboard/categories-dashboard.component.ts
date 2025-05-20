@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 import { CategoriesModalComponent } from '../../modals/categories-modal/categories-modal.component';
 import { LoadingButtonComponent } from '../../sharedComponents/loading-button/loading-button.component';
 import { ToastService } from '../../../../services/toast.service';
+import { LoadingSPinnerComponent } from '../../sharedComponents/loading-spinner/loading-spinner.component';
 @Component({
   selector: 'app-categories-dashboard',
   imports: [
@@ -18,6 +19,7 @@ import { ToastService } from '../../../../services/toast.service';
     CommonModule,
     CategoriesModalComponent,
     LoadingButtonComponent,
+    LoadingSPinnerComponent,
   ],
   templateUrl: './categories-dashboard.component.html',
 })
@@ -47,13 +49,16 @@ export class CategoriesDashboardComponent implements OnInit {
     this.fetchCategories();
   }
   fetchCategories() {
+    this.loading = true;
     this._CategoryServices.getAllCategories().subscribe({
       next: (res: any) => {
         console.log(res.data);
         this.categoriesList = res.data;
+        this.loading = false;
       },
       error: (err) => {
         console.log(err);
+        this.loading = false;
       },
     });
   }

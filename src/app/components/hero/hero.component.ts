@@ -17,14 +17,14 @@ export class HeroComponent implements OnInit {
       header: 'Welcome To VELVORIA',
       text: 'Discover modern furniture that brings comfort and style to your home.',
       buttonText: 'Shop Now',
-      link: '/furnitures',
+      link: '/furniture',
     },
     {
       image: 'images/hero4.jpg',
       header: 'Make Your Space Yours',
       text: 'Find unique pieces that match your style and elevate daily living.',
       buttonText: 'Explore Collection',
-      link: '/furnitures',
+      link: '/furniture',
     },
     {
       image: 'images/hero3.png',

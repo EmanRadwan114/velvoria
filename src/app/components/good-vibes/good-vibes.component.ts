@@ -14,7 +14,13 @@ export class GoodVibesComponent implements OnInit {
   showCard2 = false;
   showCard3 = false;
 
-  products!: { thumbnail: string; title: string; price: number; _id: string ; images:string[];}[];
+  products!: {
+    thumbnail: string;
+    title: string;
+    price: number;
+    _id: string;
+    images: string[];
+  }[];
 
   constructor(
     private productService: ProductsService,
@@ -32,7 +38,7 @@ export class GoodVibesComponent implements OnInit {
   getProductByID(id: string) {
     this.productService.getSpecificProduct(id).subscribe({
       next: () => {
-        this.router.navigate([`/furnitures/${id}`]);
+        this.router.navigate([`/furniture/${id}`]);
       },
     });
   }

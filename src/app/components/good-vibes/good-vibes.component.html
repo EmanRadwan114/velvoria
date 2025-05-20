@@ -3,8 +3,8 @@
     <h2
       class="text-xl lg:text-4xl font-medium text-center mb-10 primary-text-color"
     >
-Explore Our Unique Items    
-</h2>
+      Explore Our Unique Items
+    </h2>
 
     <section
       class="overflow-visible m-6 grid md:grid-cols-3 md:grid-rows-2 gap-6 md:h-[90vh] md:w-[90vw] relative"
@@ -28,6 +28,8 @@ Explore Our Unique Items
         </span>
 
         <!-- Hover Card on dot -->
+        @if (products) {
+
         <div
           *ngIf="showCard1"
           class="flex flex-col gap-2 items-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] bg-white bg-opacity-90 p-4 rounded-2xl shadow-xl z-20"
@@ -53,11 +55,11 @@ Explore Our Unique Items
         </div>
 
         <img
-                 [src]="products[6].images[0]"
-
+          [src]="products[6].images[0]"
           class="w-full h-full object-cover object-center rounded-lg"
           alt=""
         />
+        }
       </div>
 
       <!-- ✅ Second Image -->
@@ -79,6 +81,8 @@ Explore Our Unique Items
         </span>
 
         <!-- Hover Card on dot -->
+        @if (products) {
+
         <div
           *ngIf="showCard2"
           class="flex flex-col gap-2 items-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] bg-white bg-opacity-90 p-4 rounded-2xl shadow-xl z-20"
@@ -104,10 +108,11 @@ Explore Our Unique Items
         </div>
 
         <img
-        [src]="products[9].images[0]"
-        class="w-full h-full object-cover object-center rounded-lg"
+          [src]="products[9].images[0]"
+          class="w-full h-full object-cover object-center rounded-lg"
           alt=""
         />
+        }
       </div>
 
       <!-- ✅ Third Image -->
@@ -129,6 +134,8 @@ Explore Our Unique Items
         </span>
 
         <!-- Hover Card on dot -->
+        @if (products) {
+
         <div
           *ngIf="showCard3"
           class="flex flex-col gap-2 items-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] bg-white bg-opacity-90 p-4 rounded-2xl shadow-xl z-20"
@@ -154,10 +161,11 @@ Explore Our Unique Items
         </div>
 
         <img
-        [src]="products[0].images[0]"
-        class="w-full h-full object-cover object-center rounded-lg"
+          [src]="products[0].images[0]"
+          class="w-full h-full object-cover object-center rounded-lg"
           alt=""
         />
+        }
       </div>
     </section>
   </div>

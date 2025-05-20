@@ -1,9 +1,16 @@
-<div class="px-4">
+@if (loading) {<app-loading-spinner></app-loading-spinner>}
+
+<div class="px-4" *ngIf="!loading">
   <div class="flex justify-end mb-4">
     <button class="btn-teal" (click)="openModal('add')">+ Add Product</button>
   </div>
-  <div class="rounded-lg border border-gray-200 shadow-md overflow-auto">
-    <table class="w-full table-auto">
+
+  <!-- Loading Placeholder -->
+  <div
+    *ngIf="!loading"
+    class="rounded-lg border border-gray-200 shadow-md overflow-auto"
+  >
+    <table class="w-full table-auto" *ngIf="!loading">
       <thead class="bg-gray-50">
         <tr>
           <th class="px-2 py-2 text-left">Image</th>
@@ -14,7 +21,7 @@
           <th class="px-4 py-2"></th>
         </tr>
       </thead>
-      <tbody *ngIf="productsList.length > 0; else noData">
+      <tbody *ngIf="productsList.length > 0">
         <tr *ngFor="let prd of productsList" class="hover:bg-gray-50">
           <!-- Image & Title -->
           <th class="flex gap-5 px-2 py-2 font-normal text-gray-900">
@@ -120,15 +127,6 @@
           </div>
         </div>
       </div>
-      <ng-template #noData>
-        <tbody>
-          <tr>
-            <span class="flex items-center justify-center">
-              <app-loading-button></app-loading-button>
-            </span>
-          </tr>
-        </tbody>
-      </ng-template>
     </table>
   </div>
 </div>
@@ -143,6 +141,7 @@
 ></app-products-modal>
 
 <app-dashboard-pagination
+  *ngIf="!loading"
   [currentPage]="currentPage"
   [totalPages]="totalPages"
   (pageChange)="onPageChange($event)"

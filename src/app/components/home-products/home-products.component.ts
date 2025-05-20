@@ -51,6 +51,6 @@ export class HomeProductsComponent implements OnInit {
   }
 
   viewAllBtn(): void {
-    this.router.navigate(['/furnitures']);
+    this.router.navigate(['/furniture']);
   }
 }

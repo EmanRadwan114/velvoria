@@ -45,10 +45,11 @@ export class AppComponent implements OnInit {
         this.showSideBar = url.includes('/dashboard');
         this.showNavAndFoot =
           !url.includes('/login') && !url.includes('/register');
-        if (
-          this.showNavAndFoot &&
-          JSON.parse(localStorage.getItem('user') || '').role === 'user'
-        ) {
+
+        const userStr = localStorage.getItem('user');
+        const user = userStr ? JSON.parse(userStr) : null;
+
+        if (this.showNavAndFoot && user && user.role === 'user') {
           this.cartService.loadCartFromBackend().subscribe((cart) => {
             this.cartService.setCartItems(cart.data);
             this.cartService.setTotal(cart.totalItems);
@@ -60,20 +61,6 @@ export class AppComponent implements OnInit {
           });
         }
       }
-      // if (event instanceof NavigationEnd) {
-      //   if (event.url.includes('/dashboard')) {
-      //     this.showSideBar = true;
-      //     this.showNavAndFoot=false
-      //   } else if (
-      //     event.url.includes('/register') ||
-      //     event.url.includes('/login') ||
-      //     event.url.includes('/dashboard')
-      //   ) {
-      //     this.showNavAndFoot = false;
-      //   }
-      // } else {
-      //   this.showNavAndFoot = true;
-      // }
     });
   }
 }

@@ -35,8 +35,6 @@ export class OrderConfirmationComponent implements OnInit {
 
     this.orderService.getOrderDetails(orderId).subscribe({
       next: (data) => {
-        console.log(data);
-
         this.order = data.data;
         this.calculateSubtotal();
         this.totalAfterDiscount = data.data.totalPrice;

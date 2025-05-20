@@ -18,6 +18,10 @@ export class PaginationComponent {
       newPage !== this.currentPage
     ) {
       this.pageChanged.emit(newPage);
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
     }
   }
 }
