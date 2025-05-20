@@ -23,11 +23,11 @@
           >
             {{ discountProducts[0]?.title }}
           </h2>
-          <div class="text-gray-800 text-lg mb-4">
+          <div class="text-gray-800 text-lg sm:text-xl mb-4">
             <span class="line-through text-red-400 mr-4"
               >EGP{{ discountProducts[0]?.price }}</span
             >
-            <span class="text-2xl text-teal-700 font-bold">{{
+            <span class="text-teal-700 font-bold">{{
               getDiscountPercentage(discountProducts[0]?.price)
             }}</span>
           </div>

@@ -5,6 +5,8 @@
       Our Products
     </h1>
 
+    @if(isLoading) {<app-loading-spinner></app-loading-spinner>}
+
     <!-- Tabs Navigation -->
     <div class="w-full flex flex-col items-center justify-center">
       <!-- Mobile Dropdown -->
@@ -93,9 +95,9 @@
     </div>
 
     <!-- View All Button -->
-    <div class="flex items-center justify-center pt-4 md:pt-12 mt-4">
+    <div class="flex items-center justify-center pt-4">
       <button
-        class="border-teal-700 text-teal-700 prim-btn-outline hover:text-white px-8 py-3"
+        class="border-teal-700 text-teal-700 border-2 hover:text-white hover:bg-teal-700 transition-colors rounded-md px-12 py-2 font-semibold"
         (click)="viewAllBtn()"
       >
         View All

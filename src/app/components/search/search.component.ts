@@ -7,6 +7,7 @@ import { environment } from '../../../environments/environment';
 import { PaginationComponent } from '../sharedComponents/pagination/pagination.component';
 import { ProductsService } from '../../../services/products.service';
 import { LoadingSPinnerComponent } from '../sharedComponents/loading-spinner/loading-spinner.component';
+import { FilterationComponent } from '../filteration/filteration.component';
 @Component({
   selector: 'app-search',
   imports: [
@@ -14,6 +15,7 @@ import { LoadingSPinnerComponent } from '../sharedComponents/loading-spinner/loa
     ProductsComponent,
     PaginationComponent,
     LoadingSPinnerComponent,
+    FilterationComponent,
   ],
   templateUrl: './search.component.html',
   styles: ``,
@@ -45,6 +47,7 @@ export class SearchComponent implements OnInit {
         },
         error: (err) => {
           console.log(err.error.message);
+          this.products = [];
           this.message = 'No products were found matching your selection';
         },
       });
@@ -98,26 +101,4 @@ export class SearchComponent implements OnInit {
       },
     });
   }
-  // ngOnInit(): void {
-  //   this.route.queryParams.subscribe((params) => {
-  //     this.query = params['q'];
-  //     console.log(this.query);
-  //     this.http
-  //       .get(`${environment.backUrl}/products/search?q=${this.query}`)
-  //       .subscribe({
-  //         next: (res: any) => {
-  //           if (res) {
-  //             this.message = 'success';
-  //             this.products = res['data'];
-  //             console.log(this.products);
-  //             console.log(res);
-  //           }
-  //         },
-  //         error: (err) => {
-  //           console.log(err.error.message);
-  //           this.message = 'No products were found matching your selection';
-  //         },
-  //       });
-  //   });
-  //}
 }

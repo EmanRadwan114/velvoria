@@ -59,5 +59,4 @@ export class FilterationComponent {
     console.log('Filteration emits:', filterQuery);
     this.filterChanged.emit(filterQuery);
   }
-
 }

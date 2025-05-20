@@ -1,4 +1,11 @@
-import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { ProductCardComponent } from '../product-card/product-card.component';
 import { CommonModule } from '@angular/common';
 import { FilterationComponent } from '../filteration/filteration.component';
@@ -19,10 +26,7 @@ export class ProductsComponent {
   @Input() productsList: object[] = [];
   @Output() filterChanged = new EventEmitter<any>();
 
-
   onFilterChange(filterQuery: any): void {
-    console.log('ProductsComponent forwarding filter:', filterQuery);
     this.filterChanged.emit(filterQuery);
   }
 }
-

@@ -30,7 +30,7 @@ import { LoadingSPinnerComponent } from '../sharedComponents/loading-spinner/loa
   templateUrl: './profile.component.html',
 })
 export class ProfileComponent implements OnInit {
-  image: string = 'https://picsum.photos/350';
+  image: string = '';
   totalPages = 1;
   currentPage = 1;
   isEditingPersonalInfo: boolean = false;
@@ -99,10 +99,12 @@ export class ProfileComponent implements OnInit {
 
       this.originalEmail = email;
       this.role = role;
+      this.image = image;
 
       const formConfig: any = {
         name: [name, [Validators.required, Validators.minLength(3)]],
         email: [email, [Validators.required, Validators.email]],
+        image: [image || '', [Validators.required]],
       };
 
       if (role === 'user') {
@@ -182,8 +184,6 @@ export class ProfileComponent implements OnInit {
     const { name, email, image, address } = this.personalInfoForm.value;
     const updatedData: any = { name, email, image };
 
-    console.log(updatedData);
-
     if (this.role === 'user') {
       updatedData.address = address;
     }
@@ -243,6 +243,7 @@ export class ProfileComponent implements OnInit {
   }
 
   signOut() {
+    this.isLoading = true;
     this.http
       .post(`${environment.backUrl}/auth/logout`, null, {
         withCredentials: true,
@@ -251,6 +252,7 @@ export class ProfileComponent implements OnInit {
         next: (res: any) => {
           localStorage.removeItem('user');
           this.authService.notifyLogout();
+          this.isLoading = false;
           this.router.navigate([`/login`]);
         },
       });

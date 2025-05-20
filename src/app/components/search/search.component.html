@@ -2,7 +2,7 @@
 <div class="w-full min-h-dvh flex justify-center items-center">
   <app-loading-spinner></app-loading-spinner>
 </div>
-} @else if (message==="success") {
+} @else if(products.length > 0) {
 <app-products
   [productsList]="products"
   (filterChanged)="handleFilterChange($event)"
@@ -12,13 +12,4 @@
   [totalPages]="totalPages"
   (pageChanged)="changePage($event)"
 ></app-pagination>
-} @else {
-<div class="flex flex-col w-full min-h-56 justify-center items-center">
-  <img
-    src="https://cdn-icons-png.flaticon.com/128/16919/16919815.png"
-    width="100"
-    alt=""
-  />
-  <p class="font-medium">{{ message }}</p>
-</div>
 }
