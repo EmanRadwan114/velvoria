@@ -197,6 +197,9 @@ export class ProfileComponent implements OnInit {
 
         this.isLoading = false;
         if (this.originalEmail !== email) this.signOut();
+        else {
+          delete updatedData.email;
+        }
       },
       error: (err) => {
         console.log(err);
