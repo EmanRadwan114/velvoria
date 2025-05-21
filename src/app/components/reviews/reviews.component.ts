@@ -143,6 +143,8 @@ export class ReviewsComponent implements OnInit {
             this.isLoading = false;
           },
         });
+    } else {
+      this.toastService.show('error', 'form is not valid');
     }
   }
 }
