@@ -197,9 +197,6 @@ export class ProfileComponent implements OnInit {
 
         this.isLoading = false;
         if (this.originalEmail !== email) this.signOut();
-        else {
-          delete updatedData.email;
-        }
       },
       error: (err) => {
         console.log(err);
@@ -246,13 +243,18 @@ export class ProfileComponent implements OnInit {
   }
 
   signOut() {
-    localStorage.removeItem('user');
     this.http
       .post(`${environment.backUrl}/auth/logout`, null, {
         withCredentials: true,
       })
       .subscribe({
         next: (res: any) => {
+          localStorage.removeItem('user');
+          this.authService.notifyLogout();
+          this.router.navigate([`/login`]);
+        },
+        error: () => {
+          localStorage.removeItem('user');
           this.authService.notifyLogout();
           this.router.navigate([`/login`]);
         },
