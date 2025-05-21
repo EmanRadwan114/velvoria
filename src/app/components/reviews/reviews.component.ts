@@ -139,6 +139,13 @@ export class ReviewsComponent implements OnInit {
                 'error',
                 'You Have Already Reviewed This Product Before'
               );
+            } else {
+              console.log(err);
+
+              this.toastService.show(
+                'error',
+                'You Can not Review a Product Before Ordering It'
+              );
             }
             this.isLoading = false;
           },
