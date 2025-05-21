@@ -246,13 +246,13 @@ export class ProfileComponent implements OnInit {
   }
 
   signOut() {
+    localStorage.removeItem('user');
     this.http
       .post(`${environment.backUrl}/auth/logout`, null, {
         withCredentials: true,
       })
       .subscribe({
         next: (res: any) => {
-          localStorage.removeItem('user');
           this.authService.notifyLogout();
           this.router.navigate([`/login`]);
         },

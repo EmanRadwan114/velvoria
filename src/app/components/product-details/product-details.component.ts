@@ -87,7 +87,8 @@ export class ProductDetailsComponent implements OnInit {
             );
         },
       });
-    }
+    } else
+      this._ToastService.show('error', 'Login To add Product To Your Wishlist');
   }
   // add to cart
   addToCart() {
