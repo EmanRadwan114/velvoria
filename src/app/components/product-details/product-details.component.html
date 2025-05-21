@@ -1,8 +1,6 @@
 <section class="flex flex-col">
   <!-- * product details section -->
-  <section
-    class="flex flex-col lg:flex-row justify-between gap-8 my-6 px-4 lg:px-18"
-  >
+  <section class="flex flex-col lg:flex-row justify-between gap-8 my-6 px-4 lg:px-18">
     <!-- Left Side: Images -->
     <div class="w-full lg:w-[50%] p-4 rounded">
       <!-- main image -->
@@ -44,9 +42,7 @@
       <hr class="w-full my-4" />
 
       <!-- Category & Rating -->
-      <div
-        class="flex justify-between items-center w-full mb-6 flex-wrap gap-4"
-      >
+      <div class="flex justify-between items-center w-full mb-6 flex-wrap gap-4">
         <p class="font-medium text-lg text-gray-900">
           Category:
           <span class="text-teal-800 font-normal">{{ categoryName }}</span>
@@ -66,7 +62,7 @@
             </ng-container>
             <span class="text-gray-700 text-base">
               {{ detailsProduct.avgRating }}/5 ({{
-                detailsProduct.numberOfReviews
+              detailsProduct.numberOfReviews
               }}
               reviews)
             </span>
@@ -93,11 +89,14 @@
         Material: {{ detailsProduct.material }}
       </p>
       <p class="text-gray-900 text-lg mb-4">
-        In Stock: {{ detailsProduct.stock }}
+        Stock: {{ detailsProduct.stock > 0 ? detailsProduct.stock:'Out of Stock'}}
       </p>
 
       <!-- Add To wishlist 💖 💖 -->
-      <div class="flex items-center gap-2 my-4" (click)="addToWishList()">
+      <div
+        class="flex items-center gap-2 my-4"
+        (click)="addToWishList()"
+      >
         <div
           class="text-gray-900 border hover:border-none bg-gray-50 w-12 h-12 flex items-center justify-center hover:text-white hover:bg-teal-700 rounded cursor-pointer"
           [ngClass]="{

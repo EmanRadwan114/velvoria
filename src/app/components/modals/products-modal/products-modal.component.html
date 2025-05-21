@@ -5,6 +5,7 @@
 >
   <div
     class="bg-white w-full max-w-4xl max-h-[90dvh] overflow-y-auto rounded-xl p-6 space-y-4 relative"
+    (click)="$event.stopPropagation()"
   >
     <button
       (click)="closeModal()"
@@ -25,9 +26,7 @@
       <div class="space-y-4">
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1"
-              >Title*</label
-            >
+            <label class="block text-sm font-medium text-gray-700 mb-1">Title*</label>
             <input
               required
               formControlName="title"
@@ -46,9 +45,7 @@
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1"
-              >Material*</label
-            >
+            <label class="block text-sm font-medium text-gray-700 mb-1">Material*</label>
             <input
               formControlName="material"
               class="input w-full"
@@ -68,9 +65,7 @@
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1"
-              >Color*</label
-            >
+            <label class="block text-sm font-medium text-gray-700 mb-1">Color*</label>
             <input
               formControlName="color"
               class="input w-full"
@@ -89,9 +84,7 @@
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1"
-            >Description*</label
-          >
+          <label class="block text-sm font-medium text-gray-700 mb-1">Description*</label>
           <textarea
             formControlName="description"
             placeholder="Product description"
@@ -112,9 +105,7 @@
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1"
-            >Thumbnail URL*</label
-          >
+          <label class="block text-sm font-medium text-gray-700 mb-1">Thumbnail URL*</label>
           <div class="flex gap-4 items-center">
             <input
               type="text"
@@ -147,9 +138,7 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1"
-              >Price*</label
-            >
+            <label class="block text-sm font-medium text-gray-700 mb-1">Price*</label>
             <input
               formControlName="price"
               type="number"
@@ -168,9 +157,7 @@
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1"
-              >Stock*</label
-            >
+            <label class="block text-sm font-medium text-gray-700 mb-1">Stock*</label>
             <input
               formControlName="stock"
               type="number"
@@ -189,12 +176,20 @@
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1"
-              >Category*</label
+            <label class="block text-sm font-medium text-gray-700 mb-1">Category*</label>
+            <select
+              formControlName="categoryID"
+              class="input w-full"
             >
-            <select formControlName="categoryID" class="input w-full">
-              <option value="" disabled selected>Select a category</option>
-              <option *ngFor="let c of categories" [value]="c._id">
+              <option
+                value=""
+                disabled
+                selected
+              >Select a category</option>
+              <option
+                *ngFor="let c of categories"
+                [value]="c._id"
+              >
                 {{ c.name }}
               </option>
             </select>
@@ -208,9 +203,7 @@
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1"
-            >Labels*</label
-          >
+          <label class="block text-sm font-medium text-gray-700 mb-1">Labels*</label>
           <div class="flex flex-wrap gap-2">
             <label
               *ngFor="let label of ['new arrival', 'hot', 'trendy']"
@@ -232,9 +225,7 @@
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1"
-            >Product Images*</label
-          >
+          <label class="block text-sm font-medium text-gray-700 mb-1">Product Images*</label>
           <div class="space-y-2">
             <div
               *ngFor="let img of images?.value; let i = index"
@@ -264,7 +255,11 @@
                 🗑️
               </button>
             </div>
-            <button type="button" (click)="addImage()" class="btn-teal">
+            <button
+              type="button"
+              (click)="addImage()"
+              class="btn-teal"
+            >
               + Add Image
             </button>
           </div>
@@ -278,49 +273,45 @@
           </div>
         </div>
 
-        <button type="submit" class="btn-teal w-full mt-6">
+        <button
+          type="submit"
+          class="btn-teal w-full mt-6"
+        >
           {{ activeModal === "add" ? "Add Product" : "Update Product" }}
         </button>
       </div>
     </form>
 
-    <div *ngIf="activeModal === 'getById' && productData" class="space-y-4">
+    <div
+      *ngIf="activeModal === 'getById' && productData"
+      class="space-y-4"
+    >
       <h2 class="text-2xl font-bold text-teal-600 border-b pb-2">
         Product Details
       </h2>
       <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 text-gray-800">
-        <div
-          class="p-3 border-2 border-teal-500 rounded-lg bg-gray-50 shadow-sm"
-        >
+        <div class="p-3 border-2 border-teal-500 rounded-lg bg-gray-50 shadow-sm">
           <strong class="text-teal-800">Title:</strong>
           <div class="mt-1 text-base text-black">{{ productData.title }}</div>
         </div>
-        <div
-          class="p-3 border-2 border-teal-500 rounded-lg bg-gray-50 shadow-sm"
-        >
+        <div class="p-3 border-2 border-teal-500 rounded-lg bg-gray-50 shadow-sm">
           <strong class="text-teal-800">Price:</strong>
           <div class="mt-1 text-base text-black">
             {{ productData.price | currency : "EGP" : "symbol" }}
           </div>
         </div>
-        <div
-          class="p-3 border-2 border-teal-500 rounded-lg bg-gray-50 shadow-sm"
-        >
+        <div class="p-3 border-2 border-teal-500 rounded-lg bg-gray-50 shadow-sm">
           <strong class="text-teal-800">Stock:</strong>
           <div class="mt-1 text-base text-black">{{ productData.stock }}</div>
         </div>
-        <div
-          class="p-3 border-2 border-teal-500 rounded-lg bg-gray-50 shadow-sm"
-        >
+        <div class="p-3 border-2 border-teal-500 rounded-lg bg-gray-50 shadow-sm">
           <strong class="text-teal-800">Category:</strong>
           <div class="mt-1 text-base text-black">
             {{ productData.categoryName }}
           </div>
         </div>
         <div class="col-span-full grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div
-            class="p-3 border-2 border-teal-500 rounded-lg bg-gray-50 shadow-sm"
-          >
+          <div class="p-3 border-2 border-teal-500 rounded-lg bg-gray-50 shadow-sm">
             <strong class="text-teal-800">Thumbnail:</strong>
             <div class="mt-2">
               <img
@@ -331,18 +322,14 @@
               />
             </div>
           </div>
-          <div
-            class="p-3 border-2 border-teal-500 rounded-lg bg-gray-50 shadow-sm"
-          >
+          <div class="p-3 border-2 border-teal-500 rounded-lg bg-gray-50 shadow-sm">
             <strong class="text-teal-800">Description:</strong>
             <p class="mt-1 text-black">{{ productData.description }}</p>
           </div>
         </div>
         <div class="col-span-full">
           <strong class="text-teal-800">Images:</strong>
-          <div
-            class="mt-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2"
-          >
+          <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
             <img
               *ngFor="let img of productData.images; let i = index"
               [src]="img"
