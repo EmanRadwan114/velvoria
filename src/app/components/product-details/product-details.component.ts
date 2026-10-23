@@ -42,7 +42,7 @@ export class ProductDetailsComponent implements OnInit {
       // 1) fetch product
       this._ProductsService.getSpecificProduct(this.productID).subscribe({
         next: (res: any) => {
-          this.detailsProduct = res.data[0];
+          this.detailsProduct = Array.isArray(res.data) ? res.data[0] : res.data;
           this.categoryID = this.detailsProduct.categoryID;
           this.mainImage = this.detailsProduct.thumbnail;
           this.stock = this.detailsProduct.stock;
