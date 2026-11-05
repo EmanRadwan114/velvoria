@@ -1,13 +1,11 @@
 const fs = require("fs");
 const path = require("path");
 
-// Target the production environment file path
-const targetPath = path.join(
-  __dirname,
-  "./src/environments/environment.prod.ts",
-);
+// Target BOTH paths that the compiler looks for
+const devPath = path.join(__dirname, "./src/environments/environment.ts");
+const prodPath = path.join(__dirname, "./src/environments/environment.prod.ts");
 
-// Format the file contents using Vercel's environment variables
+// Create the production configuration string using Vercel variables
 const envConfigFile = `export const environment = {
   production: true,
   backUrl: '${process.env.BACKEND_URL || ""}',
@@ -15,6 +13,14 @@ const envConfigFile = `export const environment = {
 };
 `;
 
-// Write the file so the Angular compiler can find it
-fs.writeFileSync(targetPath, envConfigFile, "utf8");
-console.log(`Production environment.prod.ts file generated dynamically.`);
+// Make sure the target environments directory exists first
+const dir = path.join(__dirname, "./src/environments");
+if (!fs.existsSync(dir)) {
+  fs.mkdirSync(dir, { recursive: true });
+}
+
+// Write to BOTH file paths dynamically on the Vercel build machine
+fs.writeFileSync(devPath, envConfigFile, "utf8");
+fs.writeFileSync(prodPath, envConfigFile, "utf8");
+
+console.log(`Successfully generated both environment files inside Vercel.`);
